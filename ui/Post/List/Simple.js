@@ -5,8 +5,15 @@ import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
 import { all } from "deepmerge";
 
-function UI({ loading, error, allPosts, count, getMore }) {
-  if (loading) {
+function UI({
+  loading,
+  error,
+  allPosts,
+  count,
+  loadMore,
+  refetch,
+}) {
+  if (loading || error) {
     return <PostItemSkeletonSimple />;
   }
 
@@ -14,10 +21,12 @@ function UI({ loading, error, allPosts, count, getMore }) {
     <VStack px={["0", "1"]}>
       {/* Map list posts */}
       {allPosts.map((post) => (
-        <PostItemSimple key={post.id} id={post.id} />
+        <PostItemSimple key={post.id} existing={{ post }} />
       ))}
       {count > allPosts.length && (
-        <Button onPress={getMore}>Tải thêm bài viết</Button>
+        <Button my={3} colorScheme="green" onPress={loadMore}>
+          Tải thêm bài viết
+        </Button>
       )}
     </VStack>
   );

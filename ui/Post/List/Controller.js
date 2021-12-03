@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { gql, makeVar, useQuery } from "@apollo/client";
+import { AuthContext } from "../../Provider/Native";
 export const POST_LIST = gql`
-  query(
+  query (
     $first: Int
     $skip: Int
     $sortBy: [SortPostsBy!]
     $where: PostWhereInput
+    $user: UserWhereInput
   ) {
     _allPostsMeta(where: $where) {
       count
@@ -22,39 +24,65 @@ export const POST_LIST = gql`
         }
       }
       interactive {
-        comments {
+        id
+        reacted: reactions(where: { createdBy: $user }) {
+          id
+        }
+        comments(first: 5, sortBy: createdAt_DESC) {
+          id
           content
+          my_interactive {
+            id
+          }
         }
         reactions {
+          id
           emoji
+          createdBy {
+            id
+          }
+        }
+        _commentsMeta {
+          count
+        }
+        _reactionsMeta {
+          count
         }
       }
+      createdAt
       createdBy {
         id
+        name
+        avatar {
+          publicUrl
+        }
       }
     }
   }
 `;
-export const PostListRefetch = makeVar(() => {});
 
 export default function PostListController({
   UI,
   first = 20,
   skip,
-  sortBy = 'createdAt_DESC',
+  sortBy = "createdAt_DESC",
   where,
   ...props
 }) {
-  const { loading, error, data = {}, fetchMore, refetch } = useQuery(
-    POST_LIST,
-    {
-      variables: { first, where, skip, sortBy },
-    }
-  );
+  const { user } = useContext(AuthContext);
+
+  const {
+    loading,
+    error,
+    data = {},
+    fetchMore,
+    refetch,
+  } = useQuery(POST_LIST, {
+    variables: { first, where, skip, sortBy, user: { id: user.id } },
+  });
   const { allPosts, _allPostsMeta = {} } = data;
   const { count = 0 } = _allPostsMeta;
-
-  function getMore(e) {
+  function loadMore(e) {
     if (loading || error) return;
     if (count <= allPosts.length) return;
     fetchMore({
@@ -65,17 +93,20 @@ export default function PostListController({
           allPosts: [...previousResult.allPosts, ...fetchMoreResult.allPosts],
         };
       },
+    }).finally(() => {
     });
   }
-  if (refetch) PostListRefetch(refetch);
+
   return (
     <UI
       {...props}
       loading={loading}
       error={error}
+      refetch={refetch}
       allPosts={allPosts}
-      getMore={getMore}
       count={count}
+      // 
+      loadMore={loadMore}
     />
   );
 }

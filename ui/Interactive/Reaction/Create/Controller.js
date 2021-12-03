@@ -3,7 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import { REACTION_DELETE } from "../Delete/Controller";
 
 export const REACTION_CREATE_POST = gql`
-  mutation($id: ID!, $data: InteractiveUpdateInput) {
+  mutation ($id: ID!, $data: InteractiveUpdateInput) {
     updateInteractive(id: $id, data: $data) {
       reactions {
         emoji
@@ -12,7 +12,7 @@ export const REACTION_CREATE_POST = gql`
   }
 `;
 export const REACTION_CREATE_COMMENT = gql`
-  mutation($id: ID!, $data: InteractiveUpdateInput) {
+  mutation ($id: ID!, $data: InteractiveUpdateInput) {
     updateInteractive(id: $id, data: $data) {
       id
       reactions {
@@ -25,48 +25,63 @@ export const REACTION_CREATE_COMMENT = gql`
     }
   }
 `;
+export const REACTION_CREATE = gql`
+  mutation ($data: InteractiveReactionCreateInput) {
+    createInteractiveReaction(data: $data) {
+      id
+    }
+  }
+`;
 export default function ReactionCreate({
   UI,
   interactive,
   refetch,
-  reactionsList,
-  reactionsCommentList,
-  idMyInteractive,
-  refetchInteractiveItem,
+  reactions,
+  loading,
 }) {
-  const refetchPostItem = () => {
-    refetch();
-  };
-  const [onCreate, { loading1, error1, data1 = {} }] = useMutation(
-    idMyInteractive ? REACTION_CREATE_COMMENT : REACTION_CREATE_POST,
-    {
-      onCompleted: (data) => {
-        idMyInteractive ? refetchInteractiveItem() : refetchPostItem();
-      },
+  const [reacted] = interactive.reacted;
+  const [onCreate, createResult] = useMutation(REACTION_CREATE, {
+    onCompleted: (data) => {
+      console.log(data);
+      refetch();
+    },
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+  const [onDelete, deleteResult] = useMutation(REACTION_DELETE, {
+    onCompleted: (data) => {
+      refetch();
+    },
+  });
+  function handleClick(e) {
+    if (loading) return;
+    if (reacted) {
+      console.log(reacted);
+      console.log("unlike");
+
+      // onDelete({ variables: { id: reacted.id } });
+    } else {
+      if (interactive) {
+        console.log(interactive);
+        onCreate({
+          variables: {
+            data: { interactive: { connect: { id: interactive.id } } },
+          },
+        });
+      }
     }
-  );
-  const [onDelete, { loading2, error2, data2 = {} }] = useMutation(
-    REACTION_DELETE,
-    {
-      onCompleted: (data) => {
-        idMyInteractive ? refetchInteractiveItem() : refetchPostItem();
-      },
-    }
-  );
-  const { createInteractiveReaction } = data1;
-  const { deleteInteractiveReaction } = data2;
+  }
+
   return (
     <UI
+      loading={loading}
       interactive={interactive}
-      loading={loading1}
-      error={error1}
-      onCreate={onCreate}
-      onDelete={onDelete}
-      createReaction={createInteractiveReaction}
-      deleteReaction={deleteInteractiveReaction}
-      reactionsList={reactionsList}
-      idMyInteractive={idMyInteractive}
-      reactionsCommentList={reactionsCommentList}
+      reacted={reacted}
+      handleClick={handleClick}
+      createResult={createResult}
+      deleteResult={deleteResult}
+      reactions={reactions}
     />
   );
 }

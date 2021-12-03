@@ -14,9 +14,10 @@ import { PostDeleteText, PostUpdateText } from "../index";
 import { UploadImageListCarousel } from "../../Upload/Image";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import PostItem from "./Controller";
-import InteractiveItemSimple from "../../Interactive/Item/Simple";
+
+import { UI as InteractiveItemSimpleUI } from "../../Interactive/Item/Simple";
 import { Link } from "@react-navigation/native";
-import { AuthContext } from '../../Provider/Native'
+import { AuthContext } from "../../Provider/Native";
 
 function formatTimeCreate(createdAt) {
   var dayjs = require("dayjs");
@@ -38,8 +39,8 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-function UI({ loading, error, post, refetch }) {
-  const currentUser = useContext(AuthContext).user
+export function UI({ loading, error, post = {}, refetch }) {
+  const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
@@ -72,7 +73,6 @@ function UI({ loading, error, post, refetch }) {
                 "https://odanang.net" +
                 (post?.createdBy?.avatar?.publicUrl ||
                   "/upload/img/no-image.png"),
-
             }}
             alt="Profile image"
             size="8"
@@ -101,10 +101,10 @@ function UI({ loading, error, post, refetch }) {
           >
             <PostUpdateText />
             <Divider w="full" bgColor="gray.100" />
-            <PostDeleteText id={post?.id} />
+            {post && <PostDeleteText id={post?.id} />}
           </VStack>
         )}
-        {post.createdBy.id === currentUser.id && (
+        {post.createdBy && post.createdBy.id === currentUser.id && (
           <Button
             bgColor="transparent"
             p="1"
@@ -143,7 +143,7 @@ function UI({ loading, error, post, refetch }) {
             <InteractionReactionCreateButton
               interactive={post.interactive}
               refetch={refetch}
-              reactionsList={post?.interactive?.reactions}
+              reactions={post?.interactive?.reactions}
             />
           </Box>
           <Box w="33%">
@@ -153,10 +153,7 @@ function UI({ loading, error, post, refetch }) {
             <AlbumCreateButton />
           </Box>
         </HStack>
-        <InteractiveItemSimple
-          where={{ id: post?.interactive?.id }}
-          sortBy="createdAt_DESC"
-        />
+        <InteractiveItemSimpleUI interactive={post?.interactive} />
       </Box>
     </Box>
   );

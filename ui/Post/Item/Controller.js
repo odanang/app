@@ -2,7 +2,7 @@ import React from "react";
 import { gql, useQuery } from "@apollo/client";
 import { POST_LIST } from "../List/Controller";
 export const POST_ITEM = gql`
-  query($id: ID!) {
+  query ($id: ID!) {
     Post(where: { id: $id }) {
       id
       content
@@ -16,7 +16,8 @@ export const POST_ITEM = gql`
       }
       interactive {
         id
-        comments {
+        comments(first: 5, sortBy: createdAt_DESC) {
+          id
           content
         }
         reactions {
@@ -44,13 +45,19 @@ export const POST_ITEM = gql`
     }
   }
 `;
-export default function PostItem({ UI, id, where }) {
-  const { loading, error, data = {}, refetch } = useQuery(
-    id ? POST_ITEM : POST_LIST,
-    {
-      variables: id ? { id } : { where },
-    }
-  );
+export default function PostItem({ UI, id, where, existing = {} }) {
+  if (existing.post) return <UI post={existing.post} />;
+
+  if (!id) return "invalid";
+  
+  const {
+    loading,
+    error,
+    data = {},
+    refetch,
+  } = useQuery(id ? POST_ITEM : POST_LIST, {
+    variables: id ? { id } : { where },
+  });
 
   const { allPosts, Post } = data;
   const [post] = allPosts || [Post];

@@ -1,5 +1,5 @@
 import React from "react";
-import { UI as InteractionCommentItemSimple } from "../Item/Simple";
+import InteractionCommentItemSimple from "../Item/Simple";
 import { Button, VStack } from "native-base";
 import { CommentListController } from "./Controller";
 
@@ -19,8 +19,7 @@ export function UI({
         return (
           <InteractionCommentItemSimple
             key={comment.id}
-            comment={comment}
-            refetchInteractiveItem={refetchInteractiveItem}
+            existing={{ comment }}
           />
         );
       })}
