@@ -13,11 +13,12 @@ export const POST_CREATE = gql`
   }
 `;
 
-export default function PostCreate({ UI, post }) {
+export default function PostCreate({ UI, post, navigation }) {
   const postListRefetch = useReactiveVar(PostListRefetch);
   const [on, { loading, error, data = {} }] = useMutation(POST_CREATE, {
     onCompleted: (data) => {
       postListRefetch();
+      navigation.navigate("home");
     },
   });
   if (loading) return "...";

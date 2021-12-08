@@ -11,6 +11,7 @@ import {
   TextArea,
 } from "native-base";
 import Controller from "./Controller";
+import { useNavigation } from '@react-navigation/native';
 
 function UI({ loading, error, on }) {
   const contentRef = useRef();
@@ -107,5 +108,6 @@ function UI({ loading, error, on }) {
   );
 }
 export default function PostCreateSimple(props) {
-  return <Controller {...props} UI={UI} />;
+  const navigation = useNavigation();
+  return <Controller {...props} UI={UI} navigation={navigation} />;
 }
