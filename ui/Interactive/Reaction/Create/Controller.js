@@ -34,12 +34,12 @@ export const REACTION_CREATE = gql`
 `;
 export default function ReactionCreate({
   UI,
-  interactive,
-  refetch,
+  interactive = {},
+	refetch = () => {},
   reactions,
   loading,
 }) {
-  const [reacted] = interactive.reacted;
+  const [reacted] = interactive.reacted || [];
   const [onCreate, createResult] = useMutation(REACTION_CREATE, {
     onCompleted: (data) => {
       console.log(data);
@@ -57,13 +57,11 @@ export default function ReactionCreate({
   function handleClick(e) {
     if (loading) return;
     if (reacted) {
-      console.log(reacted);
-      console.log("unlike");
-
-      // onDelete({ variables: { id: reacted.id } });
+      console.log("unlike", reacted);
+      onDelete({ variables: { id: reacted.id } });
     } else {
       if (interactive) {
-        console.log(interactive);
+        console.log("like", interactive);
         onCreate({
           variables: {
             data: { interactive: { connect: { id: interactive.id } } },
