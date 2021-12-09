@@ -13,7 +13,7 @@ export function UI({ loading, error, interactive, refetch, getMore, count }) {
         refetch={refetch}
       />
       <InteractionCommentListSimple
-        existing={{ comments: interactive?.comments }}
+        existing={{ comments: interactive?.comments, refetch }}
       />
     </Box>
   );

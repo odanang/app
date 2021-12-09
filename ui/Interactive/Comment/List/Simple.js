@@ -8,7 +8,7 @@ export function UI({
   error,
   allInteractiveComments = [],
   count = 0,
-  refetchInteractiveItem,
+  refetch,
   getMore,
 }) {
   // Map list comments => InteractionCommentItemSimple
@@ -19,7 +19,7 @@ export function UI({
         return (
           <InteractionCommentItemSimple
             key={comment.id}
-            existing={{ comment }}
+            existing={{ comment, refetch }}
           />
         );
       })}

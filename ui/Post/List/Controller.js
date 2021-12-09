@@ -106,6 +106,7 @@ export default function PostListController({
       loading={loading}
       error={error}
       refetch={refetch}
+      // hàm refetch này truyền xuống cho tất cả các action nằm trong post  
       allPosts={allPosts}
       count={count}
       // 
