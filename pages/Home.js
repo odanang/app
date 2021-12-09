@@ -1,12 +1,8 @@
 import React, { useContext } from "react";
-import { Container, HStack, Box, Flex } from "native-base";
-import {
-  UserAuthShort,
-  UserSignOutButton,
-  UserListSuggestFixed,
-} from "../ui/User";
+import { Platform } from "react-native";
+import { Container, Box, Flex } from "native-base";
+import { UserListSuggestFixed } from "../ui/User";
 import { PostListSimple, PostCreateButton } from "../ui/Post";
-import EarlyAccess from "./EarlyAcess";
 import { AuthContext } from "../ui/Provider/Native";
 
 export default function Home({ navigation }) {
@@ -28,18 +24,20 @@ export default function Home({ navigation }) {
           <PostCreateButton />
           <PostListSimple first={5} />
         </Box>
-        <Box flex={[0, 0, 0, 3]} display={["none", "none", "none", "block"]}>
-          <Box
-            w="full"
-            py="8px"
-            pl="24px"
-            pr="8px"
-            position="sticky"
-            top="64px"
-          >
-            <UserListSuggestFixed id={user?.id} />
+        {Platform.OS === "web" && (
+          <Box flex={[0, 0, 0, 3]} display={["none", "none", "none", "block"]}>
+            <Box
+              w="full"
+              py="8px"
+              pl="24px"
+              pr="8px"
+              position="sticky"
+              top="64px"
+            >
+              <UserListSuggestFixed id={user?.id} />
+            </Box>
           </Box>
-        </Box>
+        )}
       </Flex>
     </Container>
   );

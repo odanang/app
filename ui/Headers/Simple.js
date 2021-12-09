@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, HStack, Box, Image } from "native-base";
+import { Container, HStack, Box, Image, Text } from "native-base";
 import AuthController from "../User/Auth/Controller";
 import { Link } from "@react-navigation/native";
 import { UserAuthShort } from "../User";
@@ -23,7 +23,7 @@ function UI({ user, navigation, route, options, back }) {
               <Image
                 source={{
                   uri:
-                    "https://res.cloudinary.com/cloudinaryassets/image/upload/v1633593799/logo-header_qh37fo.svg",
+                    "https://res.cloudinary.com/cloudinaryassets/image/upload/v1638544817/logo-header_vczz5x.svg",
                 }}
                 alt="Logo"
                 w="150px"

@@ -7,9 +7,24 @@ import {
 import Controller from "./Controller";
 import { Link } from "@react-navigation/native";
 
+function UI({ loading, error, friendsSuggest = [], count, refetch }) {
+  const [suggested] = friendsSuggest;
+  if (!suggested) {
+    return (
+      <VStack w="100%">
+        <Text
+          textAlign="center"
+          fontSize="18px"
+          fontWeight="600"
+          color="gray.700"
+          mt="40px"
+        >
+          Bạn không có gợi ý kết bạn nào
+        </Text>
+      </VStack>
+    );
+  }
 
-function UI({ loading, error, friendsSuggest, count, refetch }) {
-  
   return (
     <VStack w="100%">
       <Box w="full" mt="20px" mb="8px" px="0.5%">
@@ -17,7 +32,6 @@ function UI({ loading, error, friendsSuggest, count, refetch }) {
           Những người bạn có thể biết
         </Text>
       </Box>
-
       <HStack
         maxW="100%"
         mx="auto"
@@ -41,9 +55,6 @@ function UI({ loading, error, friendsSuggest, count, refetch }) {
               <Link to={{ screen: "users", params: { id: user.id } }}>
                 <Image
                   source={{
-                    // uri:
-                    //   user?.avatar?.publicUrl &&
-                    //   "https://res.cloudinary.com/cloudinaryassets/image/upload/v1632719776/190312313_2943016239348813_282704590362946930_n_pc3vbb.jpg",
                     uri:
                       "https://odanang.net" +
                       (user?.avatar?.publicUrl || "/upload/img/no-image.png"),
@@ -57,11 +68,13 @@ function UI({ loading, error, friendsSuggest, count, refetch }) {
               </Link>
             </Box>
             <Link to={{ screen: "users", params: { id: user.id } }}>
-              <Text fontWeight="600" color="gray.700">
-                {user.name}
-              </Text>
+              <Box my="1">
+                <Text fontWeight="600" color="gray.700">
+                  {user.name}
+                </Text>
+              </Box>
             </Link>
-            <RelationshipCreateButton toId={user.id} page={'SF'} />
+            <RelationshipCreateButton toId={user.id} page={"SF"} />
           </VStack>
         ))}
       </HStack>

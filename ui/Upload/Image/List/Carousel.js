@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { HStack, Box, Flex, Image, Button } from "native-base";
-import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
-import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
+FontAwesome.loadFont();
 
 function UI({ urls = [] }) {
   const arrowStyles = {
@@ -9,10 +10,11 @@ function UI({ urls = [] }) {
     top: "50%",
     color: "gray.700",
     p: "1",
+    px: "10px",
     fontSize: "20",
     bgColor: "white",
     opacity: "0.6",
-    rounded: "50%",
+    rounded: "100px",
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,10 +53,20 @@ function UI({ urls = [] }) {
           ))}
         </Flex>
         <Button {...arrowStyles} left="3" onPress={prevSlide}>
-          <BsChevronLeft size="16" />
+          <FontAwesome
+            name="angle-left"
+            color="#000"
+            size={18}
+            style={{ marginRight: 1 }}
+          />
         </Button>
         <Button {...arrowStyles} right="3" onPress={nextSlide}>
-          <BsChevronRight size="16" />
+          <FontAwesome
+            name="angle-right"
+            color="#000"
+            size={18}
+            style={{ marginLeft: 1 }}
+          />
         </Button>
         <HStack direction="row" position="absolute" bottom="2" right="2">
           {Array.from({ length: urlsCount }).map((_, slide) => (

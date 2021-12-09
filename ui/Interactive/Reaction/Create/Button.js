@@ -3,13 +3,11 @@ import { Button, Text } from "native-base";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Controller from "./Controller";
 import { AuthContext } from "../../../Provider/Native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export function UI({
-  handleClick,
-  createResult,
-  deleteResult,
-  reacted,
-}) {
+FontAwesome.loadFont();
+
+export function UI({ handleClick, createResult, deleteResult, reacted }) {
   if (createResult.loading) return <Text>Đang tải</Text>;
   if (deleteResult.loading) return <Text>Đang tải</Text>;
 
@@ -20,7 +18,14 @@ export function UI({
           _text={{ color: "green.500", fontSize: "14", fontWeight: "600" }}
           p="2"
           bgColor="transparent"
-          leftIcon={<FaHeart color="#22c55e" size="17" />}
+          leftIcon={
+            <FontAwesome
+              name="heart"
+              color="#22c55e"
+              size={18}
+              style={{ marginTop: "-2px" }}
+            />
+          }
           _hover={{ bgColor: "gray.100" }}
           onPress={handleClick}
         >
@@ -31,7 +36,14 @@ export function UI({
           _text={{ color: "gray.400", fontSize: "14", fontWeight: "600" }}
           p="2"
           bgColor="transparent"
-          leftIcon={<FaRegHeart color="#a1a1aa" size="17" />}
+          leftIcon={
+            <FontAwesome
+              name="heart-o"
+              color="#a1a1aa"
+              size={18}
+              style={{ marginTop: "-2px" }}
+            />
+          }
           _hover={{ bgColor: "gray.100" }}
           onPress={handleClick}
         >

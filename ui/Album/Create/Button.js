@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from "react";
 import { Button } from "native-base";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
+FontAwesome.loadFont();
 
 function UI() {
   const [isSaved, setIsSaved] = useState(false);
@@ -17,7 +19,7 @@ function UI() {
           _text={{ color: "green.500", fontSize: "14", fontWeight: "600" }}
           p="2"
           bgColor="transparent"
-          leftIcon={<FaBookmark color="#22c55e" size="17" />}
+          leftIcon={<FontAwesome name="bookmark" color="#22c55e" size={18} />}
           _hover={{ bgColor: "gray.100" }}
           onPress={saveHandle}
         >
@@ -29,7 +31,7 @@ function UI() {
           _text={{ color: "gray.400", fontSize: "14", fontWeight: "600" }}
           p="2"
           bgColor="transparent"
-          leftIcon={<FaRegBookmark color="#a1a1aa" size="17" />}
+          leftIcon={<FontAwesome name="bookmark-o" color="#a1a1aa" size={18} />}
           _hover={{ bgColor: "gray.100" }}
           onPress={saveHandle}
         >

@@ -1,11 +1,38 @@
 import React, { useContext } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { REACTION_DELETE } from "../Delete/Controller";
+<<<<<<< HEAD
 import { REACTION_LIST } from '../List/Controller'
 import { AuthContext } from "../../../Provider/Native";
 import { Text } from "native-base";
+=======
+
+export const REACTION_CREATE_POST = gql`
+  mutation($id: ID!, $data: InteractiveUpdateInput) {
+    updateInteractive(id: $id, data: $data) {
+      reactions {
+        emoji
+      }
+    }
+  }
+`;
+export const REACTION_CREATE_COMMENT = gql`
+  mutation($id: ID!, $data: InteractiveUpdateInput) {
+    updateInteractive(id: $id, data: $data) {
+      id
+      reactions {
+        id
+        emoji
+      }
+      _reactionsMeta {
+        count
+      }
+    }
+  }
+`;
+>>>>>>> 1d5d96a (20211209 - processing - done signin signup friends suggestion reuqest)
 export const REACTION_CREATE = gql`
-  mutation ($data: InteractiveReactionCreateInput) {
+  mutation($data: InteractiveReactionCreateInput) {
     createInteractiveReaction(data: $data) {
       id
     }

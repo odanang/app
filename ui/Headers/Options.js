@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Button, Box, VStack, Text } from "native-base";
 import { Link } from "@react-navigation/native";
 import { BsFillCaretDownFill } from "react-icons/bs";
@@ -6,16 +6,28 @@ import { RiUser3Fill, RiDownloadCloudFill } from "react-icons/ri";
 import { MdSettings } from "react-icons/md";
 import { HiLockClosed } from "react-icons/hi";
 import { UserSignOutButton } from "../User";
-import { AuthContext } from '../Provider/Native'
+import { AuthContext } from "../Provider/Native";
 function UI({ navigation }) {
+  const ref = useRef();
   const [isOpenOptions, setIsOpenOptions] = useState(false);
 
   const optionsHandler = () => {
     setIsOpenOptions((prev) => !prev);
   };
-  const currentUser = useContext(AuthContext).user
+  const currentUser = useContext(AuthContext).user;
+  useEffect(() => {
+    const hideOptions = (e) => {
+      if (isOpenOptions && ref.current && !ref.current.contains(e.target)) {
+        setIsOpenOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", hideOptions);
+    return () => {
+      document.removeEventListener("mousedown", hideOptions);
+    };
+  }, [isOpenOptions]);
   return (
-    <Box position="relative" right="0">
+    <Box position="relative" right="0" ref={ref}>
       <Button
         onPress={optionsHandler}
         rounded="100"

@@ -14,6 +14,9 @@ import { PostDeleteText, PostUpdateText } from "../index";
 import { UploadImageListCarousel } from "../../Upload/Image";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import PostItem from "./Controller";
+import Entypo from "react-native-vector-icons/Entypo";
+
+Entypo.loadFont();
 
 import { UI as InteractiveItemSimpleUI } from "../../Interactive/Item/Simple";
 import { Link } from "@react-navigation/native";
@@ -39,7 +42,7 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, post = {}, refetch = () => { } }) {
+export function UI({ loading, error, post = {}, refetch = () => {} }) {
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
@@ -112,7 +115,12 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
             ml="auto"
             onPress={toggleModal}
           >
-            <HiOutlineDotsHorizontal />
+            <Entypo
+              name="dots-three-horizontal"
+              color="#a1a1aa"
+              size={18}
+              style={{ marginTop: "-2px" }}
+            />
           </Button>
         )}
       </HStack>
@@ -153,7 +161,10 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
             <AlbumCreateButton />
           </Box>
         </HStack>
-        <InteractiveItemSimpleUI interactive={post?.interactive} refetch={refetch} />
+        <InteractiveItemSimpleUI
+          interactive={post?.interactive}
+          refetch={refetch}
+        />
       </Box>
     </Box>
   );
