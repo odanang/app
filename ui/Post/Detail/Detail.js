@@ -129,7 +129,7 @@ function UI({ loading, error, post, refetch }) {
               <PostDeleteText />
             </VStack>
           )}
-          {isModalOpen && post?.createdBy?.id === currentUser.id && (
+          {isModalOpen && post?.createdBy?.id === currentUser?.id && (
             <VStack
               position="absolute"
               right="3"
@@ -146,7 +146,7 @@ function UI({ loading, error, post, refetch }) {
               <PostDeleteText id={post?.id} />
             </VStack>
           )}
-          {post?.createdBy?.id === currentUser.id && (
+          {post?.createdBy?.id === currentUser?.id && (
             <Button
               bgColor="transparent"
               p="1"
@@ -159,7 +159,7 @@ function UI({ loading, error, post, refetch }) {
           )}
         </HStack>
         <Text px="3" my="2">
-          {post.content}
+          {post?.content}
         </Text>
         <Box px="3" mt="2">
           <InteractionReactionListIconTextWithCount
@@ -178,7 +178,7 @@ function UI({ loading, error, post, refetch }) {
           >
             <Box w="33%">
               <InteractionReactionCreateButton
-                interactive={post.interactive}
+                interactive={post?.interactive}
                 refetch={refetch}
                 reactionsList={post?.interactive?.reactions}
               />
