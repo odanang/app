@@ -31,8 +31,9 @@ function formatTimeCreate(createdAt) {
   } else stringTime = createdTime.format("DD-MM-YYYY");
   return stringTime;
 }
-export function UI({ loading, error, comment, refetchInteractiveItem }) {
-  const currentUser = useContext(AuthContext).user
+
+export function UI({ loading, error, comment = {}, refetch }) {
+  const { user: currentUser }= useContext(AuthContext).user
   const [open, setOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(comment?.createdAt);
   const { interactive = {} } = comment;
@@ -70,16 +71,16 @@ export function UI({ loading, error, comment, refetchInteractiveItem }) {
             </HStack>
             <HStack ml="3" mt="1" space="3">
               <InteractionReactionCreateText
-                idMyInteractive={comment?.my_interactive?.id}
-                refetchInteractiveItem={refetchInteractiveItem}
-                reactionsCommentList={comment?.my_interactive?.reactions}
+                interactive={comment.my_interactive}
+                refetch={refetch}
+                reactions={comment.my_interactive?.reactions}
               />
               {/* <CreateText
                 comment={comment}
                 onPress={(e) => setOpen((open) => !open)}
               /> */}
-              {comment?.createdBy?.id === currentUser.id && (
-                <DeleteText id={comment?.id} refetch={refetchInteractiveItem} />
+              {comment?.createdBy?.id === currentUser?.id && (
+                <DeleteText id={comment?.id} refetch={refetch} />
               )}
               <InteractionReactionListTextWithCount
                 countLikeComment={

@@ -33,6 +33,9 @@ export const POST_LIST = gql`
           content
           my_interactive {
             id
+            reacted: reactions(where: { createdBy: $user }) {
+              id
+            }
           }
         }
         reactions {

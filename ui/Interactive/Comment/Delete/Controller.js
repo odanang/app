@@ -11,12 +11,10 @@ export const COMMENT_DELETE = gql`
   }
 `;
 
-export default function CommentDelete({ UI, id, refetch }) {
-  const refectInteractiveItem = () => {
-    refetch();
-  };
+export default function CommentDelete({ UI, id, refetch = () => {}}) {
   const [on, { loading, error, data = {} }] = useMutation(COMMENT_DELETE, {
     onCompleted: (data) => {
+      refetch();
       refectInteractiveItem();
     },
   });
