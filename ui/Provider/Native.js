@@ -22,6 +22,8 @@ export const USER_AUTH = gql`
       avatar {
         publicUrl
       }
+      gender
+      description
     }
   }
 `;
