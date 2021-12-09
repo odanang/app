@@ -78,7 +78,7 @@ export default function NotificationListController({ UI, first = 3, id }) {
   const { loading, error, data = {}, refetch } = useQuery(NOTIFICATION_LIST, {
     variables: { first, id },
   })
-  const { allRelationships, allInteractives } = data
+  const { allRelationships = [], allInteractives = [] } = data
   const comments = []
   const reactions = []
   if (allInteractives.length)
