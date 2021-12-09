@@ -81,7 +81,7 @@ export default function NotificationListController({ UI, first = 3, id }) {
   const { allRelationships, allInteractives } = data
   const comments = []
   const reactions = []
-  if (allInteractives)
+  if (allInteractives.length)
     allInteractives.forEach((interactive) => {
       if (interactive.comments)
         interactive.comments.forEach((comment) => comments.push(comment))
