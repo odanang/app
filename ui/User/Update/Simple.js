@@ -20,9 +20,9 @@ function UI({ loading, error, user, on }) {
    *
    * @param {Event} e
    */
-  const [username, setUsername] = useState(user.name);
-  const [phone, setPhone] = useState(user.phone);
-  const [description, setDescription] = useState(user.description);
+  const [username, setUsername] = useState(user?.name);
+  const [phone, setPhone] = useState(user?.phone);
+  const [description, setDescription] = useState(user?.description);
   const [sex, setSex] = useState("male");
   const [inputError, setInputError] = useState(null);
 
@@ -48,7 +48,7 @@ function UI({ loading, error, user, on }) {
     console.log(username, phone, description, sex);
     on({
       variables: {
-        id: user.id,
+        id: user?.id,
         data: {
           name: username,
           phone: phone,
