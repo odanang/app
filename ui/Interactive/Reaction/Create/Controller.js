@@ -1,6 +1,6 @@
-import React from "react";
-import { gql, useMutation } from "@apollo/client";
-import { REACTION_DELETE } from "../Delete/Controller";
+import React from 'react'
+import { gql, useMutation } from '@apollo/client'
+import { REACTION_DELETE } from '../Delete/Controller'
 
 export const REACTION_CREATE_POST = gql`
   mutation ($id: ID!, $data: InteractiveUpdateInput) {
@@ -10,7 +10,7 @@ export const REACTION_CREATE_POST = gql`
       }
     }
   }
-`;
+`
 export const REACTION_CREATE_COMMENT = gql`
   mutation ($id: ID!, $data: InteractiveUpdateInput) {
     updateInteractive(id: $id, data: $data) {
@@ -24,14 +24,14 @@ export const REACTION_CREATE_COMMENT = gql`
       }
     }
   }
-`;
+`
 export const REACTION_CREATE = gql`
   mutation ($data: InteractiveReactionCreateInput) {
     createInteractiveReaction(data: $data) {
       id
     }
   }
-`;
+`
 export default function ReactionCreate({
   UI,
   interactive,
@@ -39,36 +39,36 @@ export default function ReactionCreate({
   reactions,
   loading,
 }) {
-  const [reacted] = interactive.reacted;
+  const [reacted] = interactive?.reacted
   const [onCreate, createResult] = useMutation(REACTION_CREATE, {
     onCompleted: (data) => {
-      console.log(data);
-      refetch();
+      console.log(data)
+      refetch()
     },
     onError: (e) => {
-      console.log(e);
+      console.log(e)
     },
-  });
+  })
   const [onDelete, deleteResult] = useMutation(REACTION_DELETE, {
     onCompleted: (data) => {
-      refetch();
+      refetch()
     },
-  });
+  })
   function handleClick(e) {
-    if (loading) return;
+    if (loading) return
     if (reacted) {
-      console.log(reacted);
-      console.log("unlike");
+      console.log(reacted)
+      console.log('unlike')
 
       // onDelete({ variables: { id: reacted.id } });
     } else {
       if (interactive) {
-        console.log(interactive);
+        console.log(interactive)
         onCreate({
           variables: {
             data: { interactive: { connect: { id: interactive.id } } },
           },
-        });
+        })
       }
     }
   }
@@ -83,5 +83,5 @@ export default function ReactionCreate({
       deleteResult={deleteResult}
       reactions={reactions}
     />
-  );
+  )
 }
