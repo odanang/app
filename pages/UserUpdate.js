@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Platform } from "react-native";
 import { Container } from "native-base";
 import { UserUpdateSimple } from "../ui/User";
 import { AuthContext } from "../ui/Provider/Native";
 export default function UserUpdate({ navigation }) {
-  const { user } = useContext(AuthContext);
+  const { user, refetch } = useContext(AuthContext);
+  const userUpdateSimple = useMemo(() => <UserUpdateSimple user={user} onCompleted={data => {
+    refetch()
+  }} />, [user])
   return (
     <Container
       w="container.lg"
@@ -13,7 +16,7 @@ export default function UserUpdate({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserUpdateSimple user={user} />
+      {userUpdateSimple}
     </Container>
   );
 }

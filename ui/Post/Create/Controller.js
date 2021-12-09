@@ -17,7 +17,7 @@ export default function PostCreate({
   UI,
   post,
   navigation,
-  onCompleted = () => {},
+  onCompleted = () => { },
 }) {
   const [on, { loading, error, data = {} }] = useMutation(POST_CREATE, {
     onCompleted: (data) => {

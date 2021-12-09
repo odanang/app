@@ -46,12 +46,18 @@ export default function PostListController({
   navigation,
 }) {
   const { user } = useContext(AuthContext);
-  const { loading, error, data = {}, fetchMore, refetch } = useQuery(
-    POST_LIST,
-    {
-      variables: { first, where, skip, sortBy, user: { id: user.id } },
-    }
-  );
+
+  if (!user) return "..."
+  const {
+    loading,
+    error,
+    data = {},
+    fetchMore,
+    refetch,
+  } = useQuery(POST_LIST, {
+    variables: { first, where, skip, sortBy, user: { id: user.id } },
+  });
+  
   const [loadingMore, setLoadingMore] = useState(false);
   const { allPosts = [], _allPostsMeta = {} } = data;
   const { count = 0 } = _allPostsMeta;
