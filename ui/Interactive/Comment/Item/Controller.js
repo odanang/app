@@ -21,7 +21,7 @@ export const COMMENT_ITEM = gql`
   }
 `;
 export function CommenItemController({ UI, id, where, existing = {} }) {
-  if (existing.comment) return <UI comment={existing.comment} />;
+  if (existing.comment) return <UI comment={existing.comment} refetch={existing.refetch} />;
   const {
     loading,
     error,

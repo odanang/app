@@ -33,7 +33,7 @@ export function CommentListController({
   ...props
 }) {
   if (existing.comments)
-    return <UI allInteractiveComments={existing.comments} />;
+    return <UI allInteractiveComments={existing.comments} refetch={existing.refetch} />;
   const {
     loading,
     error,

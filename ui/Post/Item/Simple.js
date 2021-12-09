@@ -39,7 +39,7 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, post = {}, refetch }) {
+export function UI({ loading, error, post = {}, refetch = () => { } }) {
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
@@ -47,7 +47,7 @@ export function UI({ loading, error, post = {}, refetch }) {
     setIsModalOpen((prev) => !prev);
     console.log(isModalOpen);
   };
-  if (loading) return "";
+  if (loading) return "...";
   return (
     <Box
       maxW={["100%", "container.md"]}
@@ -153,7 +153,7 @@ export function UI({ loading, error, post = {}, refetch }) {
             <AlbumCreateButton />
           </Box>
         </HStack>
-        <InteractiveItemSimpleUI interactive={post?.interactive} />
+        <InteractiveItemSimpleUI interactive={post?.interactive} refetch={refetch} />
       </Box>
     </Box>
   );

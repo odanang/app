@@ -21,7 +21,7 @@ function UI({
     <VStack px={["0", "1"]}>
       {/* Map list posts */}
       {allPosts.map((post) => (
-        <PostItemSimple key={post.id} existing={{ post }} />
+        <PostItemSimple key={post.id} existing={{ post, refetch }} />
       ))}
       {count > allPosts.length && (
         <Button my={3} colorScheme="green" onPress={loadMore}>

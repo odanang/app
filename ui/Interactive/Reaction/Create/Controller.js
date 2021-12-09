@@ -35,7 +35,7 @@ export const REACTION_CREATE = gql`
 export default function ReactionCreate({
   UI,
   interactive = {},
-	refetch = () => {},
+  refetch = () => { },
   reactions,
   loading,
 }) {
@@ -64,7 +64,7 @@ export default function ReactionCreate({
         console.log("like", interactive);
         onCreate({
           variables: {
-            data: { interactive: { connect: { id: interactive.id } } },
+            data: { interactive: { connect: { id: interactive.id } }, emoji: "like" },
           },
         });
       }
