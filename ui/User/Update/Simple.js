@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { Link } from "@react-navigation/native";
 import {
   Box,
@@ -13,19 +13,20 @@ import {
   Radio,
   Input,
 } from "native-base";
-function UI({ loading, error, user, navigation }) {
+import { AuthContext } from "../../Provider/Native";
+import Controller from "./Controller";
+function UI({ loading, error, user, on }) {
   /**
    *
    * @param {Event} e
    */
-
-  const [username, setUsername] = useState("Nguyễn Kim Huy");
-  const [phone, setPhone] = useState("0394123560");
-  const [description, setDescription] = useState("");
+  const [username, setUsername] = useState(user.name);
+  const [phone, setPhone] = useState(user.phone);
+  const [description, setDescription] = useState(user.description);
   const [sex, setSex] = useState("male");
   const [inputError, setInputError] = useState(null);
 
-  const submitSignUp = () => {
+  const submitUpdate = () => {
     setInputError(null);
 
     // Validation username
@@ -45,9 +46,17 @@ function UI({ loading, error, user, navigation }) {
     }
 
     console.log(username, phone, description, sex);
-
-    // Save change
-    // if (!loading);
+    on({
+      variables: {
+        id: user.id,
+        data: {
+          name: username,
+          phone: phone,
+          description: description,
+          gender: sex
+        },
+      },
+    });
   };
 
   return (
@@ -69,7 +78,8 @@ function UI({ loading, error, user, navigation }) {
               <Image
                 source={{
                   uri:
-                    "https://res.cloudinary.com/cloudinaryassets/image/upload/v1632719777/200960556_1184264562021915_3530694902678239694_n_u7mk8s.jpg",
+                    "https://odanang.net" +
+                    (user?.avatar?.publicUrl || "/upload/img/no-image.png"),
                 }}
                 alt="Alternate Text"
                 size="lg"
@@ -226,7 +236,7 @@ function UI({ loading, error, user, navigation }) {
             </FormControl>
             {!loading && (
               <Button
-                onPress={submitSignUp}
+                onPress={submitUpdate}
                 rounded={8}
                 bgColor="green.500"
                 p={2}
@@ -277,4 +287,7 @@ function UI({ loading, error, user, navigation }) {
     </Fragment>
   );
 }
-export default UI;
+//export default UI;
+export default function PostCreateSimple(props) {
+  return <Controller {...props} UI={UI} />;
+}
