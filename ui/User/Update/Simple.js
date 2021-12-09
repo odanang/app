@@ -15,12 +15,11 @@ import {
 } from "native-base";
 import { AuthContext } from "../../Provider/Native";
 import Controller from "./Controller";
-function UI({ loading, error, navigation, on }) {
+function UI({ loading, error, user, on }) {
   /**
    *
    * @param {Event} e
    */
-  const { user } = useContext(AuthContext)
   const [username, setUsername] = useState(user.name);
   const [phone, setPhone] = useState(user.phone);
   const [description, setDescription] = useState(user.description);
