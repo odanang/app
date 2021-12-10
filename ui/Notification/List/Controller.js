@@ -2,7 +2,7 @@ import React from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 export const NOTIFICATION_LIST = gql`
-  query($id: ID!, $first: Int) {
+  query ($id: ID!, $first: Int) {
     allRelationships(
       first: $first
       sortBy: updatedAt_DESC
@@ -75,8 +75,13 @@ function formatTimeCreate(createdAt) {
 }
 
 export default function NotificationListController({ UI, first = 3, id }) {
-  const { loading, error, data = {}, refetch } = useQuery(NOTIFICATION_LIST, {
+  const {
+    loading,
+    error,
+    data = {},
+  } = useQuery(NOTIFICATION_LIST, {
     variables: { first, id },
+    pollInterval: 3000,
   })
   const { allRelationships = [], allInteractives = [] } = data
   const comments = []
@@ -94,8 +99,8 @@ export default function NotificationListController({ UI, first = 3, id }) {
   arr.sort((itemA, itemB) => {
     return new Date(itemB.createdAt) - new Date(itemA.createdAt)
   })
-  const arrFilter = arr.filter((item) => item.createdBy?.id !== id)
-  if (arrFilter.length > 6) arrFilter.slice(0, 6)
+  let arrFilter = arr.filter((item) => item.createdBy?.id !== id)
+  if (arrFilter.length > 4) arrFilter = arrFilter.slice(0, 4)
   const solvedData = []
   arrFilter.forEach((item) => {
     switch (item.__typename) {
