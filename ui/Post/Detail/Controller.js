@@ -29,7 +29,7 @@ export const POST_ITEM = gql`
   }
 `;
 export default function PostDetail({ UI, id }) {
-  const { loading, error, data = {}, refetch } = useQuery(POST_ITEM, {
+  const { loading, error, data = {} , refetch} = useQuery(POST_ITEM, {
     variables: { id }
   }
   );

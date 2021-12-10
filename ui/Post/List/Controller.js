@@ -31,16 +31,28 @@ export const POST_LIST = gql`
         comments(first: 5, sortBy: createdAt_DESC) {
           id
           content
+          createdAt
+          createdBy {
+            id
+            name
+            avatar {
+              publicUrl
+            }
+          }
           my_interactive {
             id
             reacted: reactions(where: { createdBy: $user }) {
               id
+            }
+            _reactionsMeta {
+              count
             }
           }
         }
         reactions {
           id
           emoji
+          createdAt
           createdBy {
             id
           }
