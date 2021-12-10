@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { REACTION_DELETE } from "../Delete/Controller";
-import { REACTION_LIST } from '../List/Controller'
+import { REACTION_LIST } from "../List/Controller";
 import { AuthContext } from "../../../Provider/Native";
 import { Text } from "native-base";
 export const REACTION_CREATE = gql`
-  mutation ($data: InteractiveReactionCreateInput) {
+  mutation($data: InteractiveReactionCreateInput) {
     createInteractiveReaction(data: $data) {
       id
     }
@@ -14,18 +14,24 @@ export const REACTION_CREATE = gql`
 export default function ReactionCreate({
   UI,
   interactive = {},
-  onCompleted = () => { },
-  onError = () => { }
+  onCompleted = () => {},
+  onError = () => {},
 }) {
   const { user } = useContext(AuthContext);
-  if (!user) return <Text>Đang tải</Text>
+  if (!user) return <Text>Đang tải</Text>;
   // QUERY
   const { loading, error, data = {}, refetch } = useQuery(REACTION_LIST, {
-    variables: { where: { createdBy: { id: user.id }, interactive: { id: interactive.id } } }
-  })
+    variables: {
+      where: {
+        createdBy: { id: user.id },
+        interactive: { id: interactive.id },
+      },
+    },
+  });
   const {
     _allInteractiveReactionsMeta = {},
-    allInteractiveReactions = [] } = data
+    allInteractiveReactions = [],
+  } = data;
   const reacted = _allInteractiveReactionsMeta.count || 0;
 
   // MUTATION
@@ -36,7 +42,7 @@ export default function ReactionCreate({
     },
     onError: (e) => {
       refetch();
-      onError(e)
+      onError(e);
     },
   });
   const [onDelete, deleteResult] = useMutation(REACTION_DELETE, {
@@ -46,20 +52,23 @@ export default function ReactionCreate({
     },
     onError: (e) => {
       refetch();
-      onError(e)
+      onError(e);
     },
   });
   function handleClick(e) {
     if (loading) return;
     if (reacted) {
-      allInteractiveReactions.map(reaction => {
+      allInteractiveReactions.map((reaction) => {
         onDelete({ variables: { id: reaction.id } });
-      })
+      });
     } else {
       if (interactive) {
         onCreate({
           variables: {
-            data: { interactive: { connect: { id: interactive.id } }, emoji: "like" },
+            data: {
+              interactive: { connect: { id: interactive.id } },
+              emoji: "like",
+            },
           },
         });
       }

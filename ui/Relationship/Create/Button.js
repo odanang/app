@@ -1,4 +1,5 @@
 import React from "react";
+import { Text as RNText, Platform } from "react-native";
 import { Button } from "native-base";
 import Controller from "./Controller";
 
@@ -16,7 +17,20 @@ function UI({ error, loading, clickAddFriend }) {
       bgColor="green.500"
       onPress={clickHandler}
     >
-      Thêm bạn bè
+      {Platform.OS !== "web" ? (
+        <RNText
+          style={{
+            fontWeight: "500",
+            color: "white",
+            padding: 2,
+            fontFamily: "Lexend_500Medium",
+          }}
+        >
+          Thêm bạn bè
+        </RNText>
+      ) : (
+        "Thêm bạn bè"
+      )}
     </Button>
   );
 }

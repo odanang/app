@@ -7,6 +7,7 @@ export const POST_ITEM_ME = gql`
       id
       phone
       name
+      description
       avatar {
         publicUrl
       }
@@ -33,6 +34,7 @@ export const POST_ITEM = gql`
       id
       phone
       name
+      description
       avatar {
         publicUrl
       }
@@ -71,7 +73,7 @@ export const POST_ITEM = gql`
   }
 `;
 
-export const refetchUserItem = makeVar(() => { });
+export const refetchUserItem = makeVar(() => {});
 
 export default function UserItem({ UI, where, id, my_id, existing }) {
   if (existing) return <UI {...existing} />
@@ -86,7 +88,7 @@ export default function UserItem({ UI, where, id, my_id, existing }) {
   const [user] = allUsers || [User];
   const { allPosts = [] } = data;
   const { allRelationships = [] } = data;
-  const { _allRelationshipsMeta = {} } = data
+  const { _allRelationshipsMeta = {} } = data;
   const { count } = _allRelationshipsMeta;
   var relationship;
   if (allRelationships.length === 0) {

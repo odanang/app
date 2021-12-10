@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { HStack, VStack, Box, Image, Text, Divider } from "native-base";
+import React from "react";
+import { HStack, VStack, Box, Image, Text } from "native-base";
 import { Link } from "@react-navigation/native";
 import {
   RelationshipCreateButton,
@@ -10,7 +10,24 @@ import {
 } from "../../Relationship";
 import Controller from "./Controller";
 
-function UI({ loading, error, allUsers }) {
+function UI({ loading, error, allUsers = [] }) {
+  const [result] = allUsers;
+  if (!result) {
+    return (
+      <VStack w="100%">
+        <Text
+          textAlign="center"
+          fontSize="18px"
+          fontWeight="600"
+          color="gray.700"
+          mt="40px"
+        >
+          Không tìm thấy kết quả phù hợp
+        </Text>
+      </VStack>
+    );
+  }
+
   return (
     <VStack>
       <HStack
@@ -58,7 +75,7 @@ function UI({ loading, error, allUsers }) {
                 </Text>
               </Link>
             </HStack>
-            {/* {item.type === "pending" && (
+            {
               <VStack space="1.5">
                 <Box w="120px">
                   <RelationshipUpdateButton />
@@ -67,22 +84,22 @@ function UI({ loading, error, allUsers }) {
                   <RelationshipDeleteDelete />
                 </Box>
               </VStack>
-            )}
-            {item.type === "no" && (
+            }
+            {/* {
               <Box w="120px">
                 <RelationshipCreateButton />
               </Box>
-            )}
-            {item.type === "yes" && (
+            } */}
+            {/* {
               <Box w="120px">
                 <RelationshipDeleteActive />
               </Box>
-            )}
-            {item.type === "sending" && (
+            } */}
+            {/* {
               <Box w="120px">
                 <RelationshipDeleteCancel />
               </Box>
-            )} */}
+            } */}
           </HStack>
         ))}
       </HStack>
