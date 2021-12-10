@@ -21,7 +21,7 @@ export default function Home({ navigation }) {
           maxW="680px"
           mx={["auto", "auto", "auto", "0"]}
         >
-          <PostCreateButton />
+          {/* <PostCreateButton /> */}
           <PostListSimple first={5} />
         </Box>
         {Platform.OS === "web" && (

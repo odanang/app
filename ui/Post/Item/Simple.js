@@ -12,7 +12,6 @@ import {
 import { AlbumCreateButton } from "../../Album";
 import { PostDeleteText, PostUpdateText } from "../index";
 import { UploadImageListCarousel } from "../../Upload/Image";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import PostItem from "./Controller";
 import Entypo from "react-native-vector-icons/Entypo";
 

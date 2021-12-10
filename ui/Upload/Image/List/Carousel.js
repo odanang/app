@@ -41,11 +41,11 @@ function UI({ urls = [] }) {
       <Flex w="full" direction="row" overflow="hidden" position="relative">
         <Flex direction="row" w="full" {...carouselStyle}>
           {urls.map((slide, index) => (
-            <Box key={`slide-${index}`} boxSize="100%" flex="none">
+            <Box key={`slide-${index}`} boxSize="100%">
               <Image
                 src={slide}
                 alt="Slide Image"
-                backgroundSize="cover"
+                // backgroundSize="cover"
                 flex="1"
                 p="50%"
               />
@@ -75,7 +75,7 @@ function UI({ urls = [] }) {
               w="1"
               m="0.5"
               p="1"
-              rounded="50%"
+              rounded="100"
               opacity="0.8"
               bgColor={currentSlide === slide ? "green.500" : "white"}
               onPress={() => setSlide(slide)}

@@ -14,8 +14,7 @@ export function UI({ loading, content, contentChangeHandle, userCommentHandle })
             name="comment"
             type="text"
             bgColor="white"
-            px={2}
-            py={1.5}
+            p={2}
             fontSize={14}
             borderWidth={1}
             borderColor="gray.100"

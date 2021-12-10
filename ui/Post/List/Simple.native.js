@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, VStack } from "native-base";
+import { Button, VStack, Box } from "native-base";
 import PostItemSimple from "../Item/Simple";
 import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
-import { ScrollView } from "react-native";
+import { ScrollView, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function UI({ loading, error, allPosts, count, loadMore, refetch }) {
   if (loading || error) {
@@ -11,30 +12,37 @@ function UI({ loading, error, allPosts, count, loadMore, refetch }) {
   }
 
   return (
-    <VStack px={["0", "1"]}>
-      <ScrollView>
-        {/* Map list posts */}
-        {allPosts.map((post) => (
-          <PostItemSimple key={post.id} existing={{ post, refetch }} />
-        ))}
-        {count > allPosts.length && (
-          <Button
-            my={3}
-            bgColor="green.500"
-            _text={{
-              color: "white",
-              fontSize: ["13", "14"],
-              fontWeight: "600",
-            }}
-            rounded="8"
-            py="2"
-            px="4"
-            onPress={loadMore}
-          >
-            Tải thêm bài viết
-          </Button>
-        )}
-      </ScrollView>
+    <VStack mb="20px">
+      <KeyboardAwareScrollView style={{ width: "100%" }}>
+        <ScrollView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <>
+              {allPosts.map((post) => (
+                <PostItemSimple key={post.id} existing={{ post, refetch }} />
+              ))}
+              {count > allPosts.length && (
+                <Box px="2">
+                  <Button
+                    my={3}
+                    bgColor="green.500"
+                    _text={{
+                      color: "white",
+                      fontSize: ["13", "14"],
+                      fontWeight: "600",
+                    }}
+                    rounded="8"
+                    py="2"
+                    px="4"
+                    onPress={loadMore}
+                  >
+                    Tải thêm bài viết
+                  </Button>
+                </Box>
+              )}
+            </>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </KeyboardAwareScrollView>
     </VStack>
   );
 }
