@@ -48,7 +48,7 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-function UI({ loading, error, post, refetch }) {
+function UI({ loading, error, post, refetch = () => { } }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const currentUser = useContext(AuthContext).user;
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
@@ -182,7 +182,6 @@ function UI({ loading, error, post, refetch }) {
                 refetch={refetch}
                 reactionsList={post?.interactive?.reactions}
               />
-              {console.log(post)}
             </Box>
             <Box w="33%">
               <InteractionCommentListToggleButton />

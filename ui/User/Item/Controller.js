@@ -10,6 +10,7 @@ export const POST_ITEM_ME = gql`
       avatar {
         publicUrl
       }
+      description
     }
     allPosts(where: { createdBy: { id: $id } }) {
       id
@@ -35,6 +36,7 @@ export const POST_ITEM = gql`
       avatar {
         publicUrl
       }
+      description
     }
     allPosts(where: { createdBy: { id: $id } }) {
       id
