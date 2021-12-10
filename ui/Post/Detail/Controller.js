@@ -45,13 +45,12 @@ export const POST_ITEM = gql`
   }
 `;
 export default function PostDetail({ UI, id }) {
-  const { loading, error, data = {}, refetch } = useQuery(POST_ITEM, {
+  const { loading, error, data = {} } = useQuery(POST_ITEM, {
     variables: { id }
   }
   );
 
   const { Post } = data;
   const post = Post;
-  console.log(post)
-  return <UI loading={loading} error={error} post={post} refetch={refetch} />;
+  return <UI loading={loading} error={error} post={post} />;
 }

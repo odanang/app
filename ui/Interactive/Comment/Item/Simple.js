@@ -86,6 +86,7 @@ export function UI({ loading, error, comment = {}, refetch }) {
                 countLikeComment={
                   comment?.my_interactive?._reactionsMeta?.count
                 }
+               
               />
               <Text color="gray.400" fontSize="12">
                 {stringCreatedAt}

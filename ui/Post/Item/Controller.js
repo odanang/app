@@ -19,10 +19,19 @@ export const POST_ITEM = gql`
         comments(first: 5, sortBy: createdAt_DESC) {
           id
           content
+          createdAt
+          createdBy {
+            id
+            name
+            avatar{
+              publicUrl
+            }
+          }
         }
         reactions {
           id
           emoji
+          createdAt
           createdBy {
             id
           }

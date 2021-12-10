@@ -2110,9 +2110,6 @@
   dependencies:
     "@babel/runtime" "^7.6.2"
 
-"@itoa/ui@file:ui":
-  version "1.0.0"
-
 "@jest/console@^24.9.0":
   version "24.9.0"
   resolved "https://registry.npmjs.org/@jest/console/-/console-24.9.0.tgz"
