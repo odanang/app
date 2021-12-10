@@ -133,7 +133,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
         </Text>
         <Divider bg="gray.100" w="full" my="1" orientation="horizontal" />
         <Text fontSize="14" fontWeight="400" color="gray.600" lineHeight="26px">
-          <Field>{user.description}</Field>
+          <Field>{user?.description}</Field>
         </Text>
       </VStack>
       {user?.id === currentUser?.id && (
