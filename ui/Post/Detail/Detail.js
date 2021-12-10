@@ -182,6 +182,7 @@ function UI({ loading, error, post, refetch }) {
                 refetch={refetch}
                 reactionsList={post?.interactive?.reactions}
               />
+              {console.log(post)}
             </Box>
             <Box w="33%">
               <InteractionCommentListToggleButton />
