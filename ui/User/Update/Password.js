@@ -20,7 +20,7 @@ function UI({ loading, error, user, navigation }) {
   const passwordConfirmRef = useRef();
   const [inputError, setInputError] = useState(null);
 
-  const submitSignUp = () => {
+  const submitChange = () => {
     setInputError(null);
 
     const passwordOld = passwordOldRef.current.value;
@@ -145,7 +145,7 @@ function UI({ loading, error, user, navigation }) {
 
             {!loading && (
               <Button
-                onPress={submitSignUp}
+                onPress={submitChange}
                 rounded={8}
                 bgColor="green.500"
                 p={2}

@@ -19,15 +19,12 @@ import {
 } from "../../Relationship";
 import Controller from "./Controller";
 import DetailSkeleton from "./DetailSkeleton";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import PostListCount from "../../Post/List/Count";
-import RelationshipListCount from "../../Relationship/List/Count";
 import Field from "../../Field";
 import { AuthContext } from "../../Provider/Native";
 function UI({ loading, error, user, posts, relationship, count }) {
   const currentUser = useContext(AuthContext).user;
   if (loading) return <DetailSkeleton />;
-  if (error) return "error";
+
   return (
     <VStack maxw="full" mx="auto" my="5" w="full" space="4">
       <HStack space="7" m="1%" alignItems="center">
@@ -49,15 +46,10 @@ function UI({ loading, error, user, posts, relationship, count }) {
             <Text fontSize={["20", "22"]} fontWeight="600">
               {user?.name}
             </Text>
-            <Button bgColor="transparent" p="2" color="gray.500">
-              <HiOutlineDotsHorizontal />
-            </Button>
           </HStack>
-
           <HStack space="4">
             <Text fontSize="14" color="gray.500">
-              {/* <PostListCount /> bài đăng */}
-              <Text>{posts.length}</Text> bài đăng
+              <Text>{posts.length} bài đăng</Text>
             </Text>
             <Text fontSize="14" color="gray.500">
               {count} bạn bè
@@ -65,7 +57,6 @@ function UI({ loading, error, user, posts, relationship, count }) {
           </HStack>
         </VStack>
       </HStack>
-
       <VStack space="2" mx="1%" my={["1", "0"]}>
         <Stack
           space="2"
@@ -77,7 +68,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
               <Text mr="4" fontSize="15" fontWeight="600" color="gray.500">
                 Gửi lời mời kết bạn đến {user.name}
               </Text>
-              <HStack space="2" w="100">
+              <HStack space="2" w="120">
                 <RelationshipCreateButton toId={user?.id} />
               </HStack>
             </>
@@ -126,8 +117,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
             )}
         </Stack>
       </VStack>
-
-      <VStack space="2" m="1%">
+      <VStack space="2" m="1%" mb="-1">
         <Text fontSize="18" fontWeight="600" color="gray.700">
           Giới thiệu
         </Text>

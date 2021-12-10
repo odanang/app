@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "native-base";
+import { Text as RNText, Platform } from "react-native";
 import Controller from "./Controller";
 
 function UI({ error, loading, clickAgree }) {
@@ -16,7 +17,20 @@ function UI({ error, loading, clickAgree }) {
       bgColor="green.500"
       onPress={clickHandler}
     >
-      Đồng ý kết bạn
+      {Platform.OS !== "web" ? (
+        <RNText
+          style={{
+            fontWeight: "500",
+            fontFamily: "Lexend_500Medium",
+            color: "white",
+            padding: 2,
+          }}
+        >
+          Đồng ý kết bạn
+        </RNText>
+      ) : (
+        "Đồng ý kết bạn"
+      )}
     </Button>
   );
 }

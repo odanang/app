@@ -6,7 +6,7 @@ const style = {
   paragraph: {
     fontFamily: "Lexend_400Regular",
     color: "#27272a",
-    lineHeight: "1.5em",
+    lineHeight: 1.5,
   },
 
   // Headings
@@ -14,37 +14,37 @@ const style = {
     fontSize: 30,
     fontFamily: "Lexend_600SemiBold",
     color: "#27272a",
-    lineHeight: "2em",
+    lineHeight: 2.2,
   },
   heading2: {
     fontSize: 24,
     fontFamily: "Lexend_600SemiBold",
     color: "#27272a",
-    lineHeight: "1.75em",
+    lineHeight: 1.75,
   },
   heading3: {
     fontSize: 20,
     fontFamily: "Lexend_600SemiBold",
     color: "#27272a",
-    lineHeight: "1.75em",
+    lineHeight: 1.75,
   },
   heading4: {
     fontSize: 18,
     fontFamily: "Lexend_600SemiBold",
     color: "#27272a",
-    lineHeight: "1.5em",
+    lineHeight: 1.5,
   },
   heading5: {
     fontSize: 16,
     fontFamily: "Lexend_600SemiBold",
     color: "#27272a",
-    lineHeight: "1.375em",
+    lineHeight: 1.375,
   },
   heading6: {
     fontSize: 14,
     fontFamily: "Lexend_600SemiBold",
     color: "#27272a",
-    lineHeight: "1.25em",
+    lineHeight: 1.25,
   },
 
   // Horizontal Rule
@@ -62,7 +62,6 @@ const style = {
     justifyContent: "flex-start",
     fontFamily: "Lexend_400Regular",
     color: "#27272a",
-    lineHeight: "1.5em",
   },
 
   // Links
@@ -83,23 +82,22 @@ const style = {
 
   // Tables
   table: {
-    borderWidth: "0.5px",
+    borderWidth: 1,
     borderColor: "#f4f4f5",
-    borderCollapse: "collapse",
   },
   thead: {},
   tbody: {},
   th: {
     padding: 5,
     flex: 1,
-    borderWidth: "0.5px",
+    borderWidth: 1,
     borderColor: "#f4f4f5",
   },
   tr: {
     flexDirection: "row",
   },
   td: {
-    borderWidth: "0.5px",
+    borderWidth: 1,
     borderColor: "#f4f4f5",
     flex: 1,
     padding: 5,
@@ -109,7 +107,7 @@ const style = {
   image: {
     marginTop: 10,
     marginBottom: 10,
-    display: "block",
+    display: "flex",
   },
 };
 
@@ -123,6 +121,6 @@ export default function Field({
   ...props
 }) {
   return useMemo(() => {
-    return <Markdown children={children} style={style} mergeStyle="true" />;
+    return <Markdown children={children} style={style} />;
   }, [children]);
 }

@@ -25,7 +25,7 @@ function UI({ item }) {
             (item?.images[0]?.file?.publicUrl || "/upload/img/no-image.png"),
         }}
         alt="Profile Image"
-        backgroundSize="cover"
+        // backgroundSize="cover"
         flex="1"
         p="50%"
       />

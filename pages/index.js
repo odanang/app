@@ -43,6 +43,11 @@ export default {
       options: { title: "Lời mời kết bạn" },
     },
     {
+      name: "friends",
+      component: Friends,
+      options: { title: "Tất cả bạn bè" },
+    },
+    {
       name: "userupdate",
       component: UserUpdate,
       options: { title: "Chỉnh sửa trang cá nhân" },
@@ -61,11 +66,6 @@ export default {
       name: "earlyaccess",
       component: EarlyAcess,
       options: { title: "Odanang - Sắp ra mắt" },
-    },
-    {
-      name: "friends",
-      component: Friends,
-      options: { title: "Tất cả bạn bè" },
     },
     {
       name: "result",

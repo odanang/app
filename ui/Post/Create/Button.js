@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { HStack, Box, Image, Text, Button } from "native-base";
 import { Link } from "@react-navigation/native";
-import { AuthContext } from '../../Provider/Native'
+import { AuthContext } from "../../Provider/Native";
 function UI() {
-  const createHandler = () => { };
-  const user = useContext(AuthContext).user
+  const createHandler = () => {};
+  const user = useContext(AuthContext).user;
   return (
     <Box mt="2" mx="0" w="full" px={["0", "1"]}>
       <HStack
@@ -52,7 +52,7 @@ function UI() {
           </Button>
         </Link>
       </HStack>
-    </Box >
+    </Box>
   );
 }
 export default UI;

@@ -1,12 +1,17 @@
 import React from "react";
 import { Box, Input, FormControl } from "native-base";
-import { HiOutlineSearch } from "react-icons/hi";
-import { Link } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { Link, useNavigation } from "@react-navigation/native";
 
-function UI({ navigation }) {
+Ionicons.loadFont();
+
+function UI({}) {
+  const navigation = useNavigation();
   const submitHandler = (e) => {
     if (e.key === "Enter") {
       console.log(e.target.value);
+      // url: /result?keyword=
+      navigation.navigate("result");
     }
   };
 
@@ -32,7 +37,7 @@ function UI({ navigation }) {
         />
       </FormControl>
       <Box position="absolute" top="2.5" left="2.5" size="14">
-        <HiOutlineSearch color="#a1a1aa" />
+        <Ionicons name="search" size={16} color="#a1a1aa" />
       </Box>
     </Box>
   );

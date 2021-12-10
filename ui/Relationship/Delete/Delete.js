@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "native-base";
+import { Text as RNText, Platform } from "react-native";
 import Controller from "./Controller";
 
 function UI({ error, loading, clickDetete, id }) {
@@ -16,7 +17,20 @@ function UI({ error, loading, clickDetete, id }) {
       bgColor="gray.100"
       onPress={clickHandler}
     >
-      Xoá lời mời
+      {Platform.OS !== "web" ? (
+        <RNText
+          style={{
+            fontWeight: "500",
+            fontFamily: "Lexend_500Medium",
+            color: "#a1a1aa",
+            padding: 2,
+          }}
+        >
+          Xoá lời mời
+        </RNText>
+      ) : (
+        "Xoá lời mời"
+      )}
     </Button>
   );
 }
