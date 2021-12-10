@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { gql, makeVar, useQuery } from "@apollo/client";
-import { AuthContext } from "../../Provider/Native";
+import React, { useContext, useState } from 'react'
+import { gql, makeVar, useQuery } from '@apollo/client'
+import { AuthContext } from '../../Provider/Native'
 export const POST_LIST = gql`
   query (
     $first: Int
@@ -62,17 +62,19 @@ export const POST_LIST = gql`
       }
     }
   }
-`;
+`
+
+export const PostListRefetch = makeVar(() => {})
 
 export default function PostListController({
   UI,
   first = 20,
   skip,
-  sortBy = "createdAt_DESC",
+  sortBy = 'createdAt_DESC',
   where,
   ...props
 }) {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext)
 
   const {
     loading,
@@ -82,22 +84,21 @@ export default function PostListController({
     refetch,
   } = useQuery(POST_LIST, {
     variables: { first, where, skip, sortBy, user: { id: user.id } },
-  });
-  const { allPosts, _allPostsMeta = {} } = data;
-  const { count = 0 } = _allPostsMeta;
+  })
+  const { allPosts, _allPostsMeta = {} } = data
+  const { count = 0 } = _allPostsMeta
   function loadMore(e) {
-    if (loading || error) return;
-    if (count <= allPosts.length) return;
+    if (loading || error) return
+    if (count <= allPosts.length) return
     fetchMore({
       variables: { skip: allPosts.length },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         return {
           ...previousResult,
           allPosts: [...previousResult.allPosts, ...fetchMoreResult.allPosts],
-        };
+        }
       },
-    }).finally(() => {
-    });
+    }).finally(() => {})
   }
 
   return (
@@ -106,11 +107,11 @@ export default function PostListController({
       loading={loading}
       error={error}
       refetch={refetch}
-      // hàm refetch này truyền xuống cho tất cả các action nằm trong post  
+      // hàm refetch này truyền xuống cho tất cả các action nằm trong post
       allPosts={allPosts}
       count={count}
-      // 
+      //
       loadMore={loadMore}
     />
-  );
+  )
 }
