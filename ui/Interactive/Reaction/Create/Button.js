@@ -1,52 +1,18 @@
 import React, { useState, Fragment, useContext } from "react";
-import { Button } from "native-base";
+import { Button, Text } from "native-base";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Controller from "./Controller";
 import { AuthContext } from "../../../Provider/Native";
 
 export function UI({
-  interactive,
   handleClick,
   createResult,
   deleteResult,
-  reactions,
   reacted,
 }) {
-  if (createResult.loading) return "...";
-  if (deleteResult.loading) return "...";
-  // const arrReactions = reactionsList?.map((reaction) => {
-  //   return { idEmoij: reaction.id, userId: reaction.createdBy?.id };
-  // });
-  // const arrUserId =
-  //   reactionsList?.map((reaction) => {
-  //     return reaction.createdBy?.id;
-  //   }) || [];
-  // let idDel;
-  // const user = useContext(AuthContext).user;
-  // const [isLike, setIsLike] = useState(arrUserId.indexOf(user.id) !== -1);
-  // if (isLike === true)
-  //   idDel = arrReactions[arrUserId.indexOf(user.id)]
-  //     ? (idDel = arrReactions[arrUserId.indexOf(user.id)].idEmoij)
-  //     : null;
-  // const likeHandle = (e) => {
-  //   if (!loading && isLike === false)
-  //     if (interactive)
-  //       onCreate({
-  //         variables: {
-  //           id: interactive.id,
-  //           data: {
-  //             reactions: { create: { emoji: "like" } },
-  //           },
-  //         },
-  //       });
-  //     else
-  //       onDelete({
-  //         variables: {
-  //           id: idDel,
-  //         },
-  //       });
-  //   setIsLike((prev) => !prev);
-  // };
+  if (createResult.loading) return <Text>Đang tải</Text>;
+  if (deleteResult.loading) return <Text>Đang tải</Text>;
+
   return (
     <Fragment>
       {reacted ? (

@@ -20,8 +20,36 @@ export const COMMENT_ITEM = gql`
     }
   }
 `;
+
+
+function formatTimeCreate(createdAt) {
+  var dayjs = require("dayjs");
+  let stringTime = "";
+  const createdTime = dayjs(createdAt);
+  const now = dayjs();
+  if (now.format("DD-MM-YYYY") === createdTime.format("DD-MM-YYYY")) {
+    if (Number(now.get("hour")) - Number(createdTime.get("hour")) === 0)
+      stringTime =
+        Number(now.get("minute")) -
+        Number(createdTime.get("minute")) +
+        " phút trước";
+    else
+      stringTime =
+        Number(now.get("hour")) -
+        Number(createdTime.get("hour")) +
+        " giờ trước";
+  } else stringTime = createdTime.format("DD-MM-YYYY");
+  return stringTime;
+}
+
+
+
 export function CommenItemController({ UI, id, where, existing = {} }) {
-  if (existing.comment) return <UI comment={existing.comment} refetch={existing.refetch} />;
+  if (existing.comment) {
+    const timeAgo = formatTimeCreate(existing.comment?.createdAt);
+    return <UI comment={existing.comment} refetch={existing.refetch}
+      timeAgo={timeAgo} />;
+  }
   const {
     loading,
     error,
@@ -31,12 +59,15 @@ export function CommenItemController({ UI, id, where, existing = {} }) {
   });
   const { allInteractiveComments, InteractiveComment } = data;
   const [comment] = allInteractiveComments || [InteractiveComment];
+  const timeAgo = formatTimeCreate(comment?.createdAt);
+
   return (
     <UI
       loading={loading}
       error={error}
       comment={comment}
       refetchInteractiveItem={refetchInteractiveItem}
+      timeAgo={timeAgo}
     />
   );
 }

@@ -21,8 +21,6 @@ export default function PostCreate({ UI, post, navigation }) {
       navigation.navigate("home");
     },
   });
-  if (loading) return "...";
-  if (error) return error.message;
   const { createPost } = data;
   return (
     <UI

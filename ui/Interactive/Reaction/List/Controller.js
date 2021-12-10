@@ -12,18 +12,19 @@ export const REACTION_LIST = gql`
   }
 `;
 
-export default function ReactionListController({ UI, where, _allReactionsMeta, countLikeComment }) {
-  // const { loading, error, data = {}, refetch } = useQuery(REACTION_LIST, {
-  //   variables: { where },
-  // });
-  // const { allInteractiveReactions, _allInteractiveReactionsMeta } = data;
+export default function ReactionListController({ UI, where, existing }) {
+  if (existing) return <UI {...existing} />
+  const { loading, error, data = {}, refetch } = useQuery(REACTION_LIST, {
+    variables: { where },
+  });
+  const { allInteractiveReactions = [], _allInteractiveReactionsMeta = {} } = data;
+  const { count = 0 } = _allInteractiveReactionsMeta
   return (
     <UI
-      // loading={loading}
-      // error={error}
-      // allReactions={allInteractiveReactions}
-      _allReactionsMeta={_allReactionsMeta}
-      countLikeComment = {countLikeComment}
+      loading={loading}
+      error={error}
+      allInteractiveReactions={allInteractiveReactions}
+      count={count}
     />
   );
 }

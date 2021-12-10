@@ -11,6 +11,7 @@ import isEqual from "lodash/isEqual";
 import { setContext } from "@apollo/client/link/context";
 import merge from "deepmerge";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Text } from "native-base";
 
 export const USER_AUTH = gql`
   query {
@@ -128,36 +129,31 @@ function Native({ navigation, header }) {
   useEffect(() => {
     //console.log("navigation renderd", user);
   });
-  const screens = useMemo(
-    () => (
-      <AuthContext.Provider value={result}>
-        <NavigationContainer linking={navigation.linking} theme={customTheme}>
-          <Stack.Navigator
-            screenOptions={{
-              header,
-            }}
-            initialRouteName={navigation.initialRouteName}
-          >
-            {navigation.screens?.map((screen, index) => {
-              return (
-                <Stack.Screen
-                  {...screen}
-                  key={screen.name + index}
-                  component={
-                    !user && navigation.auth.requires.includes(screen.name)
-                      ? navigation.auth.component
-                      : screen.component
-                  }
-                />
-              );
-            })}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AuthContext.Provider>
-    ),
-    [user, loading],
-  );
-  return screens;
+  if (result.loading) return <Text>Đang tải</Text>
+  return <AuthContext.Provider value={result}>
+    <NavigationContainer linking={navigation.linking} theme={customTheme}>
+      <Stack.Navigator
+        screenOptions={{
+          header,
+        }}
+        initialRouteName={navigation.initialRouteName}
+      >
+        {navigation.screens?.map((screen, index) => {
+          return (
+            <Stack.Screen
+              {...screen}
+              key={screen.name + index}
+              component={
+                !user && navigation.auth.requires.includes(screen.name)
+                  ? navigation.auth.component
+                  : screen.component
+              }
+            />
+          );
+        })}
+      </Stack.Navigator>
+    </NavigationContainer>
+  </AuthContext.Provider>;
 }
 export default function ProviderNative(props) {
   const { pageProps = {}, navigation, header } = props;

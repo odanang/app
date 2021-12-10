@@ -24,12 +24,11 @@ export default function CommentUpdate({ UI, comment, ...props }) {
       variables: { id: comment.id, data: { interactive: { create: {} } } },
     });
   };
-  if (loading) return "...";
-  if (error) return error.message;
   const { commentUpdate } = data;
   return (
     <UI
-      {...props}
+      loading={loading}
+      error={error}
       comment={comment}
       on={on}
       commentUpdate={commentUpdate}

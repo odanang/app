@@ -11,30 +11,30 @@ function UI({
 	reactions,
 	reacted,
 }) {
-	if (createResult.loading) return "...";
-	if (deleteResult.loading) return "...";
+	if (createResult.loading) return <Text>Đang tải</Text>;
+	if (deleteResult.loading) return <Text>Đang tải</Text>;
 	return (
 		<Fragment>
 			{reacted ? (
 				<Button
-				_text={{ color: "green.500", fontSize: "12", fontWeight: "600" }}
-				p="0"
-				bgColor="transparent"
-				onPress={handleClick}
-			>
+					_text={{ color: "green.500", fontSize: "12", fontWeight: "600" }}
+					p="0"
+					bgColor="transparent"
+					onPress={handleClick}
+				>
 					Thích
 				</Button>)
-					: (
-						<Button
+				: (
+					<Button
 						_text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
 						p="0"
 						bgColor="transparent"
 						onPress={handleClick}
 					>
-							Thích
+						Thích
 					</Button>
-					)}
-				</Fragment>
+				)}
+		</Fragment>
 	);
 }
 export default function InteractionReactionCreateText(props) {

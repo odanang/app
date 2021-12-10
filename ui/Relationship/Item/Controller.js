@@ -23,8 +23,6 @@ export function RelationshipItemController(UI, id, where) {
       variables: id ? { id } : { where },
     }
   );
-  if (loading) return "...";
-  if (error) return error.message;
   const { allRelationships, Relationship } = data;
   const [relationship] = allRelationships || [Relationship];
   return (

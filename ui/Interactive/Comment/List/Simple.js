@@ -1,20 +1,27 @@
 import React from "react";
 import InteractionCommentItemSimple from "../Item/Simple";
-import { Button, VStack } from "native-base";
-import { CommentListController } from "./Controller";
+import { Button, Text, VStack } from "native-base";
+import Controller from "./Controller";
+import { InteractionCommentCreateSimple } from "..";
 
 export function UI({
   loading,
   error,
-  allInteractiveComments = [],
+  allInteractiveComments = [], interactive,
   count = 0,
-  refetch,
+  refetch = () => { },
   getMore,
 }) {
-  // Map list comments => InteractionCommentItemSimple
-  if (loading) return "...";
+  if (loading) return <Text>Đang tải</Text>;
   return (
     <VStack>
+      <InteractionCommentCreateSimple
+        my="10"
+        interactive={interactive}
+        onCompleted={data => {
+          refetch()
+        }}
+      />
       {allInteractiveComments.map((comment) => {
         return (
           <InteractionCommentItemSimple
@@ -23,7 +30,6 @@ export function UI({
           />
         );
       })}
-      {/* More comments */}
       {count > allInteractiveComments.length && (
         <Button
           _text={{
@@ -42,5 +48,5 @@ export function UI({
   );
 }
 export default function InteractionCommentListSimple(props) {
-  return <CommentListController {...props} UI={UI} />;
+  return <Controller {...props} UI={UI} />;
 }

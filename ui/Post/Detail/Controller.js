@@ -16,22 +16,6 @@ export const POST_ITEM = gql`
       }
       interactive {
         id
-        comments {
-          content
-        }
-        reactions {
-          id
-          emoji
-          createdBy {
-            id
-          }
-        }
-        _commentsMeta {
-          count
-        }
-        _reactionsMeta {
-          count
-        }
       }
       createdAt
       createdBy {
@@ -49,9 +33,7 @@ export default function PostDetail({ UI, id }) {
     variables: { id }
   }
   );
-
   const { Post } = data;
   const post = Post;
-  console.log(post)
   return <UI loading={loading} error={error} post={post} refetch={refetch} />;
 }

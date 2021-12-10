@@ -71,7 +71,8 @@ export const POST_ITEM = gql`
 
 export const refetchUserItem = makeVar(() => { });
 
-export default function UserItem({ UI, where, id, my_id }) {
+export default function UserItem({ UI, where, id, my_id, existing }) {
+  if (existing) return <UI {...existing} />
   const { loading, error, data = {}, refetch } = useQuery(
     id && my_id ? POST_ITEM : id ? POST_ITEM_ME : POST_LIST,
     {

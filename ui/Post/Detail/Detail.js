@@ -10,14 +10,14 @@ import {
   Divider,
 } from "native-base";
 import {
-  InteractionCommentCreateSimple,
-  InteractionCommentListSimple,
   InteractionCommentListToggleButton,
 } from "../../Interactive/Comment";
 import {
   InteractionReactionCreateButton,
   InteractionReactionListIconTextWithCount,
 } from "../../Interactive/Reaction";
+
+
 import { AlbumCreateButton } from "../../Album";
 import { PostDeleteText, PostUpdateText } from "../index";
 import { UploadImageListCarousel } from "../../Upload/Image";
@@ -48,8 +48,9 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-function UI({ loading, error, post, refetch }) {
+function UI({ loading, error, post, refetch = () => { }, isOpen = true }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openComment, setOpenComment] = useState(isOpen)
   const currentUser = useContext(AuthContext).user;
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
@@ -57,9 +58,11 @@ function UI({ loading, error, post, refetch }) {
     console.log(isModalOpen);
   };
 
-  console.log(post);
   if (loading) {
     return <PostItemSkeletonDetail />;
+  }
+  function pressComment() {
+    setOpenComment(status => !status)
   }
   return (
     <Stack
@@ -161,40 +164,11 @@ function UI({ loading, error, post, refetch }) {
         <Text px="3" my="2">
           {post?.content}
         </Text>
-        <Box px="3" mt="2">
-          <InteractionReactionListIconTextWithCount
-            _allReactionsMeta={post?.interactive?._reactionsMeta}
-          />
-        </Box>
-        <Box px="3">
-          <HStack
-            w="full"
-            my="2"
-            borderBottomWidth="1"
-            borderBottomColor="gray.100"
-            borderTopWidth="1"
-            borderTopColor="gray.100"
-            justifyContent="space-around"
-          >
-            <Box w="33%">
-              <InteractionReactionCreateButton
-                interactive={post?.interactive}
-                refetch={refetch}
-                reactionsList={post?.interactive?.reactions}
-              />
-            </Box>
-            <Box w="33%">
-              <InteractionCommentListToggleButton />
-            </Box>
-            <Box w="33%">
-              <AlbumCreateButton />
-            </Box>
-          </HStack>
-          <InteractiveItemSimple
-            where={{ id: post?.interactive?.id }}
-            sortBy="createdAt_DESC"
-          />
-        </Box>
+        {/* INTERACTABLE GROUNP */}
+        {post?.interactive && <InteractiveItemSimple
+          id={post?.interactive?.id}
+          sortBy="createdAt_DESC"
+        />}
       </VStack>
     </Stack>
   );

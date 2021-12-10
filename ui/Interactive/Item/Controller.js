@@ -6,9 +6,8 @@ export const INTERACTIVE_ITEM = gql`
     $id: ID!
     $sortBy: [SortInteractiveCommentsBy!]
     $first: Int
-    $where: InteractiveWhereInput
   ) {
-    allInteractives(where: $where) {
+    Interactive(where:{id: $id}) {
       id
       comments(sortBy: $sortBy, first: $first) {
         id
@@ -26,6 +25,12 @@ export const INTERACTIVE_ITEM = gql`
             count
           }
         }
+        my_interactive{
+          id
+        }
+      }
+      _commentsMeta {
+        count
       }
       reactions {
         id
@@ -37,9 +42,44 @@ export const INTERACTIVE_ITEM = gql`
           }
         }
       }
+      _reactionsMeta {
+        count
+      }
+      createdAt
+    }
+    user: authenticatedUser {
+      id
+      phone
+      name
+      email
+      avatar {
+        publicUrl
+      }
+      gender
+      description
     }
   }
 `;
+function formatTimeCreate(createdAt) {
+  var dayjs = require("dayjs");
+  let stringTime = "";
+  const createdTime = dayjs(createdAt);
+  const now = dayjs();
+  if (now.format("DD-MM-YYYY") === createdTime.format("DD-MM-YYYY")) {
+    if (Number(now.get("hour")) - Number(createdTime.get("hour")) === 0)
+      stringTime =
+        Number(now.get("minute")) -
+        Number(createdTime.get("minute")) +
+        " phút trước";
+    else
+      stringTime =
+        Number(now.get("hour")) -
+        Number(createdTime.get("hour")) +
+        " giờ trước";
+  } else stringTime = createdTime.format("DD-MM-YYYY");
+  return stringTime;
+}
+
 export default function InteractiveItem({
   UI,
   id,
@@ -54,34 +94,16 @@ export default function InteractiveItem({
       variables: id ? { id, sortBy, first } : { where, sortBy, first, skip },
     }
   );
-  const { allInteractives, Interactive } = data;
-  const [interactive] = allInteractives || [Interactive];
-  const lengthComment = interactive?.comments.length
-    ? interactive.comments.length
-    : 0;
-  const count = interactive?._commentsMeta.count
-    ? interactive._commentsMeta.count
-    : 0;
-  function getMore(e) {
-    if (loading || error) return;
-    if (count <= lengthComment) return;
-    fetchMore({
-      variables: { first: lengthComment + first },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        return {
-          ...fetchMoreResult,
-        };
-      },
-    });
-  }
+  const { Interactive: interactive = {}, user = {} } = data;
+  const timeAgo = formatTimeCreate(interactive?.createdAt);
   return (
     <UI
       loading={loading}
       error={error}
       interactive={interactive}
-      getMore={getMore}
+      user={user}
       refetch={refetch}
-      count={count}
+      timeAgo={timeAgo}
     />
   );
 }
