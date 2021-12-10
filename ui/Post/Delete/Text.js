@@ -16,14 +16,14 @@ function UI({ loading, error, clickDetete, post }) {
       py="1.5"
       bgColor="transparrent"
       onPress={hadleSubmit}
-      leftIcon={
-        <FontAwesome
-          name="trash-o"
-          color="#22c55e"
-          size={18}
-          style={{ marginTop: "-2px" }}
-        />
-      }
+      // leftIcon={
+      //   <FontAwesome
+      //     name="trash-o"
+      //     color="#22c55e"
+      //     size={18}
+      //     style={{ marginTop: "-2px" }}
+      //   />
+      // }
     >
       Xoá bài viết
     </Button>

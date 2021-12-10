@@ -55,7 +55,7 @@ export const POST_ITEM = gql`
   }
 `;
 export default function PostItem({ UI, id, where, existing = {} }) {
-  if (existing.post) return <UI post={existing.post} refetch={existing.refetch} />;
+  if (existing) return <UI {...existing} />;
 
   if (!id) return "invalid";
 

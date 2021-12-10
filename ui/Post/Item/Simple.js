@@ -41,7 +41,7 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, post = {}, refetch = () => {} }) {
+export function UI({ loading, error, post = {}, refetch = () => { } }) {
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
@@ -131,40 +131,11 @@ export function UI({ loading, error, post = {}, refetch = () => {} }) {
           (image) => "https://odanang.net" + image?.file?.publicUrl
         )}
       />
-      <Box px="3" mt="2">
-        <InteractionReactionListIconTextWithCount
-          _allReactionsMeta={post?.interactive?._reactionsMeta}
-        />
-      </Box>
-      <Box px="3">
-        <HStack
-          w="full"
-          my="2"
-          borderBottomWidth="1"
-          borderBottomColor="gray.100"
-          borderTopWidth="1"
-          borderTopColor="gray.100"
-          justifyContent="space-around"
-        >
-          <Box w="33%">
-            <InteractionReactionCreateButton
-              interactive={post.interactive}
-              refetch={refetch}
-              reactions={post?.interactive?.reactions}
-            />
-          </Box>
-          <Box w="33%">
-            <InteractionCommentListToggleButton />
-          </Box>
-          <Box w="33%">
-            <AlbumCreateButton />
-          </Box>
-        </HStack>
-        <InteractiveItemSimpleUI
-          interactive={post?.interactive}
-          refetch={refetch}
-        />
-      </Box>
+
+      <InteractiveItemSimpleUI
+        interactive={post?.interactive}
+        refetch={refetch}
+      />
     </Box>
   );
 }
