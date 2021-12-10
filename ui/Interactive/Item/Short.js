@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Box, HStack, Text } from "native-base";
 import Controller from "./Controller";
 import { InteractionReactionCreateText, InteractionReactionListTextWithCount } from "../Reaction";
-export function UI({ loading, error, timeAgo, interactive, user = {}, refetch, getMore, count }) {
+export function UI({ loading, error, timeAgo, interactive, user = {}, refetch, loadMore, count }) {
   const [openComment, setOpenComment] = useState(true)
   function pressComment() {
     setOpenComment(status => !status)

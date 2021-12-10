@@ -1,14 +1,8 @@
-import React, { useState, useContext } from "react";
-import ListToggleText from "../List/ToggleText";
+import React, { useContext } from "react";
 import ItemAvatar from "../../../User/Item/Avatar";
 import DeleteText from "../Delete/Text";
-import {
-  InteractionReactionCreateText,
-  InteractionReactionListTextWithCount,
-} from "../../Reaction";
-import { VStack, HStack, Box, Image, Text } from "native-base";
+import { HStack, Box, Text } from "native-base";
 import { CommenItemController } from "./Controller";
-import InteractiveItemSimple from "../../Item/Simple";
 import { Link } from "@react-navigation/native";
 import { AuthContext } from '../../../Provider/Native'
 import InteractiveItemShort from "../../Item/Short";
@@ -34,14 +28,10 @@ function formatTimeCreate(createdAt) {
 }
 
 export function UI({ loading, error, comment = {}, refetch, timeAgo, onDeleted }) {
-  const { user } = useContext(AuthContext)
-  const [open, setOpen] = useState(false);
-  const stringCreatedAt = formatTimeCreate(comment?.createdAt);
+  const { user = {} } = useContext(AuthContext)
   const { interactive = {} } = comment;
   const { _commentsMeta = {} } = interactive;
-  const { count = 0 } = _commentsMeta;
   if (loading) return <Text>Đang tải</Text>;
-  console.log(comment, user)
   return (
     <Box mx="auto" my="2" w="full">
       <HStack space="2" display="flex" flexDirection="row" w="full">
@@ -58,8 +48,8 @@ export function UI({ loading, error, comment = {}, refetch, timeAgo, onDeleted }
             </Text>
           </Box>
           <HStack mt='1' space="2">
-            <InteractiveItemShort id={comment.my_interactive.id} />
-            {user.id === comment.createdBy.id && <DeleteText id={comment.id} onCompleted={onDeleted} />}
+            {comment.my_interactive && <InteractiveItemShort id={comment.my_interactive.id} />}
+            {comment.createdBy && user.id === comment.createdBy.id && <DeleteText id={comment.id} onCompleted={onDeleted} />}
           </HStack>
         </Box>
       </HStack>

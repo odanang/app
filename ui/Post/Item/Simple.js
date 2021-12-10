@@ -17,7 +17,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 
 Entypo.loadFont();
 
-import { UI as InteractiveItemSimpleUI } from "../../Interactive/Item/Simple";
+import InteractiveItemSimple from "../../Interactive/Item/Simple";
 import { Link } from "@react-navigation/native";
 import { AuthContext } from "../../Provider/Native";
 
@@ -132,9 +132,8 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
         )}
       />
 
-      <InteractiveItemSimpleUI
-        interactive={post?.interactive}
-        refetch={refetch}
+      <InteractiveItemSimple
+        id={post?.interactive.id}
       />
     </Box>
   );

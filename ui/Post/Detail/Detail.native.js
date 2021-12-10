@@ -191,7 +191,7 @@ function UI({ loading, error, post, refetch }) {
             </Box>
           </HStack>
           <InteractiveItemSimple
-            where={{ id: post?.interactive?.id }}
+            id={post?.interactive?.id}
             sortBy="createdAt_DESC"
           />
         </Box>

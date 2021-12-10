@@ -1,16 +1,13 @@
 import React, { Fragment, useState } from "react";
-import { Box, HStack, Text } from "native-base";
+import { Box, HStack, Text, Button } from "native-base";
 import InteractionCommentCreateSimple from "../Comment/Create/Simple";
 import InteractionCommentListSimple from "../Comment/List/Simple";
 import Controller from "./Controller";
 import { InteractionReactionCreateButton, InteractionReactionListIconTextWithCount } from "../Reaction";
 import { InteractionCommentListToggleButton } from "../Comment";
 import { AlbumCreateButton } from "../../Album";
-export function UI({ loading, error, interactive, user, refetch, getMore, count }) {
-  const [openComment, setOpenComment] = useState(true)
-  function pressComment() {
-    setOpenComment(status => !status)
-  }
+
+export function UI({ loading, error, interactive, user, refetch, loadMore = () => { }, count }) {
   if (loading) return <Text>Đang tải</Text>;
   return (
     <Fragment>
@@ -41,7 +38,7 @@ export function UI({ loading, error, interactive, user, refetch, getMore, count 
             />
           </Box>
           <Box w="33%">
-            <InteractionCommentListToggleButton onPress={pressComment} />
+            <InteractionCommentListToggleButton />
           </Box>
           <Box w="33%">
             <AlbumCreateButton />
@@ -49,9 +46,14 @@ export function UI({ loading, error, interactive, user, refetch, getMore, count 
         </HStack>
       </Box>
       <Box px="3">
-        {openComment && <InteractionCommentListSimple
+        <InteractionCommentListSimple
           existing={{ interactive, allInteractiveComments: interactive?.comments, _allInteractiveCommentsMeta: interactive.commentsMeta, refetch }}
-        />}
+        />
+        {interactive.comments.length < interactive._commentsMeta.count && <Button onPress={() => {
+          console.log('click')
+          loadMore()
+        }}
+        >more</Button>}
       </Box>
     </Fragment>
 

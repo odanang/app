@@ -7,9 +7,8 @@ export const POST_LIST = gql`
     $skip: Int
     $sortBy: [SortPostsBy!]
     $where: PostWhereInput
-    $user: UserWhereInput
   ) {
-    _allPostsMeta(where: $where) {
+    _allPostsMeta {
       count
     }
     allPosts(first: $first, skip: $skip, sortBy: $sortBy, where: $where) {
@@ -25,44 +24,6 @@ export const POST_LIST = gql`
       }
       interactive {
         id
-        reacted: reactions(where: { createdBy: $user }) {
-          id
-        }
-        comments(first: 5, sortBy: createdAt_DESC) {
-          id
-          content
-          createdAt
-          createdBy {
-            id
-            name
-            avatar {
-              publicUrl
-            }
-          }
-          my_interactive {
-            id
-            reacted: reactions(where: { createdBy: $user }) {
-              id
-            }
-            _reactionsMeta {
-              count
-            }
-          }
-        }
-        reactions {
-          id
-          emoji
-          createdAt
-          createdBy {
-            id
-          }
-        }
-        _commentsMeta {
-          count
-        }
-        _reactionsMeta {
-          count
-        }
       }
       createdAt
       createdBy {
@@ -76,18 +37,14 @@ export const POST_LIST = gql`
   }
 `
 
-export const PostListRefetch = makeVar(() => {})
-
 export default function PostListController({
   UI,
-  first = 20,
+  first = 4,
   skip,
   sortBy = 'createdAt_DESC',
   where,
-  ...props
 }) {
   const { user } = useContext(AuthContext)
-
   const {
     loading,
     error,
@@ -97,11 +54,12 @@ export default function PostListController({
   } = useQuery(POST_LIST, {
     variables: { first, where, skip, sortBy, user: { id: user.id } },
   })
-  const { allPosts, _allPostsMeta = {} } = data
+  const [loadingMore, setLoadingMore] = useState(false)
+  const { allPosts = [], _allPostsMeta = {} } = data
   const { count = 0 } = _allPostsMeta
   function loadMore(e) {
     if (loading || error) return
-    if (count <= allPosts.length) return
+    setLoadingMore(true)
     fetchMore({
       variables: { skip: allPosts.length },
       updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -110,20 +68,19 @@ export default function PostListController({
           allPosts: [...previousResult.allPosts, ...fetchMoreResult.allPosts],
         }
       },
-    }).finally(() => {})
+    }).finally(() => {
+      setLoadingMore(false)
+    })
   }
 
   return (
     <UI
-      {...props}
       loading={loading}
       error={error}
-      refetch={refetch}
-      // hàm refetch này truyền xuống cho tất cả các action nằm trong post
       allPosts={allPosts}
       count={count}
-      //
       loadMore={loadMore}
+      loadingMore={loadingMore}
     />
   )
 }

@@ -1,12 +1,12 @@
 import React from "react";
-import { Button, VStack, Box } from "native-base";
+import { Button, VStack, Box, Text } from "native-base";
 import PostItemSimple from "../Item/Simple";
 import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
 import { ScrollView, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-function UI({ loading, error, allPosts, count, loadMore, refetch }) {
+function UI({ loading, error, allPosts, count, loadMore, loadingMore, refetch }) {
   if (loading || error) {
     return <PostItemSkeletonSimple />;
   }
@@ -18,8 +18,9 @@ function UI({ loading, error, allPosts, count, loadMore, refetch }) {
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
               {allPosts.map((post) => (
-                <PostItemSimple key={post.id} existing={{ post, refetch }} />
+                <PostItemSimple key={post.id} existing={{ post }} />
               ))}
+              {loadingMore && <PostItemSkeletonSimple />}
               {count > allPosts.length && (
                 <Box px="2">
                   <Button
@@ -35,7 +36,7 @@ function UI({ loading, error, allPosts, count, loadMore, refetch }) {
                     px="4"
                     onPress={loadMore}
                   >
-                    Tải thêm bài viết
+                    <Text>{loadingMore ? 'Đang tải' : 'Tải thêm bài viết'}</Text>
                   </Button>
                 </Box>
               )}

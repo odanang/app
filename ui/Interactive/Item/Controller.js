@@ -6,10 +6,11 @@ export const INTERACTIVE_ITEM = gql`
     $id: ID!
     $sortBy: [SortInteractiveCommentsBy!]
     $first: Int
+    $skip: Int
   ) {
     Interactive(where:{id: $id}) {
       id
-      comments(sortBy: $sortBy, first: $first) {
+      comments(sortBy: $sortBy, first: $first, skip: $skip) {
         id
         content
         createdAt
@@ -97,6 +98,23 @@ export default function InteractiveItem({
   );
   const { Interactive: interactive = {}, user = {} } = data;
   const timeAgo = formatTimeCreate(interactive?.createdAt);
+  function loadMore(e) {
+    if (loading || error) return
+    fetchMore({
+      variables: { skip: interactive.comments.length },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        const [{ Interactive: { comments: previousComments = [] } },
+          { Interactive: { comments: fetchMoreComments = [] } }] = [previousResult, fetchMoreResult]
+        return {
+          ...previousResult,
+          Interactive: {
+            ...previousResult.Interactive,
+            comments: [...previousComments, ...fetchMoreComments]
+          }
+        }
+      },
+    }).finally(() => { })
+  }
   return (
     <UI
       loading={loading}
@@ -104,6 +122,7 @@ export default function InteractiveItem({
       interactive={interactive}
       user={user}
       refetch={refetch}
+      loadMore={loadMore}
       timeAgo={timeAgo}
     />
   );
