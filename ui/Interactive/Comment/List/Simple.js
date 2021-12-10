@@ -26,7 +26,7 @@ export function UI({
         return (
           <InteractionCommentItemSimple
             key={comment.id}
-            existing={{ comment, refetch }}
+            existing={{ comment, onDeleted: data => { refetch() } }}
           />
         );
       })}

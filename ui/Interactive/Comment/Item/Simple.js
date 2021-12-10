@@ -33,41 +33,36 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, comment = {}, refetch, timeAgo }) {
+export function UI({ loading, error, comment = {}, refetch, timeAgo, onDeleted }) {
   const { user } = useContext(AuthContext)
   const [open, setOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(comment?.createdAt);
   const { interactive = {} } = comment;
   const { _commentsMeta = {} } = interactive;
   const { count = 0 } = _commentsMeta;
-  if (loading) return <Text>Đạng tải</Text>;
-  console.log(comment)
+  if (loading) return <Text>Đang tải</Text>;
+  console.log(comment, user)
   return (
     <Box mx="auto" my="2" w="full">
-      <VStack>
-        <HStack space="2" display="flex" flexDirection="row" w="full">
-          <ItemAvatar existing={{ user: comment.createdBy }} />
-          <VStack flex="1">
-            <HStack>
-              <Box bgColor="gray.50" rounded="8" px="3" py="2" flex="1">
-                <Link to={{ screen: "users", params: { id: comment?.createdBy?.id } }}>
-                  <Text color="gray.900" fontWeight="600" fontSize="14">
-                    {comment?.createdBy?.name}
-                  </Text>
-                </Link>
-                <Text color="gray.700" lineHeight="18">
-                  {comment?.content}
-                </Text>
-              </Box>
-            </HStack>
-
+      <HStack space="2" display="flex" flexDirection="row" w="full">
+        <ItemAvatar existing={{ user: comment.createdBy }} />
+        <Box px="3">
+          <Box bgColor="gray.50" rounded="8" py="2" flex="1">
+            <Link to={{ screen: "users", params: { id: comment?.createdBy?.id } }}>
+              <Text color="gray.900" fontWeight="600" fontSize="14">
+                {comment?.createdBy?.name}
+              </Text>
+            </Link>
+            <Text color="gray.700" lineHeight="18">
+              {comment?.content}
+            </Text>
+          </Box>
+          <HStack mt='1' space="2">
             <InteractiveItemShort id={comment.my_interactive.id} />
-            <HStack ml="3" mt="1">
-
-            </HStack>
-          </VStack>
-        </HStack>
-      </VStack>
+            {user.id === comment.createdBy.id && <DeleteText id={comment.id} onCompleted={onDeleted} />}
+          </HStack>
+        </Box>
+      </HStack>
     </Box>
   );
 }

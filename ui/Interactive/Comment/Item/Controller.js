@@ -45,9 +45,9 @@ function formatTimeCreate(createdAt) {
 
 
 export function CommenItemController({ UI, id, where, existing = {} }) {
-  if (existing.comment) {
+  if (existing) {
     const timeAgo = formatTimeCreate(existing.comment?.createdAt);
-    return <UI comment={existing.comment} refetch={existing.refetch}
+    return <UI {...existing}
       timeAgo={timeAgo} />;
   }
   const {

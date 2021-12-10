@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "native-base";
-import CommentDelete from "./Controller";
+import { Button, Text } from "native-base";
+import Controller from "./Controller";
 function UI({ loading, error, comment, clickDetete }) {
   const toggleText = (e) => {
     console.log("Comment Delete Text");
@@ -8,9 +8,8 @@ function UI({ loading, error, comment, clickDetete }) {
   const handleSubmit = (e) => {
     clickDetete();
   };
-  return loading ? (
-    "..."
-  ) : (
+  if (loading) return <Text>Đang tải</Text>
+  return (
     <Button
       _text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
       p="0"
@@ -22,5 +21,5 @@ function UI({ loading, error, comment, clickDetete }) {
   );
 }
 export default function InteractionCommentCreateDelete(props) {
-  return <CommentDelete {...props} UI={UI} />;
+  return <Controller {...props} UI={UI} />;
 }

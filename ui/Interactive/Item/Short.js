@@ -9,24 +9,20 @@ export function UI({ loading, error, timeAgo, interactive, user = {}, refetch, g
   }
   if (loading) return <Text>Đang tải</Text>;
   return (
-    <Fragment>
-      <Box px="3" mt="2">
-        <HStack ml="3" mt="1" space="3">
-          <InteractionReactionCreateText
-            interactive={interactive}
-            onCompleted={data => {
-              refetch()
-            }}
-          />
-          <InteractionReactionListTextWithCount
-            existing={{ count: interactive._reactionsMeta.count }}
-          />
-          <Text color="gray.400" fontSize="12">
-            {timeAgo}
-          </Text>
-        </HStack>
-      </Box>
-    </Fragment>
+    <HStack space="2">
+      <InteractionReactionCreateText
+        interactive={interactive}
+        onCompleted={data => {
+          refetch()
+        }}
+      />
+      <InteractionReactionListTextWithCount
+        existing={{ count: interactive._reactionsMeta.count }}
+      />
+      <Text color="gray.400" fontSize="12">
+        {timeAgo}
+      </Text>
+    </HStack>
 
   );
 }

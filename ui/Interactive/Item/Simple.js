@@ -48,7 +48,7 @@ export function UI({ loading, error, interactive, user, refetch, getMore, count 
           </Box>
         </HStack>
       </Box>
-      <Box w="full">
+      <Box px="3">
         {openComment && <InteractionCommentListSimple
           existing={{ interactive, allInteractiveComments: interactive?.comments, _allInteractiveCommentsMeta: interactive.commentsMeta, refetch }}
         />}
