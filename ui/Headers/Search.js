@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Input, FormControl } from "native-base";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Link, useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/core";
 
 Ionicons.loadFont();
 
 function UI({}) {
+  const [searchText, setSearchText] = useState("");
   const navigation = useNavigation();
   const submitHandler = (e) => {
     if (e.key === "Enter") {
-      console.log(e.target.value);
-      // url: /result?keyword=
-      navigation.navigate("result");
+      navigation.navigate("result", { keyword: searchText });
     }
   };
 
@@ -20,6 +20,8 @@ function UI({}) {
       <FormControl>
         <Input
           onKeyPress={submitHandler}
+          onChangeText={(value) => setSearchText(value)}
+          value={searchText}
           bgColor="white"
           px="2"
           py="1.5"
