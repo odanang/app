@@ -12,10 +12,8 @@ export const POST_DELETE = gql`
 `;
 
 export default function PostDelete({ UI, id }) {
-  const postListRefetch = useReactiveVar(PostListRefetch);
   const [on, { loading, error, data = {} }] = useMutation(POST_DELETE, {
     onCompleted: (data) => {
-      postListRefetch();
     },
   });
   const { deletePost } = data;

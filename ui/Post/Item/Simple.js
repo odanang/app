@@ -53,11 +53,11 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
   return (
     <Box
       maxW={["100%", "container.md"]}
-      my={1}
+      my={2}
       py={4}
       rounded={["0", "xl"]}
       borderWidth="1"
-      borderColor="gray.100"
+		  borderColor="gray.100"
     >
       <HStack
         space="3"
