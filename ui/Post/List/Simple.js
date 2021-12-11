@@ -20,6 +20,7 @@ function UI({
 
   return (
     <VStack mb="20px">
+      <PostCreateButton />
       {allPosts.map((post) => (
         <PostItemSimple key={post.id} existing={{ post }} />
       ))}

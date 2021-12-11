@@ -4,7 +4,7 @@ import DeleteText from "../Delete/Text";
 import { HStack, Box, Text } from "native-base";
 import { CommenItemController } from "./Controller";
 import { Link } from "@react-navigation/native";
-import { AuthContext } from '../../../Provider/Native'
+import { AuthContext } from "../../../Provider/Native";
 import InteractiveItemShort from "../../Item/Short";
 
 function formatTimeCreate(createdAt) {
@@ -27,8 +27,15 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, comment = {}, refetch, timeAgo, onDeleted }) {
-  const { user = {} } = useContext(AuthContext)
+export function UI({
+  loading,
+  error,
+  comment = {},
+  refetch,
+  timeAgo,
+  onDeleted,
+}) {
+  const { user = {} } = useContext(AuthContext);
   const { interactive = {} } = comment;
   const { _commentsMeta = {} } = interactive;
   if (loading) return <Text>Đang tải</Text>;
@@ -36,9 +43,11 @@ export function UI({ loading, error, comment = {}, refetch, timeAgo, onDeleted }
     <Box mx="auto" my="2" w="full">
       <HStack space="2" display="flex" flexDirection="row" w="full">
         <ItemAvatar existing={{ user: comment.createdBy }} />
-        <Box px="3">
-          <Box bgColor="gray.50" rounded="8" py="2" flex="1">
-            <Link to={{ screen: "users", params: { id: comment?.createdBy?.id } }}>
+        <Box flex="1">
+          <Box bgColor="gray.50" rounded="8" p="2" px="3" flex="1" w="full">
+            <Link
+              to={{ screen: "users", params: { id: comment?.createdBy?.id } }}
+            >
               <Text color="gray.900" fontWeight="600" fontSize="14">
                 {comment?.createdBy?.name}
               </Text>
@@ -47,9 +56,15 @@ export function UI({ loading, error, comment = {}, refetch, timeAgo, onDeleted }
               {comment?.content}
             </Text>
           </Box>
-          <HStack mt='1' space="2">
-            {comment.my_interactive && <InteractiveItemShort id={comment.my_interactive.id} />}
-            {comment.createdBy && user.id === comment.createdBy.id && <DeleteText id={comment.id} onCompleted={onDeleted} />}
+          <HStack mt="1" ml="1" space="2">
+            {comment.my_interactive && (
+              <InteractiveItemShort id={comment.my_interactive.id} />
+            )}
+            <Box ml="auto">
+              {comment.createdBy && user.id === comment.createdBy.id && (
+                <DeleteText id={comment.id} onCompleted={onDeleted} />
+              )}
+            </Box>
           </HStack>
         </Box>
       </HStack>
