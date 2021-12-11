@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "native-base";
+import { Button, Text } from "native-base";
 import PostDelete from "./Controller";
 
 function UI({ loading, error, clickDetete, post }) {
@@ -8,7 +8,7 @@ function UI({ loading, error, clickDetete, post }) {
   };
 
   return loading ? (
-    "..."
+		<Text>...</Text>
   ) : (
     <Button
       _text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
