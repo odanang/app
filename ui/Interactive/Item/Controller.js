@@ -86,7 +86,7 @@ export default function InteractiveItem({
   UI,
   id,
   where,
-  sortBy,
+  sortBy = "createdAt_DESC",
   first = 3,
   skip,
 }) {
