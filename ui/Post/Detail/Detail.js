@@ -9,14 +9,11 @@ import {
   VStack,
   Divider,
 } from "native-base";
-import {
-  InteractionCommentListToggleButton,
-} from "../../Interactive/Comment";
+import { InteractionCommentListToggleButton } from "../../Interactive/Comment";
 import {
   InteractionReactionCreateButton,
   InteractionReactionListIconTextWithCount,
 } from "../../Interactive/Reaction";
-
 
 import { AlbumCreateButton } from "../../Album";
 import { PostDeleteText, PostUpdateText } from "../index";
@@ -48,9 +45,9 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-function UI({ loading, error, post, refetch = () => { }, isOpen = true }) {
+function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openComment, setOpenComment] = useState(isOpen)
+  const [openComment, setOpenComment] = useState(isOpen);
   const currentUser = useContext(AuthContext).user;
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
@@ -62,7 +59,7 @@ function UI({ loading, error, post, refetch = () => { }, isOpen = true }) {
     return <PostItemSkeletonDetail />;
   }
   function pressComment() {
-    setOpenComment(status => !status)
+    setOpenComment((status) => !status);
   }
   return (
     <Stack
@@ -82,6 +79,9 @@ function UI({ loading, error, post, refetch = () => { }, isOpen = true }) {
         />
       </Box>
       <VStack
+        h="580px"
+        overflow="auto"
+        flex={1}
         maxW={["100%", "100%", "100%", "40%"]}
         py="3"
         px={["0", "0", "1"]}
@@ -164,11 +164,15 @@ function UI({ loading, error, post, refetch = () => { }, isOpen = true }) {
         <Text px="3" my="2">
           {post?.content}
         </Text>
-        {/* INTERACTABLE GROUNP */}
-        {post?.interactive && <InteractiveItemSimple
-          id={post?.interactive?.id}
-          sortBy="createdAt_DESC"
-        />}
+        <Box flex={1}>
+          {/* INTERACTABLE GROUNP */}
+          {post?.interactive && (
+            <InteractiveItemSimple
+              id={post?.interactive?.id}
+              sortBy="createdAt_DESC"
+            />
+          )}
+        </Box>
       </VStack>
     </Stack>
   );
