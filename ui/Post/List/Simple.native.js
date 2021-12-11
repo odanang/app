@@ -3,10 +3,23 @@ import { Button, VStack, Box } from "native-base";
 import PostItemSimple from "../Item/Simple";
 import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
-import { ScrollView, Keyboard, TouchableWithoutFeedback } from "react-native";
+import {
+  ScrollView,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Text as RNText,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-function UI({ loading, error, allPosts, count, loadMore, refetch }) {
+function UI({
+  loading,
+  error,
+  allPosts,
+  count,
+  loadMore,
+  loadingMore,
+  refetch,
+}) {
   if (loading || error) {
     return <PostItemSkeletonSimple />;
   }
@@ -20,22 +33,27 @@ function UI({ loading, error, allPosts, count, loadMore, refetch }) {
               {allPosts.map((post) => (
                 <PostItemSimple key={post.id} existing={{ post, refetch }} />
               ))}
+              {loadingMore && <PostItemSkeletonSimple />}
               {count > allPosts.length && (
                 <Box px="2">
                   <Button
                     my={3}
                     bgColor="green.500"
-                    _text={{
-                      color: "white",
-                      fontSize: ["13", "14"],
-                      fontWeight: "600",
-                    }}
                     rounded="8"
                     py="2"
                     px="4"
                     onPress={loadMore}
                   >
-                    Tải thêm bài viết
+                    <RNText
+                      style={{
+                        fontWeight: "500",
+                        color: "white",
+                        padding: 2,
+                        fontFamily: "Lexend_500Medium",
+                      }}
+                    >
+                      {loadingMore ? "Đang tải" : "Tải thêm bài viết"}
+                    </RNText>
                   </Button>
                 </Box>
               )}
