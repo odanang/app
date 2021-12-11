@@ -3,17 +3,31 @@ import { Box, HStack, Text, Button } from "native-base";
 import InteractionCommentCreateSimple from "../Comment/Create/Simple";
 import InteractionCommentListSimple from "../Comment/List/Simple";
 import Controller from "./Controller";
-import { InteractionReactionCreateButton, InteractionReactionListIconTextWithCount } from "../Reaction";
+import {
+  InteractionReactionCreateButton,
+  InteractionReactionListIconTextWithCount,
+} from "../Reaction";
 import { InteractionCommentListToggleButton } from "../Comment";
 import { AlbumCreateButton } from "../../Album";
 
-export function UI({ loading, error, interactive, user, refetch, loadMore = () => { }, count }) {
+export function UI({
+  loading,
+  error,
+  interactive,
+  user,
+  refetch,
+  loadMore = () => {},
+  count,
+}) {
   if (loading) return <Text>Đang tải</Text>;
   return (
     <Fragment>
       <Box px="3" mt="2">
         <InteractionReactionListIconTextWithCount
-          existing={{ allInteractiveReactions: interactive.reactions, count: interactive._reactionsMeta.count }}
+          existing={{
+            allInteractiveReactions: interactive.reactions,
+            count: interactive._reactionsMeta.count,
+          }}
         />
       </Box>
       <Box px="3">
@@ -30,10 +44,10 @@ export function UI({ loading, error, interactive, user, refetch, loadMore = () =
             <InteractionReactionCreateButton
               interactive={interactive}
               onCompleted={() => {
-                refetch()
+                refetch();
               }}
               onError={() => {
-                refetch()
+                refetch();
               }}
             />
           </Box>
@@ -47,16 +61,33 @@ export function UI({ loading, error, interactive, user, refetch, loadMore = () =
       </Box>
       <Box px="3">
         <InteractionCommentListSimple
-          existing={{ interactive, allInteractiveComments: interactive?.comments, _allInteractiveCommentsMeta: interactive.commentsMeta, refetch }}
+          existing={{
+            interactive,
+            allInteractiveComments: interactive?.comments,
+            _allInteractiveCommentsMeta: interactive.commentsMeta,
+            refetch,
+          }}
         />
-        {interactive.comments.length < interactive._commentsMeta.count && <Button onPress={() => {
-          console.log('click')
-          loadMore()
-        }}
-        >more</Button>}
+        {interactive.comments.length < interactive._commentsMeta.count && (
+          <Button
+            w="150px"
+            bgColor="transparent"
+            _text={{
+              color: "gray.400",
+              color: "black",
+              fontSize: ["13", "14"],
+              fontWeight: "600",
+            }}
+            rounded="8"
+            onPress={() => {
+              loadMore();
+            }}
+          >
+            Tải thêm bình luận ...
+          </Button>
+        )}
       </Box>
     </Fragment>
-
   );
 }
 export default function InteractiveItemSimple(props) {
