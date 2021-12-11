@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Button, VStack, Box, Text } from "native-base";
 import PostItemSimple from "../Item/Simple";
+import PostCreateButton from "../Create/Button";
 import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
 
