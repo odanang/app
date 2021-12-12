@@ -74,7 +74,7 @@ function mergeState(a, b) {
     arrayMerge: (destinationArray, sourceArray) => [
       ...sourceArray,
       ...destinationArray.filter((d) =>
-        sourceArray.every((s) => !isEqual(d, s)),
+        sourceArray.every((s) => !isEqual(d, s))
       ),
     ],
   });
@@ -126,34 +126,35 @@ function Native({ navigation, header }) {
       background: "rgb(255, 255, 255)",
     },
   };
-  useEffect(() => {
-    //console.log("navigation renderd", user);
-  });
-  if (result.loading) return <Text>Đang tải</Text>
-  return <AuthContext.Provider value={result}>
-    <NavigationContainer linking={navigation.linking} theme={customTheme}>
-      <Stack.Navigator
-        screenOptions={{
-          header,
-        }}
-        initialRouteName={navigation.initialRouteName}
-      >
-        {navigation.screens?.map((screen, index) => {
-          return (
-            <Stack.Screen
-              {...screen}
-              key={screen.name + index}
-              component={
-                !user && navigation.auth.requires.includes(screen.name)
-                  ? navigation.auth.component
-                  : screen.component
-              }
-            />
-          );
-        })}
-      </Stack.Navigator>
-    </NavigationContainer>
-  </AuthContext.Provider>;
+
+  if (result.loading) return <Text>Đang tải</Text>;
+  return (
+    <AuthContext.Provider value={result}>
+      <NavigationContainer linking={navigation.linking} theme={customTheme}>
+        <Stack.Navigator
+          screenOptions={{
+            header,
+            animation: "none",
+          }}
+          initialRouteName={navigation.initialRouteName}
+        >
+          {navigation.screens?.map((screen, index) => {
+            return (
+              <Stack.Screen
+                {...screen}
+                key={screen.name + index}
+                component={
+                  !user && navigation.auth.requires.includes(screen.name)
+                    ? navigation.auth.component
+                    : screen.component
+                }
+              />
+            );
+          })}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
 }
 export default function ProviderNative(props) {
   const { pageProps = {}, navigation, header } = props;

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Box, Button, Text, Image, HStack } from 'native-base'
-import { Link } from '@react-navigation/native'
+import React from "react";
+import { Box, Button, Text, Image, HStack } from "native-base";
+import { Link } from "@react-navigation/native";
 
 function UI(props) {
   return (
@@ -36,6 +36,6 @@ function UI(props) {
         </Box>
       </HStack>
     </Button>
-  )
+  );
 }
-export default UI
+export default UI;

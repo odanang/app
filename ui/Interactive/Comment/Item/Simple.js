@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Text as RNText, Platform } from "react-native";
 import ItemAvatar from "../../../User/Item/Avatar";
 import DeleteText from "../Delete/Text";
 import { HStack, Box, Text } from "native-base";
@@ -38,9 +39,9 @@ export function UI({
   const { user = {} } = useContext(AuthContext);
   const { interactive = {} } = comment;
   const { _commentsMeta = {} } = interactive;
-  if (loading) return <Text>Đang tải</Text>;
+  if (loading) return <Text></Text>;
   return (
-    <Box mx="auto" my="2" w="full">
+    <Box mx="auto" my="1.5" w="full">
       <HStack space="2" display="flex" flexDirection="row" w="full">
         <ItemAvatar existing={{ user: comment.createdBy }} />
         <Box flex="1">
@@ -48,13 +49,23 @@ export function UI({
             <Link
               to={{ screen: "users", params: { id: comment?.createdBy?.id } }}
             >
-              <Text color="gray.900" fontWeight="600" fontSize="14">
-                {comment?.createdBy?.name}
-              </Text>
+              {Platform.OS !== "web" ? (
+                <RNText
+                  style={{
+                    fontWeight: "500",
+                    color: "#18181b",
+                    fontFamily: "Lexend_500Medium",
+                  }}
+                >
+                  {comment?.createdBy?.name}
+                </RNText>
+              ) : (
+                <Text color="gray.900" fontWeight="600" fontSize="14">
+                  {comment?.createdBy?.name}
+                </Text>
+              )}
             </Link>
-            <Text color="gray.700" lineHeight="18">
-              {comment?.content}
-            </Text>
+            <Text color="gray.700">{comment?.content}</Text>
           </Box>
           <HStack mt="1" ml="1" space="2">
             {comment.my_interactive && (

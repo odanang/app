@@ -12,6 +12,8 @@ import Album from "./Album";
 import EarlyAcess from "./EarlyAcess";
 import Friends from "./Friends";
 import Result from "./Result";
+import Menu from "./Menu";
+import Notification from "./Notification";
 import Markdown from "./Markdown";
 import Test from "./Test";
 
@@ -73,6 +75,16 @@ export default {
       options: { title: "Kết quả tìm kiếm" },
     },
     {
+      name: "menu",
+      component: Menu,
+      options: { title: "Menu" },
+    },
+    {
+      name: "notification",
+      component: Notification,
+      options: { title: "Notification" },
+    },
+    {
       name: "markdown",
       component: Markdown,
       options: { title: "Markdown" },
@@ -100,6 +112,8 @@ export default {
         earlyaccess: "earlyaccess",
         friends: "friends",
         result: "result",
+        menu: "menu",
+        notification: "notification",
         markdown: "markdown",
         test: "test",
       },

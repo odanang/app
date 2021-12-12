@@ -19,17 +19,18 @@ import {
   Input,
 } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-function UI({ loading, error, user, navigation }) {
+function UI({ loading, error, user, on, data }) {
   /**
    *
    * @param {Event} e
    */
 
-  const [username, setUsername] = useState("Nguyễn Kim Huy");
-  const [phone, setPhone] = useState("0394123560");
-  const [description, setDescription] = useState("");
+  const [username, setUsername] = useState(user?.name);
+  const [phone, setPhone] = useState(user?.phone);
+  const [description, setDescription] = useState(user?.description);
   const [sex, setSex] = useState("male");
   const [inputError, setInputError] = useState(null);
+  const updateUser = data?.updateUser;
 
   const submitChange = () => {
     Keyboard.dismiss();
@@ -52,6 +53,18 @@ function UI({ loading, error, user, navigation }) {
     }
 
     console.log(username, phone, description, sex);
+    console.log(on);
+    on({
+      variables: {
+        id: user?.id,
+        data: {
+          name: username,
+          phone: phone,
+          description: description,
+          gender: sex,
+        },
+      },
+    });
 
     // Save change
     // if (!loading);
@@ -88,7 +101,9 @@ function UI({ loading, error, user, navigation }) {
                     <Image
                       source={{
                         uri:
-                          "https://res.cloudinary.com/cloudinaryassets/image/upload/v1632719777/200960556_1184264562021915_3530694902678239694_n_u7mk8s.jpg",
+                          "https://odanang.net" +
+                          (user?.avatar?.publicUrl ||
+                            "/upload/img/no-image.png"),
                       }}
                       alt="Alternate Text"
                       size="lg"
@@ -271,6 +286,19 @@ function UI({ loading, error, user, navigation }) {
                   )}
                 </VStack>
               </Box>
+              {updateUser && !error && !inputError && (
+                <Box
+                  my={4}
+                  p={3.5}
+                  rounded={10}
+                  borderWidth={1}
+                  borderColor="green.500"
+                >
+                  <Text textAlign="center" color="green.500">
+                    Lưu thông tin thành công
+                  </Text>
+                </Box>
+              )}
               {error && (
                 <Box
                   my={4}

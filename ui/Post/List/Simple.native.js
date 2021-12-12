@@ -3,6 +3,7 @@ import { Button, VStack, Box } from "native-base";
 import PostItemSimple from "../Item/Simple";
 import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
+import PostCreateButton from "../Create/Button";
 import {
   ScrollView,
   Keyboard,
@@ -26,8 +27,9 @@ function UI({
 
   return (
     <VStack mb="20px">
-      <KeyboardAwareScrollView style={{ width: "100%" }}>
+      <KeyboardAwareScrollView style={{ width: "100%" }} extraHeight={100}>
         <ScrollView>
+          <PostCreateButton />
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
               {allPosts.map((post) => (

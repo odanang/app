@@ -3,7 +3,12 @@ import { HStack, Box, Input, Text } from "native-base";
 import Controller from "./Controller";
 import AuthAvatar from "../../../User/Auth/Avatar";
 
-export function UI({ loading, content, contentChangeHandle, userCommentHandle }) {
+export function UI({
+  loading,
+  content,
+  contentChangeHandle,
+  userCommentHandle,
+}) {
   if (loading) return <Text>Đang tải</Text>;
   return (
     <Box mx="auto" w="full">

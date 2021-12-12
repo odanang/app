@@ -58,9 +58,9 @@ function UI({ loading, error, user, navigation, on }) {
     console.log(username, phone, password, sex);
 
     // Sign up
-    // if (!loading) {
-    //   on({ variables: { data: { name: username, phone, password } } });
-    // }
+    if (!loading) {
+      on({ variables: { data: { name: username, phone, password } } });
+    }
   };
 
   return (

@@ -34,6 +34,7 @@ export function UI({
         <HStack
           w="full"
           my="2"
+          py="0.5"
           borderBottomWidth="1"
           borderBottomColor="gray.100"
           borderTopWidth="1"
@@ -72,6 +73,9 @@ export function UI({
           <Button
             w="150px"
             bgColor="transparent"
+            alignItems="flex-start"
+            justifyContent="flex-start"
+            px="1"
             _text={{
               color: "gray.400",
               color: "black",

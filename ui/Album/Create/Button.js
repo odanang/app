@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import { Text as RNText, Platform } from "react-native";
 import { Button } from "native-base";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
@@ -23,7 +24,19 @@ function UI() {
           _hover={{ bgColor: "gray.100" }}
           onPress={saveHandle}
         >
-          Lưu
+          {Platform.OS !== "web" ? (
+            <RNText
+              style={{
+                color: "#22c55e",
+                fontWeight: "500",
+                fontFamily: "Lexend_500Medium",
+              }}
+            >
+              Lưu
+            </RNText>
+          ) : (
+            "Lưu"
+          )}
         </Button>
       )}
       {!isSaved && (
@@ -35,7 +48,19 @@ function UI() {
           _hover={{ bgColor: "gray.100" }}
           onPress={saveHandle}
         >
-          Lưu
+          {Platform.OS !== "web" ? (
+            <RNText
+              style={{
+                color: "#a1a1aa",
+                fontWeight: "500",
+                fontFamily: "Lexend_500Medium",
+              }}
+            >
+              Lưu
+            </RNText>
+          ) : (
+            "Lưu"
+          )}
         </Button>
       )}
     </Fragment>

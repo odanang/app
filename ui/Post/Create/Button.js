@@ -2,11 +2,15 @@ import React, { useContext } from "react";
 import { HStack, Box, Image, Text, Button } from "native-base";
 import { Link } from "@react-navigation/native";
 import { AuthContext } from "../../Provider/Native";
+import { Text as RNText, Platform } from "react-native";
+import { borderRadius } from "styled-system";
 function UI() {
-  const createHandler = () => {};
+  const createHandler = () => {
+    console.log("click");
+  };
   const user = useContext(AuthContext).user;
   return (
-    <Box mt="2" mx="0" w="full" px={["0", "1"]}>
+    <Box mx="0" w="full" px="0" mt="2">
       <HStack
         space="4"
         alignItems="center"
@@ -36,20 +40,34 @@ function UI() {
           </Text>
         </Box>
         <Link to={{ screen: "newpost" }}>
-          <Button
-            bgColor="green.500"
-            _text={{
-              color: "white",
-              fontSize: ["13", "14"],
-              fontWeight: "600",
-            }}
-            rounded="8"
-            py="2"
-            px="4"
-            onPress={createHandler}
-          >
-            THÊM BÀI VIẾT
-          </Button>
+          {Platform.OS !== "web" ? (
+            <Box bgColor="green.500" rounded="8" py="2" px="4" h="36px">
+              <RNText
+                style={{
+                  fontWeight: "500",
+                  color: "white",
+                  fontFamily: "Lexend_500Medium",
+                }}
+              >
+                THÊM BÀI VIẾT
+              </RNText>
+            </Box>
+          ) : (
+            <Button
+              _text={{
+                color: "white",
+                fontSize: ["13", "14"],
+                fontWeight: "600",
+              }}
+              bgColor="green.500"
+              rounded="8"
+              py="2"
+              px="4"
+              onPress={createHandler}
+            >
+              THÊM BÀI VIẾT
+            </Button>
+          )}
         </Link>
       </HStack>
     </Box>

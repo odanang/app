@@ -57,7 +57,7 @@ function UI({ signIn, loading, error, user, navigation }) {
   return (
     <Fragment>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Flex w="full" h="full" maxW="370px" mx="auto">
+        <Flex w="full" h="full" maxW="370px" mx="auto" mt={-10}>
           <Box my="auto">
             <Image
               source={{
