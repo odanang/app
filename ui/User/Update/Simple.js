@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link } from "@react-navigation/native";
 import {
   Box,
@@ -15,7 +15,7 @@ import {
 } from "native-base";
 import { AuthContext } from "../../Provider/Native";
 import Controller from "./Controller";
-function UI({ loading, error, user, on }) {
+function UI({ loading, error, user, on, data }) {
   /**
    *
    * @param {Event} e
@@ -25,6 +25,7 @@ function UI({ loading, error, user, on }) {
   const [description, setDescription] = useState(user?.description);
   const [sex, setSex] = useState("male");
   const [inputError, setInputError] = useState(null);
+  const { updateUser } = data;
 
   const submitUpdate = () => {
     setInputError(null);
@@ -46,6 +47,7 @@ function UI({ loading, error, user, on }) {
     }
 
     console.log(username, phone, description, sex);
+    console.log(on);
     on({
       variables: {
         id: user?.id,
@@ -53,7 +55,7 @@ function UI({ loading, error, user, on }) {
           name: username,
           phone: phone,
           description: description,
-          gender: sex
+          gender: sex,
         },
       },
     });
@@ -257,6 +259,19 @@ function UI({ loading, error, user, on }) {
             )}
           </VStack>
         </Box>
+        {updateUser && !error && !inputError && (
+          <Box
+            my={4}
+            p={3.5}
+            rounded={10}
+            borderWidth={1}
+            borderColor="green.500"
+          >
+            <Text textAlign="center" color="green.500">
+              Lưu thông tin thành công
+            </Text>
+          </Box>
+        )}
         {error && (
           <Box
             my={4}

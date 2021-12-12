@@ -7,6 +7,16 @@ import { MdSettings } from "react-icons/md";
 import { HiLockClosed } from "react-icons/hi";
 import { UserSignOutButton } from "../User";
 import { AuthContext } from "../Provider/Native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+
+MaterialCommunityIcons.loadFont();
+MaterialIcons.loadFont();
+Ionicons.loadFont();
+AntDesign.loadFont();
+
 function UI({ navigation }) {
   const ref = useRef();
   const [isOpenOptions, setIsOpenOptions] = useState(false);
@@ -15,6 +25,7 @@ function UI({ navigation }) {
     setIsOpenOptions((prev) => !prev);
   };
   const currentUser = useContext(AuthContext).user;
+
   useEffect(() => {
     const hideOptions = (e) => {
       if (isOpenOptions && ref.current && !ref.current.contains(e.target)) {
@@ -26,6 +37,7 @@ function UI({ navigation }) {
       document.removeEventListener("mousedown", hideOptions);
     };
   }, [isOpenOptions]);
+
   return (
     <Box position="relative" right="0" ref={ref}>
       <Button
@@ -35,7 +47,8 @@ function UI({ navigation }) {
         p="10px"
         _text={{ color: "gray.400", fontWeight: "600" }}
       >
-        <BsFillCaretDownFill color="#a1a1aa" />
+        {/* <BsFillCaretDownFill color="#a1a1aa" /> */}
+        <AntDesign name="caretdown" color="#a1a1aa" size={16} />
       </Button>
       {isOpenOptions && (
         <Box position="absolute" top="40px" right="0" w="200px">
@@ -46,11 +59,19 @@ function UI({ navigation }) {
             rounded="8px"
             borderWidth="1px"
             borderColor="gray.100"
-            alignItems="start"
+            alignItems="flex-start"
           >
             <Button
               bgColor="white"
-              leftIcon={<RiUser3Fill color="#22c55e" />}
+              // leftIcon={<RiUser3Fill color="#22c55e" />}
+              leftIcon={
+                <MaterialCommunityIcons
+                  name="account"
+                  color="#22c55e"
+                  size={18}
+                  style={{ marginRight: 10 }}
+                />
+              }
               onPress={optionsHandler}
             >
               <Link to={{ screen: "users", params: { id: currentUser.id } }}>
@@ -59,7 +80,15 @@ function UI({ navigation }) {
             </Button>
             <Button
               bgColor="white"
-              leftIcon={<MdSettings color="#22c55e" />}
+              // leftIcon={<MdSettings color="#22c55e" />}
+              leftIcon={
+                <MaterialIcons
+                  name="settings"
+                  color="#22c55e"
+                  size={18}
+                  style={{ marginRight: 10 }}
+                />
+              }
               onPress={optionsHandler}
             >
               <Link to={{ screen: "userupdate" }}>
@@ -68,7 +97,15 @@ function UI({ navigation }) {
             </Button>
             <Button
               bgColor="white"
-              leftIcon={<HiLockClosed color="#22c55e" />}
+              // leftIcon={<HiLockClosed color="#22c55e" />}
+              leftIcon={
+                <Ionicons
+                  name="lock-closed"
+                  color="#22c55e"
+                  size={18}
+                  style={{ marginRight: 10 }}
+                />
+              }
               onPress={optionsHandler}
             >
               <Link to={{ screen: "updatepassword" }}>
@@ -77,7 +114,15 @@ function UI({ navigation }) {
             </Button>
             <Button
               bgColor="white"
-              leftIcon={<RiDownloadCloudFill color="#22c55e" />}
+              // leftIcon={<RiDownloadCloudFill color="#22c55e" />}
+              leftIcon={
+                <MaterialCommunityIcons
+                  name="bookmark"
+                  color="#22c55e"
+                  size={18}
+                  style={{ marginRight: 10 }}
+                />
+              }
               onPress={optionsHandler}
             >
               <Link to={{ screen: "album" }}>

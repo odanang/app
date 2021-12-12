@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
     <Container
       w="container.lg"
       margin="auto"
-      mt="64px"
+      mt={Platform.OS === "web" ? "64px" : "0"}
       maxW="full"
       px={["0", "8px"]}
     >

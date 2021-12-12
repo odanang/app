@@ -3,6 +3,9 @@ import { Button, Box } from "native-base";
 import { HiBell } from "react-icons/hi";
 import NotificationListSimple from "../List/Simple";
 import { AuthContext } from "../../Provider/Native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+MaterialCommunityIcons.loadFont();
 
 function UI() {
   const ref = useRef();
@@ -37,7 +40,9 @@ function UI() {
         p="10px"
         _text={{ color: "gray.400", fontWeight: "600" }}
       >
-        <HiBell color="#a1a1aa" />
+        {/* <HiBell color="#a1a1aa" /> */}
+
+        <MaterialCommunityIcons name="bell" color="#a1a1aa" size={18} />
       </Button>
       {isOpenNotification && (
         <NotificationListSimple

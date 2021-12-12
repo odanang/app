@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Text as RNText, Platform } from "react-native";
 import { Box, HStack, Image, Text, Button, VStack, Divider } from "native-base";
 import {
   InteractionCommentCreateSimple,
@@ -41,7 +42,7 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, post = {}, refetch = () => { } }) {
+export function UI({ loading, error, post = {}, refetch = () => {} }) {
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
@@ -57,7 +58,7 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
       py={4}
       rounded={["0", "xl"]}
       borderWidth="1"
-		  borderColor="gray.100"
+      borderColor="gray.100"
     >
       <HStack
         space="3"
@@ -82,9 +83,20 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
           />
         </Link>
         <Link to={{ screen: "users", params: { id: post?.createdBy?.id } }}>
-          <Text color="gray.900" fontWeight="600" fontSize="14">
-            {post?.createdBy?.name}
-          </Text>
+          {Platform.OS !== "web" ? (
+            <RNText
+              style={{
+                fontWeight: "500",
+                fontFamily: "Lexend_500Medium",
+              }}
+            >
+              {post?.createdBy?.name}
+            </RNText>
+          ) : (
+            <Text color="gray.900" fontWeight="600" fontSize="14">
+              {post?.createdBy?.name}
+            </Text>
+          )}
         </Link>
         <Text color="gray.400" fontSize="12">
           {stringCreatedAt}
@@ -118,7 +130,7 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
               name="dots-three-horizontal"
               color="#a1a1aa"
               size={18}
-              style={{ marginTop: "-2px" }}
+              style={{ marginTop: -2 }}
             />
           </Button>
         )}
@@ -132,9 +144,7 @@ export function UI({ loading, error, post = {}, refetch = () => { } }) {
         )}
       />
 
-      <InteractiveItemSimple
-        id={post?.interactive.id}
-      />
+      <InteractiveItemSimple id={post?.interactive.id} />
     </Box>
   );
 }

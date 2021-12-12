@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from "react";
+import { Platform } from "react-native";
 import {
   Container,
   Heading,

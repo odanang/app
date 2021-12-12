@@ -1,27 +1,32 @@
 import React, { useContext, useState } from "react";
+import { Platform } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { AuthContext } from "../../../Provider/Native";
 
 export const COMMENT_CREATE = gql`
   mutation($data: InteractiveCommentCreateInput) {
     createInteractiveComment(data: $data) {
-     id
-     content
+      id
+      content
     }
   }
 `;
 
-export default function CommentCreate({ UI, interactive, onCompleted = () => { } }) {
+export default function CommentCreate({
+  UI,
+  interactive,
+  onCompleted = () => {},
+}) {
   const [on, { loading, error, data = {} }] = useMutation(COMMENT_CREATE, {
     onCompleted: (data) => {
-      console.log(data)
+      console.log(data);
       onCompleted(data);
     },
-    onError: e => {
-      console.log(e)
-    }
+    onError: (e) => {
+      console.log(e);
+    },
   });
-  // 
+  //
   const { user } = useContext(AuthContext);
   const [content, setContent] = useState("");
 
@@ -31,8 +36,8 @@ export default function CommentCreate({ UI, interactive, onCompleted = () => { }
         connect: { id: interactive?.id },
       },
       content,
-    }
-    console.log(data, interactive)
+    };
+    console.log(data, interactive);
     if (!loading && interactive) {
       on({
         variables: {
@@ -42,22 +47,27 @@ export default function CommentCreate({ UI, interactive, onCompleted = () => { }
     }
   };
   const contentChangeHandle = (e) => {
-    setContent(e.target.value);
+    setContent(Platform.OS === "web" ? e.target.value : e);
+    // console.log(e.target.value);
+    // setContent(e.target.value);
   };
   const userCommentHandle = (e) => {
-    const value = e.target.value;
+    const value = Platform.OS === "web" ? e.target.value : e.nativeEvent.text;
     if (!value.trim().length) {
       return;
     }
     clickCreate();
     setContent("");
   };
+
   return (
     <UI
-      loading={loading} error={error}
+      loading={loading}
+      error={error}
       content={content}
       contentChangeHandle={contentChangeHandle}
       userCommentHandle={userCommentHandle}
-      interactive={interactive} />
+      interactive={interactive}
+    />
   );
 }
