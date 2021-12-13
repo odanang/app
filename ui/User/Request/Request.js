@@ -54,7 +54,12 @@ function UI({ loading, error, allRelationships }) {
             rounded="8px"
           >
             <Box>
-              <Link to="/">
+              <Link
+                to={{
+                  screen: "users",
+                  params: { id: relationship?.createdBy?.id },
+                }}
+              >
                 <Image
                   source={{
                     uri:
@@ -70,7 +75,12 @@ function UI({ loading, error, allRelationships }) {
                 />
               </Link>
             </Box>
-            <Link to="/">
+            <Link
+              to={{
+                screen: "users",
+                params: { id: relationship?.createdBy?.id },
+              }}
+            >
               <Box my="1">
                 <Text fontWeight="600" color="gray.700">
                   {relationship?.createdBy?.name}

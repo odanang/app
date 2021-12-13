@@ -68,7 +68,12 @@ function UI({ loading, error, allRelationships }) {
               rounded="8px"
             >
               <Box>
-                <Link to="/">
+                <Link
+                  to={{
+                    screen: "users",
+                    params: { id: relationship?.createdBy?.id },
+                  }}
+                >
                   <Image
                     source={{
                       uri:
@@ -84,7 +89,12 @@ function UI({ loading, error, allRelationships }) {
                   />
                 </Link>
               </Box>
-              <Link to="/">
+              <Link
+                to={{
+                  screen: "users",
+                  params: { id: relationship?.createdBy?.id },
+                }}
+              >
                 <Box mb="1" pt="2">
                   <RNText
                     style={{
