@@ -1,9 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import ImageUploading from "react-images-uploading"; // upload image
 import {
-  Select,
   Box,
-  Container,
   Heading,
   VStack,
   FormControl,
@@ -11,24 +9,25 @@ import {
   TextArea,
 } from "native-base";
 import Controller from "./Controller";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 function UI({ loading, error, on }) {
-  const contentRef = useRef();
   const [content, setContent] = useState("");
   const changeContent = (e) => {
-    const content = e.target.value;
-    setContent(content);
+    setContent(e.target.value);
   };
-  const submitHandler = (event) => {
-    on({
-      variables: {
-        data: {
-          content: content,
-          interactive: { create: { comments: null, reactions: null } },
+
+  const submitHandler = () => {
+    if (!loading && content.trim()) {
+      on({
+        variables: {
+          data: {
+            content: content,
+            interactive: { create: { comments: null, reactions: null } },
+          },
         },
-      },
-    });
+      });
+    }
   };
 
   return (
@@ -59,7 +58,6 @@ function UI({ loading, error, on }) {
               placeholder="Nhập nội dung ..."
               w="full"
               onChange={changeContent}
-              ref={contentRef}
               name="content"
               bgColor="white"
               px={2}
@@ -73,7 +71,6 @@ function UI({ loading, error, on }) {
               }}
             />
           </FormControl>
-
           {!loading && (
             <Button
               onPress={submitHandler}
@@ -100,7 +97,7 @@ function UI({ loading, error, on }) {
       {error && (
         <Box mt={4} p={3.5} rounded={10} borderWidth={1} borderColor="red.500">
           <Text textAlign="center" color="red.500">
-            Vui lòng kiểm tra các thông tin
+            Đăng bài viết không thành công!
           </Text>
         </Box>
       )}
