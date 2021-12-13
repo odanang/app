@@ -9,32 +9,27 @@ import {
   Input,
   Button,
 } from "native-base";
-function UI({ loading, error, user, navigation }) {
-  /**
-   *
-   * @param {Event} e
-   */
-
+import Controller from "./Controller"
+function UI({ loading, error, user, navigation, on, updateUser }) {
   const passwordOldRef = useRef();
   const passwordNewRef = useRef();
   const passwordConfirmRef = useRef();
   const [inputError, setInputError] = useState(null);
-
   const submitChange = () => {
     setInputError(null);
 
-    const passwordOld = passwordOldRef.current.value;
+    //const passwordOld = passwordOldRef.current.value;
     const passwordNew = passwordNewRef.current.value;
     const passwordConfirm = passwordConfirmRef.current.value;
 
     // Validation password
-    if (passwordOld.trim().length < 6) {
-      setInputError("Kiểm tra lại mật khẩu cũ");
-      return;
-    }
+    // if (passwordOld.trim().length < 8) {
+    //   setInputError("Kiểm tra lại mật khẩu cũ");
+    //   return;
+    // }
 
-    if (passwordNew.trim().length < 6) {
-      setInputError("Độ dài mật khẩu mới ít nhất 6 kí tự");
+    if (passwordNew.trim().length < 8) {
+      setInputError("Độ dài mật khẩu mới ít nhất 8 kí tự");
       return;
     }
 
@@ -43,10 +38,15 @@ function UI({ loading, error, user, navigation }) {
       return;
     }
 
-    console.log(passwordOld, passwordNew, passwordConfirm);
-
-    // Save change
-    // if (!loading);
+    console.log(on);
+    on({
+      variables: {
+        id: user?.id,
+        data: {
+          password: passwordConfirm
+        },
+      },
+    });
   };
 
   return (
@@ -64,7 +64,7 @@ function UI({ loading, error, user, navigation }) {
           bg="gray.50"
         >
           <VStack space={3}>
-            <FormControl>
+            {/* <FormControl>
               <FormControl.Label
                 _text={{
                   color: "coolGray.800",
@@ -89,7 +89,7 @@ function UI({ loading, error, user, navigation }) {
                   borderColor: "green.500",
                 }}
               />
-            </FormControl>
+            </FormControl> */}
             <FormControl>
               <FormControl.Label
                 _text={{
@@ -179,6 +179,20 @@ function UI({ loading, error, user, navigation }) {
             </Text>
           </Box>
         )}
+        {updateUser && (
+          <Box
+            mt={4}
+            p={3.5}
+            rounded={10}
+            borderWidth={1}
+            borderColor="green.500"
+          >
+            <Text textAlign="center" color="green.500">
+              Đổi mật khẩu thành công
+            </Text>
+          </Box>
+        )
+        }
         {inputError && (
           <Box
             mt={4}
@@ -196,4 +210,7 @@ function UI({ loading, error, user, navigation }) {
     </Fragment>
   );
 }
-export default UI;
+export default function ChangePassword(props) {
+  return <Controller {...props} UI={UI} />;
+}
+
