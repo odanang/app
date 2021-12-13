@@ -68,12 +68,12 @@ export function UI({
             <Text color="gray.700">{comment?.content}</Text>
           </Box>
           <HStack mt="1" ml="1" space="2">
-            {comment.my_interactive && (
-              <InteractiveItemShort id={comment.my_interactive.id} />
+            {comment?.my_interactive && (
+              <InteractiveItemShort id={comment?.my_interactive.id} />
             )}
             <Box ml="auto">
-              {comment.createdBy && user.id === comment.createdBy.id && (
-                <DeleteText id={comment.id} onCompleted={onDeleted} />
+              {comment?.createdBy && user?.id === comment?.createdBy.id && (
+                <DeleteText id={comment?.id} onCompleted={onDeleted} />
               )}
             </Box>
           </HStack>

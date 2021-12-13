@@ -5,10 +5,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 FontAwesome.loadFont();
 function UI({ loading, error, signOut, navigation, auth }) {
-  /**
-   *
-   * @param {Event} e
-   */
   const clickSignOut = (e) => {
     signOut();
   };
