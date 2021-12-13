@@ -1,25 +1,26 @@
-import React from "react";
-import { gql, useMutation, useReactiveVar } from "@apollo/client";
-import { PostListRefetch } from "../List/Controller";
+import React from 'react'
+import { gql, useMutation, useReactiveVar } from '@apollo/client'
+import { PostListRefetch } from '../List/Controller'
 
 export const POST_DELETE = gql`
-  mutation($id: ID!) {
+  mutation ($id: ID!) {
     deletePost(id: $id) {
       id
       content
     }
   }
-`;
+`
 
-export default function PostDelete({ UI, id }) {
+export default function PostDelete({ UI, id, refetchPostList }) {
   const [on, { loading, error, data = {} }] = useMutation(POST_DELETE, {
     onCompleted: (data) => {
+      refetchPostList()
     },
-  });
-  const { deletePost } = data;
+  })
+  const { deletePost } = data
   const clickDetete = () => {
-    on({ variables: { id: id } });
-  };
+    on({ variables: { id: id } })
+  }
   return (
     <UI
       loading={loading}
@@ -27,5 +28,5 @@ export default function PostDelete({ UI, id }) {
       clickDetete={clickDetete}
       post={deletePost}
     />
-  );
+  )
 }
