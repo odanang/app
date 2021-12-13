@@ -1,10 +1,10 @@
 import React from "react";
-import { Container, HStack, Box, Image, Stack } from "native-base";
+import { Container, HStack, Box, Image, Stack, SearchIcon } from "native-base";
 import AuthController from "../User/Auth/Controller";
 import { Link } from "@react-navigation/native";
 import Options from "./Options";
 import { NotificationListToggle } from "../Notification";
-import HeadersSearch from "./Search";
+import SearchButton from "./SearchButton";
 
 function UI({ user, navigation, route, options, back }) {
   return (
@@ -37,6 +37,7 @@ function UI({ user, navigation, route, options, back }) {
               </Link>
 
               <HStack alignItems="center" space="10px">
+                <SearchButton navigation={navigation} />
                 <NotificationListToggle navigation={navigation} />
                 <Options navigation={navigation} />
               </HStack>

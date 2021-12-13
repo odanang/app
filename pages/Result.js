@@ -7,6 +7,7 @@ import { PostListSearch } from "../ui/Post";
 import { UserListSearch } from "../ui/User";
 import { useRoute } from "@react-navigation/core";
 import { AuthContext } from "../ui/Provider/Native";
+import HeadersSearch from "../ui/Headers/Search";
 export default function Result({ navigation }) {
   const { user } = useContext(AuthContext);
   const { params = {} } = useRoute();
@@ -60,18 +61,23 @@ export default function Result({ navigation }) {
       ) : (
         <>
           <VStack w="100%">
-            <Box w="full" mt="12px" my="20px" px="0.5%">
-              <RNText
-                style={{
-                  fontWeight: "500",
-                  fontFamily: "Lexend_500Medium",
-                  fontSize: 20,
-                }}
-              >
-                Kết quả tìm kiếm cho {keyword}
-              </RNText>
-            </Box>
-            <UserListSearch keyword={keyword} my_id={user?.id} />
+            <HeadersSearch />
+            {keyword && (
+              <>
+                <Box w="full" mt="12px" my="20px" px="0.5%">
+                  <RNText
+                    style={{
+                      fontWeight: "500",
+                      fontFamily: "Lexend_500Medium",
+                      fontSize: 20,
+                    }}
+                  >
+                    Kết quả tìm kiếm cho {keyword}
+                  </RNText>
+                </Box>
+                <UserListSearch keyword={keyword} my_id={user?.id} />
+              </>
+            )}
           </VStack>
         </>
       )}

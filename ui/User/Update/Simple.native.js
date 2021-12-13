@@ -19,6 +19,7 @@ import {
   Input,
 } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Controller from "./Controller";
 function UI({ loading, error, user, on, data }) {
   /**
    *
@@ -53,7 +54,6 @@ function UI({ loading, error, user, on, data }) {
     }
 
     console.log(username, phone, description, sex);
-    console.log(on);
     on({
       variables: {
         id: user?.id,
@@ -332,4 +332,7 @@ function UI({ loading, error, user, on, data }) {
     </Fragment>
   );
 }
-export default UI;
+//export default UI;
+export default function PostCreateSimple(props) {
+  return <Controller {...props} UI={UI} />;
+}

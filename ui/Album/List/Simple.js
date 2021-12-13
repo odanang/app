@@ -1,6 +1,6 @@
 import React from "react";
 import { HStack, Box, VStack, Text, Divider } from "native-base";
-import { PostItemImageOnly } from "../../Post";
+import PostItemImageOnly from "../../Post/Item/ImageOnly";
 // import PostItemSkeletonGrid from "./SkeletonGrid";
 
 const data = [

@@ -134,7 +134,6 @@ function Native({ navigation, header }) {
         <Stack.Navigator
           screenOptions={{
             header,
-            animation: "none",
           }}
           initialRouteName={navigation.initialRouteName}
         >

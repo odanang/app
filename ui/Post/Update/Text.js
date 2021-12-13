@@ -15,14 +15,14 @@ function UI() {
       _text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
       p="3"
       py="1.5"
-      bgColor="transparrent"
+      bgColor="transparent"
       onPress={toggleText}
       leftIcon={
         <Feather
           name="edit"
           color="#22c55e"
           size={18}
-          style={{ marginTop: "-2px" }}
+          style={{ marginTop: -2 }}
         />
       }
     >

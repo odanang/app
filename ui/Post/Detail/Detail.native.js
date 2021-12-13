@@ -9,7 +9,8 @@ import {
   VStack,
   Divider,
 } from "native-base";
-import { PostDeleteText, PostUpdateText } from "../index";
+import { PostDeleteText } from "../Delete/Text";
+import { PostUpdateText } from "../Update/Text";
 import { UploadImageListCarousel } from "../../Upload/Image";
 import PostItemSkeletonDetail from "./SkeletonDetail";
 import InteractiveItemSimple from "../../Interactive/Item/Simple";
