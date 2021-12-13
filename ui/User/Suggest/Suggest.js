@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { HStack, VStack, Box, Image, Text, Divider } from "native-base";
+import { HStack, VStack, Box, Image, Text, Spinner } from "native-base";
 import {
   RelationshipCreateButton,
   RelationshipDeleteDelete,
 } from "../../Relationship";
 import Controller from "./Controller";
 import { Link } from "@react-navigation/native";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
 function UI({ loading, error, friendsSuggest = [], count, refetch }) {
+  if (loading) return <LoadingSpinner />;
+
   const [suggested] = friendsSuggest;
   if (!suggested) {
     return (

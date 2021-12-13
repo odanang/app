@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Text as RNText, Platform } from "react-native";
 import { Box, HStack, Image, Text, Button, VStack, Divider } from "native-base";
 import PostDeleteText from "../Delete/Text";
@@ -34,25 +34,12 @@ function formatTimeCreate(createdAt) {
 }
 
 export function UI({ loading, error, post = {}, refetch = () => {} }) {
-  const ref = useRef();
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
-
-  useEffect(() => {
-    const hideModal = (e) => {
-      if (isModalOpen && ref.current && !ref.current.contains(e.target)) {
-        setIsModalOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", hideModal);
-    return () => {
-      document.removeEventListener("mousedown", hideModal);
-    };
-  }, [isModalOpen]);
 
   if (loading) return <Text></Text>;
 
@@ -108,7 +95,6 @@ export function UI({ loading, error, post = {}, refetch = () => {} }) {
         </Text>
         {isModalOpen && post.createdBy.id === currentUser?.id && (
           <VStack
-            ref={ref}
             position="absolute"
             right="3"
             top="8"

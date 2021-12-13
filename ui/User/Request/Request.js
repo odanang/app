@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { HStack, VStack, Box, Image, Text } from "native-base";
+import { HStack, VStack, Box, Image, Text, Spinner } from "native-base";
 import {
   RelationshipUpdateButton,
   RelationshipDeleteDelete,
 } from "../../Relationship";
 import Controller from "./Controller";
 import { Link } from "@react-navigation/native";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 function UI({ loading, error, allRelationships }) {
-  console.log(allRelationships)
+  if (loading) return <LoadingSpinner />;
+
   const [suggested] = allRelationships;
   if (!suggested) {
     return (
@@ -52,7 +54,12 @@ function UI({ loading, error, allRelationships }) {
             rounded="8px"
           >
             <Box>
-              <Link to={{ screen: "users", params: { id: relationship?.createdBy?.id } }}>
+              <Link
+                to={{
+                  screen: "users",
+                  params: { id: relationship?.createdBy?.id },
+                }}
+              >
                 <Image
                   source={{
                     uri:
@@ -68,22 +75,24 @@ function UI({ loading, error, allRelationships }) {
                 />
               </Link>
             </Box>
-            <Link to="/">
+            <Link
+              to={{
+                screen: "users",
+                params: { id: relationship?.createdBy?.id },
+              }}
+            >
               <Box my="1">
-                <Link to={{ screen: "users", params: { id: relationship?.createdBy?.id } }}>
-                  <Text fontWeight="600" color="gray.700">
-                    {relationship?.createdBy?.name}
-                  </Text>
-                </Link>
+                <Text fontWeight="600" color="gray.700">
+                  {relationship?.createdBy?.name}
+                </Text>
               </Box>
             </Link>
             <RelationshipUpdateButton id={relationship.id} page={"FR"} />
             <RelationshipDeleteDelete id={relationship.id} page={"FR"} />
           </VStack>
-        ))
-        }
-      </HStack >
-    </VStack >
+        ))}
+      </HStack>
+    </VStack>
   );
 }
 export { UI };

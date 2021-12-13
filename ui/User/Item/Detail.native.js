@@ -12,7 +12,7 @@ import {
 import Controller from "./Controller";
 import DetailSkeleton from "./DetailSkeleton";
 import { AuthContext } from "../../Provider/Native";
-import Field from "../../Field";
+
 function UI({ loading, error, user, posts, relationship, count }) {
   const currentUser = useContext(AuthContext).user;
   if (loading) return <DetailSkeleton />;
@@ -97,7 +97,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
                 )}
                 {(relationship?.isAccepted === false ||
                   relationship?.isAccepted === null) &&
-                  relationship?.createdBy?.id === currentUser.id && (
+                  relationship?.createdBy?.id === currentUser?.id && (
                     <>
                       <Text
                         mb="3"

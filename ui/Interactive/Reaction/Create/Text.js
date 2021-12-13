@@ -11,8 +11,6 @@ function UI({
   reactions,
   reacted,
 }) {
-  if (createResult.loading) return <Text>Đang tải</Text>;
-  if (deleteResult.loading) return <Text>Đang tải</Text>;
   return (
     <Fragment>
       {reacted ? (
@@ -21,6 +19,7 @@ function UI({
           p="0"
           bgColor="transparent"
           onPress={handleClick}
+          disabled={createResult.loading || deleteResult.loading}
         >
           Thích
         </Button>
@@ -30,6 +29,7 @@ function UI({
           p="0"
           bgColor="transparent"
           onPress={handleClick}
+          disabled={createResult.loading || deleteResult.loading}
         >
           Thích
         </Button>

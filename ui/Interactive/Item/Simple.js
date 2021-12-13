@@ -19,7 +19,7 @@ export function UI({
   loadMore = () => {},
   count,
 }) {
-  if (loading) return <Text>Đang tải</Text>;
+  if (loading) return <Text></Text>;
   return (
     <Fragment>
       <Box px="3" mt="2">

@@ -3,7 +3,7 @@ import { HStack, Box, Image, Text, Button } from "native-base";
 import { Link } from "@react-navigation/native";
 import { AuthContext } from "../../Provider/Native";
 import { Text as RNText, Platform } from "react-native";
-import { borderRadius } from "styled-system";
+
 function UI() {
   const createHandler = () => {
     console.log("click");

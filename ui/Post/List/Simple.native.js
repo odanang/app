@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, VStack, Box } from "native-base";
+import { Button, VStack, Box, Text } from "native-base";
 import PostItemSimple from "../Item/Simple";
 import PostItemSkeletonSimple from "./SkeletonSimple";
 import PostListController from "./Controller";
@@ -21,7 +21,7 @@ function UI({
   loadingMore,
   refetch,
 }) {
-  if (loading || error) {
+  if (loading) {
     return <PostItemSkeletonSimple />;
   }
 
