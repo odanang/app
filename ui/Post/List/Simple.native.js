@@ -33,7 +33,11 @@ function UI({
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
               {allPosts.map((post) => (
-                <PostItemSimple key={post.id} existing={{ post, refetch }} />
+                <PostItemSimple
+                  key={post.id}
+                  existing={{ post }}
+                  refetchPostList={refetch}
+                />
               ))}
               {loadingMore && <PostItemSkeletonSimple />}
               {count > allPosts.length && (
