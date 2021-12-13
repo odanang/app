@@ -12,10 +12,10 @@ export default function UserSignOut({ UI, navigation }) {
   const client = useApolloClient();
   const auth = useContext(AuthContext);
   const [on, result = {}] = useMutation(USER_SIGNIN, {
-    onCompleted: async ({ status }) => {
+    onCompleted: async (data) => {
+      await navigation.navigate("home");
       await client.clearStore();
       await client.resetStore();
-      navigation.navigate("home");
     },
     onError: (error) => { },
   });
