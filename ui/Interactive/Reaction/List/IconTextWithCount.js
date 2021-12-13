@@ -6,9 +6,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 FontAwesome.loadFont();
 
 function UI({ loading, error, allInteractiveReactions = [], count = 0 }) {
-  return loading ? (
-    <Text>...</Text>
-  ) : (
+  if (loading) return <Text></Text>;
+
+  return (
     <HStack alignItems="center" space="1.5">
       <FontAwesome name="heart" color="#22c55e" size={18} />
       <Text color="gray.800" fontSize="14" fontWeight="500">

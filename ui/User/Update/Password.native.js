@@ -42,7 +42,7 @@ function UI({ loading, error, user, navigation }) {
     <Fragment>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Box maxW="370px" w="full" mx="auto" mt="4">
-          <Box my="20px">
+          <Box mb="20px">
             <RNText
               style={{
                 fontWeight: "500",

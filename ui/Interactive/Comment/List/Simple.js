@@ -13,7 +13,8 @@ export function UI({
   refetch = () => {},
   getMore,
 }) {
-  if (loading) return <Text>Đang tải</Text>;
+  if (loading) return <Text></Text>;
+
   return (
     <VStack>
       <InteractionCommentCreateSimple

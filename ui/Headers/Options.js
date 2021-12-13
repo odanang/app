@@ -1,10 +1,6 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Button, Box, VStack, Text } from "native-base";
 import { Link } from "@react-navigation/native";
-import { BsFillCaretDownFill } from "react-icons/bs";
-import { RiUser3Fill, RiDownloadCloudFill } from "react-icons/ri";
-import { MdSettings } from "react-icons/md";
-import { HiLockClosed } from "react-icons/hi";
 import { UserSignOutButton } from "../User";
 import { AuthContext } from "../Provider/Native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -47,7 +43,6 @@ function UI({ navigation }) {
         p="10px"
         _text={{ color: "gray.400", fontWeight: "600" }}
       >
-        {/* <BsFillCaretDownFill color="#a1a1aa" /> */}
         <AntDesign name="caretdown" color="#a1a1aa" size={16} />
       </Button>
       {isOpenOptions && (
@@ -63,7 +58,6 @@ function UI({ navigation }) {
           >
             <Button
               bgColor="white"
-              // leftIcon={<RiUser3Fill color="#22c55e" />}
               leftIcon={
                 <MaterialCommunityIcons
                   name="account"
@@ -74,13 +68,12 @@ function UI({ navigation }) {
               }
               onPress={optionsHandler}
             >
-              <Link to={{ screen: "users", params: { id: currentUser.id } }}>
+              <Link to={{ screen: "users", params: { id: currentUser?.id } }}>
                 <Text>Trang cá nhân</Text>
               </Link>
             </Button>
             <Button
               bgColor="white"
-              // leftIcon={<MdSettings color="#22c55e" />}
               leftIcon={
                 <MaterialCommunityIcons
                   name="account-plus"
@@ -97,7 +90,6 @@ function UI({ navigation }) {
             </Button>
             <Button
               bgColor="white"
-              // leftIcon={<MdSettings color="#22c55e" />}
               leftIcon={
                 <MaterialIcons
                   name="settings"
@@ -114,7 +106,6 @@ function UI({ navigation }) {
             </Button>
             <Button
               bgColor="white"
-              // leftIcon={<HiLockClosed color="#22c55e" />}
               leftIcon={
                 <Ionicons
                   name="lock-closed"
@@ -131,7 +122,6 @@ function UI({ navigation }) {
             </Button>
             <Button
               bgColor="white"
-              // leftIcon={<RiDownloadCloudFill color="#22c55e" />}
               leftIcon={
                 <MaterialCommunityIcons
                   name="bookmark"

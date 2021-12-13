@@ -1,23 +1,26 @@
 import React from "react";
-import { Button } from "native-base";
+import { Button, Spinner } from "native-base";
 import PostDelete from "./Controller";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 FontAwesome.loadFont();
 function UI({ loading, error, clickDetete, post }) {
-  const hadleSubmit = (e) => {
+  const handleSubmit = (e) => {
     clickDetete();
   };
 
-  return loading ? (
-    "..."
-  ) : (
+  if (loading) {
+    return <Spinner color="green.500" size="sm" />;
+  }
+
+  return (
     <Button
       _text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
       p="3"
       py="1.5"
       bgColor="transparent"
-      onPress={hadleSubmit}
+      onPress={handleSubmit}
+      disabled={loading}
       leftIcon={
         <FontAwesome
           name="trash-o"

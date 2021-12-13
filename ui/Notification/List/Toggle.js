@@ -40,8 +40,6 @@ function UI() {
         p="10px"
         _text={{ color: "gray.400", fontWeight: "600" }}
       >
-        {/* <HiBell color="#a1a1aa" /> */}
-
         <MaterialCommunityIcons name="bell" color="#a1a1aa" size={18} />
       </Button>
       {isOpenNotification && (

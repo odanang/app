@@ -1,13 +1,18 @@
 import React from "react";
 import { Text as RNText, ScrollView } from "react-native";
-import { HStack, VStack, Box, Image } from "native-base";
+import { HStack, VStack, Box, Image, Spinner } from "native-base";
 import {
   RelationshipUpdateButton,
   RelationshipDeleteDelete,
 } from "../../Relationship";
 import { Link } from "@react-navigation/native";
 import Controller from "./Controller";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 function UI({ loading, error, allRelationships }) {
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const [suggested] = allRelationships;
   if (!suggested) {
     return (
@@ -63,7 +68,12 @@ function UI({ loading, error, allRelationships }) {
               rounded="8px"
             >
               <Box>
-                <Link to="/">
+                <Link
+                  to={{
+                    screen: "users",
+                    params: { id: relationship?.createdBy?.id },
+                  }}
+                >
                   <Image
                     source={{
                       uri:
@@ -79,7 +89,12 @@ function UI({ loading, error, allRelationships }) {
                   />
                 </Link>
               </Box>
-              <Link to="/">
+              <Link
+                to={{
+                  screen: "users",
+                  params: { id: relationship?.createdBy?.id },
+                }}
+              >
                 <Box mb="1" pt="2">
                   <RNText
                     style={{
