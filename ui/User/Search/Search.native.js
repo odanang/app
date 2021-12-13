@@ -9,9 +9,14 @@ import {
   RelationshipDeleteActive,
   RelationshipDeleteCancel,
 } from "../../Relationship";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 import Controller from "./Controller";
 
 function UI({ loading, error, allUsers = [] }) {
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const [result] = allUsers;
   if (!result) {
     return (

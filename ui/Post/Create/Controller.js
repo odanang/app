@@ -13,10 +13,15 @@ export const POST_CREATE = gql`
   }
 `;
 
-export default function PostCreate({ UI, post, navigation, onCompleted = ()=>{} }) {
+export default function PostCreate({
+  UI,
+  post,
+  navigation,
+  onCompleted = () => {},
+}) {
   const [on, { loading, error, data = {} }] = useMutation(POST_CREATE, {
     onCompleted: (data) => {
-			onCompleted(data);
+      onCompleted(data);
       navigation.navigate("home");
     },
   });

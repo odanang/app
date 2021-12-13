@@ -22,7 +22,7 @@ export default function Home({ navigation }) {
           mx={["auto", "auto", "auto", "0"]}
         >
           {/* <PostCreateButton /> */}
-          <PostListSimple first={5} />
+          <PostListSimple first={5} navigation={navigation} />
         </Box>
         {Platform.OS === "web" && (
           <Box flex={[0, 0, 0, 3]} display={["none", "none", "none", "block"]}>
