@@ -81,6 +81,7 @@ export default function PostListController({
       count={count}
       loadMore={loadMore}
       loadingMore={loadingMore}
+      refetch={refetch}
     />
   )
 }

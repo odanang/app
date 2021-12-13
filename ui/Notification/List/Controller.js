@@ -74,14 +74,14 @@ function formatTimeCreate(createdAt) {
   return stringTime
 }
 
-export default function NotificationListController({ UI, first = 3, id }) {
+export default function NotificationListController({ UI, first = 4, id }) {
   const {
     loading,
     error,
     data = {},
   } = useQuery(NOTIFICATION_LIST, {
     variables: { first, id },
-    pollInterval: 3000,
+    pollInterval: 1000,
   })
   const { allRelationships = [], allInteractives = [] } = data
   const comments = []
