@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Platform } from "react-native";
 import { Container } from "native-base";
 import { UserUpdatePassword } from "../ui/User";
-
+import { AuthContext } from "../ui/Provider/Native";
 export default function UserUpdate({ navigation }) {
+  const { user } = useContext(AuthContext);
   return (
     <Container
       w="container.lg"
@@ -12,7 +13,7 @@ export default function UserUpdate({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserUpdatePassword />
+      <UserUpdatePassword user={user} />
     </Container>
   );
 }
