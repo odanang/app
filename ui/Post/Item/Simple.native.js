@@ -33,7 +33,13 @@ function formatTimeCreate(createdAt) {
   return stringTime;
 }
 
-export function UI({ loading, error, post = {}, refetch = () => {} }) {
+export function UI({
+  loading,
+  error,
+  post = {},
+  refetch = () => {},
+  refetchPostList,
+}) {
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
@@ -107,7 +113,9 @@ export function UI({ loading, error, post = {}, refetch = () => {} }) {
           >
             <PostUpdateText />
             <Divider w="full" bgColor="gray.100" />
-            {post && <PostDeleteText id={post?.id} />}
+            {post && (
+              <PostDeleteText id={post?.id} refetchPostList={refetchPostList} />
+            )}
           </VStack>
         )}
         {post.createdBy && post.createdBy.id === currentUser?.id && (
