@@ -3,7 +3,7 @@ import { useMutation, gql, useApolloClient, useQuery } from "@apollo/client";
 import { AuthContext } from "../../Provider/Native";
 export const USER_SIGNIN = gql`
   mutation {
-    status: unauthenticateUser {
+    unauthenticateUser {
       success
     }
   }
@@ -17,16 +17,16 @@ export default function UserSignOut({ UI, navigation }) {
       await client.resetStore();
       navigation.navigate("home");
     },
-    onError: (error) => {},
+    onError: (error) => { },
   });
   const { loading, error, data = {} } = result;
-  const { status } = data;
+  const { unauthenticateUser } = data;
   return (
     <UI
       signOut={on}
       loading={loading}
       error={error}
-      status={status}
+      unauthenticateUser={unauthenticateUser}
       auth={auth}
     />
   );

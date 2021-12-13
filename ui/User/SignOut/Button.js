@@ -6,10 +6,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 FontAwesome.loadFont();
 function UI({ loading, error, signOut, navigation, auth }) {
-  /**
-   *
-   * @param {Event} e
-   */
   const clickSignOut = (e) => {
     signOut();
   };
@@ -21,7 +17,6 @@ function UI({ loading, error, signOut, navigation, auth }) {
       justifyContent="flex-start"
       bgColor="white"
       _text={{ color: "gray.900" }}
-      // leftIcon={<IoLogOut color="#22c55e" />}
       leftIcon={
         <FontAwesome
           name="sign-out"
