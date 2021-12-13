@@ -110,7 +110,7 @@ export default function NotificationListController({ UI, first = 3, id }) {
           user: item.createdBy.name,
           imgUrl:
             'https://odanang.net' +
-            (item.createdBy.avatar.publicUrl || '/upload/img/no-image.png'),
+            (item?.createdBy?.avatar?.publicUrl || '/upload/img/no-image.png'),
           content: 'đã bình luận về bài viết của bạn.',
           time: formatTimeCreate(item.createdAt),
         })
@@ -121,7 +121,7 @@ export default function NotificationListController({ UI, first = 3, id }) {
           user: item.createdBy.name,
           imgUrl:
             'https://odanang.net' +
-            (item.createdBy.avatar.publicUrl || '/upload/img/no-image.png'),
+            (item?.createdBy?.avatar?.publicUrl || '/upload/img/no-image.png'),
           content: 'đã thích bài viết của bạn.',
           time: formatTimeCreate(item.createdAt),
         })
@@ -133,7 +133,8 @@ export default function NotificationListController({ UI, first = 3, id }) {
             user: item.createdBy.name,
             imgUrl:
               'https://odanang.net' +
-              (item.createdBy.avatar.publicUrl || '/upload/img/no-image.png'),
+              (item?.createdBy?.avatar?.publicUrl ||
+                '/upload/img/no-image.png'),
             content: 'đã gửi lời mời kết bạn đến bạn.',
             time: formatTimeCreate(item.createdAt),
           })
