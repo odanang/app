@@ -82,6 +82,23 @@ function UI({ navigation }) {
               bgColor="white"
               // leftIcon={<MdSettings color="#22c55e" />}
               leftIcon={
+                <MaterialCommunityIcons
+                  name="account-plus"
+                  color="#22c55e"
+                  size={18}
+                  style={{ marginRight: 10 }}
+                />
+              }
+              onPress={optionsHandler}
+            >
+              <Link to={{ screen: "friendrequest" }}>
+                <Text>Lời mời kết bạn</Text>
+              </Link>
+            </Button>
+            <Button
+              bgColor="white"
+              // leftIcon={<MdSettings color="#22c55e" />}
+              leftIcon={
                 <MaterialIcons
                   name="settings"
                   color="#22c55e"

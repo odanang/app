@@ -33,14 +33,14 @@ function UI({ loading, error, allUsers = [] }) {
   }
 
   return (
-    <ScrollView mb="140px">
+    <ScrollView mb="240px">
       <HStack
         maxW="full"
         mx="auto"
         w="full"
         flexWrap="wrap"
         justifyContent="flex-start"
-        mb="140px"
+        mb="240px"
       >
         {allUsers.map((user, index) => (
           <VStack
@@ -71,7 +71,7 @@ function UI({ loading, error, allUsers = [] }) {
                 />
               </Link>
             </Box>
-            <Link to="/">
+            <Link to={{ screen: "users", params: { id: user?.id } }}>
               <Box mb="1" pt="2">
                 <RNText
                   style={{

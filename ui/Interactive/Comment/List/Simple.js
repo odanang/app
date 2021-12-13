@@ -2,14 +2,15 @@ import React from "react";
 import InteractionCommentItemSimple from "../Item/Simple";
 import { Button, Text, VStack } from "native-base";
 import Controller from "./Controller";
-import { InteractionCommentCreateSimple } from "..";
+import InteractionCommentCreateSimple from "../Create/Simple";
 
 export function UI({
   loading,
   error,
-  allInteractiveComments = [], interactive,
+  allInteractiveComments = [],
+  interactive,
   count = 0,
-  refetch = () => { },
+  refetch = () => {},
   getMore,
 }) {
   if (loading) return <Text>Đang tải</Text>;
@@ -18,15 +19,20 @@ export function UI({
       <InteractionCommentCreateSimple
         my="10"
         interactive={interactive}
-        onCompleted={data => {
-          refetch()
+        onCompleted={(data) => {
+          refetch();
         }}
       />
       {allInteractiveComments.map((comment) => {
         return (
           <InteractionCommentItemSimple
             key={comment.id}
-            existing={{ comment, onDeleted: data => { refetch() } }}
+            existing={{
+              comment,
+              onDeleted: (data) => {
+                refetch();
+              },
+            }}
           />
         );
       })}

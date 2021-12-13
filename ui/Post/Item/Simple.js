@@ -1,17 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Text as RNText, Platform } from "react-native";
 import { Box, HStack, Image, Text, Button, VStack, Divider } from "native-base";
-import {
-  InteractionCommentCreateSimple,
-  InteractionCommentListSimple,
-  InteractionCommentListToggleButton,
-} from "../../Interactive/Comment";
-import {
-  InteractionReactionCreateButton,
-  InteractionReactionListIconTextWithCount,
-} from "../../Interactive/Reaction";
 import { AlbumCreateButton } from "../../Album";
-import { PostDeleteText, PostUpdateText } from "../index";
+import PostDeleteText from "../Delete/Text";
+import PostUpdateText from "../Update/Text";
 import { UploadImageListCarousel } from "../../Upload/Image";
 import PostItem from "./Controller";
 import Entypo from "react-native-vector-icons/Entypo";

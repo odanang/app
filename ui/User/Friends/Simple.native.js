@@ -76,7 +76,7 @@ function UI({ loading, error, allUsers }) {
                   />
                 </Link>
               </Box>
-              <Link to="/">
+              <Link to={{ screen: "users", params: { id: user?.id } }}>
                 <Box mb="1" pt="2">
                   <RNText
                     style={{

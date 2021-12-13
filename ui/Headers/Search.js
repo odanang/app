@@ -10,8 +10,8 @@ function UI({}) {
   const [searchText, setSearchText] = useState("");
   const navigation = useNavigation();
   const submitHandler = (e) => {
-    if (e.key === "Enter") {
-      navigation.navigate("result", { keyword: searchText });
+    if (e.key === "Enter" && searchText.trim()) {
+      navigation.navigate("result", { keyword: searchText.trim() });
     }
   };
 
