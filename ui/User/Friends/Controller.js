@@ -1,7 +1,7 @@
-import React from "react";
-import { gql, useQuery } from "@apollo/client";
+import React from 'react'
+import { gql, useQuery } from '@apollo/client'
 export const FRIEND_LIST = gql`
-  query($id: ID!) {
+  query ($id: ID!) {
     allRelationships(
       where: {
         OR: [
@@ -30,16 +30,26 @@ export const FRIEND_LIST = gql`
       }
     }
   }
-`;
+`
 export default function UserList({ UI, where, id, ...props }) {
-  const { loading, error, data = {}, refetch  } = useQuery(FRIEND_LIST, {
+  const {
+    loading,
+    error,
+    data = {},
+    refetch,
+  } = useQuery(FRIEND_LIST, {
     variables: { id },
-  });
-  const { allRelationships = [] } = data;
+  })
+  const { allRelationships = [] } = data
   let allUsers = []
   allRelationships.map((relationship) => {
-    if (relationship?.createdBy?.id === id) allUsers.push(relationship?.to)
-    if (relationship?.to?.id === id) allUsers.push(relationship?.createdBy)
+    if (relationship?.createdBy?.id === id)
+      allUsers.push({ ...relationship?.to, idRelationship: relationship?.id })
+    if (relationship?.to?.id === id)
+      allUsers.push({
+        ...relationship?.createdBy,
+        idRelationship: relationship?.id,
+      })
   })
   return (
     <UI
@@ -49,5 +59,5 @@ export default function UserList({ UI, where, id, ...props }) {
       allUsers={allUsers}
       refetch={refetch}
     />
-  );
+  )
 }
