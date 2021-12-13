@@ -7,6 +7,7 @@ import {
 import Controller from "./Controller";
 import { Link } from "@react-navigation/native";
 function UI({ loading, error, allRelationships }) {
+  console.log(allRelationships)
   const [suggested] = allRelationships;
   if (!suggested) {
     return (
@@ -51,7 +52,7 @@ function UI({ loading, error, allRelationships }) {
             rounded="8px"
           >
             <Box>
-              <Link to="/">
+              <Link to={{ screen: "users", params: { id: relationship?.createdBy?.id } }}>
                 <Image
                   source={{
                     uri:
@@ -69,17 +70,20 @@ function UI({ loading, error, allRelationships }) {
             </Box>
             <Link to="/">
               <Box my="1">
-                <Text fontWeight="600" color="gray.700">
-                  {relationship?.createdBy?.name}
-                </Text>
+                <Link to={{ screen: "users", params: { id: relationship?.createdBy?.id } }}>
+                  <Text fontWeight="600" color="gray.700">
+                    {relationship?.createdBy?.name}
+                  </Text>
+                </Link>
               </Box>
             </Link>
             <RelationshipUpdateButton id={relationship.id} page={"FR"} />
             <RelationshipDeleteDelete id={relationship.id} page={"FR"} />
           </VStack>
-        ))}
-      </HStack>
-    </VStack>
+        ))
+        }
+      </HStack >
+    </VStack >
   );
 }
 export { UI };
