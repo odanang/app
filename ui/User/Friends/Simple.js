@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from "react";
-import { HStack, VStack, Box, Image, Text } from "native-base";
+import { HStack, VStack, Box, Image, Text, Spinner } from "native-base";
 import { Link } from "@react-navigation/native";
 import { RelationshipDeleteActive } from "../../Relationship";
 import Controller from "../Friends/Controller";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
 function UI({ loading, error, allUsers }) {
+  if (loading) return <LoadingSpinner />;
+
   const [friends] = allUsers;
   if (!friends) {
     return (

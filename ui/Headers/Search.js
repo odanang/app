@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Input, FormControl } from "native-base";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Link, useNavigation } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/core";
 
 Ionicons.loadFont();
 

@@ -11,7 +11,7 @@ import isEqual from "lodash/isEqual";
 import { setContext } from "@apollo/client/link/context";
 import merge from "deepmerge";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text } from "native-base";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 export const USER_AUTH = gql`
   query {
@@ -127,7 +127,7 @@ function Native({ navigation, header }) {
     },
   };
 
-  if (result.loading) return <Text>Đang tải</Text>;
+  if (result.loading) return <LoadingSpinner />;
   return (
     <AuthContext.Provider value={result}>
       <NavigationContainer linking={navigation.linking} theme={customTheme}>

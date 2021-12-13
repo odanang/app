@@ -14,7 +14,7 @@ function UI({
   loadingMore,
   refetch,
 }) {
-  if (loading || error) {
+  if (loading) {
     return <PostItemSkeletonSimple />;
   }
 

@@ -1,12 +1,11 @@
 import React from "react";
 import { Button } from "native-base";
+import { Text as RNText, Platform } from "react-native";
 import Controller from "./Controller";
 
 function UI({ error, loading, clickDetete }) {
   const clickHandler = (e) => {
-    if (confirm("Bạn có chắc chắn muốn xoá hem?") && !loading) clickDetete();
-
-    //if (!loading) clickDetete();
+    if (!loading) clickDetete();
   };
 
   return (
@@ -17,8 +16,22 @@ function UI({ error, loading, clickDetete }) {
       w="full"
       bgColor="gray.100"
       onPress={clickHandler}
+      disabled={loading}
     >
-      Xoá bạn bè
+      {Platform.OS !== "web" ? (
+        <RNText
+          style={{
+            fontWeight: "500",
+            color: "#a1a1aa",
+            padding: 2,
+            fontFamily: "Lexend_500Medium",
+          }}
+        >
+          Xoá bạn bè
+        </RNText>
+      ) : (
+        "Xoá bạn bè"
+      )}
     </Button>
   );
 }

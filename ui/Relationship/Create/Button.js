@@ -5,7 +5,7 @@ import Controller from "./Controller";
 
 function UI({ error, loading, clickAddFriend }) {
   const clickHandler = (e) => {
-    clickAddFriend();
+    if (!loading) clickAddFriend();
   };
 
   return (
@@ -16,6 +16,7 @@ function UI({ error, loading, clickAddFriend }) {
       w="full"
       bgColor="green.500"
       onPress={clickHandler}
+      disabled={loading}
     >
       {Platform.OS !== "web" ? (
         <RNText

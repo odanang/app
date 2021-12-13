@@ -15,9 +15,10 @@ function UI(props) {
         foregroundColor="#ecebeb"
         animate="true"
       >
-        <Rect x="0" y="0" rx="10" ry="10" width="325" height="300" />
-        <Rect x="340" y="0" rx="10" ry="10" width="325" height="300" />
-        <Rect x="680" y="0" rx="10" ry="10" width="325" height="300" />
+        <Rect x="0" y="0" rx="10" ry="10" width="245" height="300" />
+        <Rect x="255" y="0" rx="10" ry="10" width="245" height="300" />
+        <Rect x="510" y="0" rx="10" ry="10" width="245" height="300" />
+        <Rect x="765" y="0" rx="10" ry="10" width="240" height="300" />
       </ContentLoader>
     </Box>
   );

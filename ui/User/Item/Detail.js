@@ -86,7 +86,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
             )}
             {(relationship?.isAccepted === false ||
               relationship?.isAccepted === null) &&
-              relationship?.createdBy?.id === currentUser.id && (
+              relationship?.createdBy?.id === currentUser?.id && (
                 <>
                   <Text mr="4" fontSize="15" fontWeight="600" color="gray.500">
                     Bạn đã gửi kết bạn đến {user.name}

@@ -32,7 +32,7 @@ export default function Menu({ navigation }) {
               />
             }
           >
-            <Link to={{ screen: "users", params: { id: currentUser.id } }}>
+            <Link to={{ screen: "users", params: { id: currentUser?.id } }}>
               <Text>Trang cá nhân</Text>
             </Link>
           </Button>

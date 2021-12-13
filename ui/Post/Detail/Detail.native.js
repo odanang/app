@@ -57,10 +57,10 @@ function UI({ loading, error, post, refetch }) {
     console.log(isModalOpen);
   };
 
-  console.log(post);
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Text></Text>;
   }
+
   return (
     <Stack direction="column" mx="auto" w="full">
       <KeyboardAwareScrollView style={{ width: "100%" }} extraHeight={100}>
@@ -126,7 +126,7 @@ function UI({ loading, error, post, refetch }) {
                       <PostDeleteText />
                     </VStack>
                   )}
-                  {isModalOpen && post?.createdBy?.id === currentUser.id && (
+                  {isModalOpen && post?.createdBy?.id === currentUser?.id && (
                     <VStack
                       position="absolute"
                       right="3"
@@ -143,7 +143,7 @@ function UI({ loading, error, post, refetch }) {
                       <PostDeleteText id={post?.id} />
                     </VStack>
                   )}
-                  {post?.createdBy?.id === currentUser.id && (
+                  {post?.createdBy?.id === currentUser?.id && (
                     <Button
                       bgColor="transparent"
                       p="1"

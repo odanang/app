@@ -48,8 +48,6 @@ export default function CommentCreate({
   };
   const contentChangeHandle = (e) => {
     setContent(Platform.OS === "web" ? e.target.value : e);
-    // console.log(e.target.value);
-    // setContent(e.target.value);
   };
   const userCommentHandle = (e) => {
     const value = Platform.OS === "web" ? e.target.value : e.nativeEvent.text;
