@@ -111,7 +111,7 @@ export function UI({
             space="1"
             p="2"
           >
-            <PostUpdateText />
+            <PostUpdateText id={post?.id} />
             <Divider w="full" bgColor="gray.100" />
             {post && (
               <PostDeleteText id={post?.id} refetchPostList={refetchPostList} />
