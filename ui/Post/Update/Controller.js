@@ -32,7 +32,7 @@ export default function PostUpdate({ UI, children, id }) {
       loading={loading}
       error={error}
       post={Post}
-      updatePost={updatePost}
+      dataUpdate={updatePost}
       onUpdate={onUpdate}
     />
   )
