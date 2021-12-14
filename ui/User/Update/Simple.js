@@ -23,7 +23,7 @@ function UI({ loading, error, user, on, data }) {
   const [username, setUsername] = useState(user?.name);
   const [phone, setPhone] = useState(user?.phone);
   const [description, setDescription] = useState(user?.description);
-  const [sex, setSex] = useState("male");
+  const [sex, setSex] = useState(user?.gender);
   const [inputError, setInputError] = useState(null);
   const { updateUser } = data;
 

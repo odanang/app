@@ -29,11 +29,9 @@ export const POST_ITEM = gql`
   }
 `;
 export default function PostDetail({ UI, id }) {
-  const { loading, error, data = {} , refetch} = useQuery(POST_ITEM, {
-    variables: { id }
-  }
-  );
-  const { Post } = data;
-  const post = Post;
+  const { loading, error, data = {}, refetch } = useQuery(POST_ITEM, {
+    variables: { id },
+  });
+  const { Post: post } = data;
   return <UI loading={loading} error={error} post={post} refetch={refetch} />;
 }

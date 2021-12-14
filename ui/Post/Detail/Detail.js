@@ -118,23 +118,6 @@ function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
           <Text color="gray.400" fontSize="12">
             {stringCreatedAt}
           </Text>
-          {isModalOpen && (
-            <VStack
-              position="absolute"
-              right="3"
-              top="8"
-              borderColor="gray.100"
-              borderWidth="1"
-              bgColor="white"
-              rounded="10"
-              space="1"
-              p="2"
-            >
-              <PostUpdateText />
-              <Divider w="full" bgColor="gray.100" />
-              <PostDeleteText />
-            </VStack>
-          )}
           {isModalOpen && post?.createdBy?.id === currentUser?.id && (
             <VStack
               ref={ref}
@@ -148,7 +131,7 @@ function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
               space="1"
               p="2"
             >
-              <PostUpdateText />
+              <PostUpdateText id={post?.id} />
               <Divider w="full" bgColor="gray.100" />
               <PostDeleteText id={post?.id} />
             </VStack>
