@@ -1,9 +1,9 @@
-import React from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { POST_ITEM } from "../Detail/Controller";
+import React from 'react'
+import { gql, useMutation, useQuery } from '@apollo/client'
+import { POST_ITEM } from '../Detail/Controller'
 
 export const POST_UPDATE = gql`
-  mutation($id: ID!, $data: PostUpdateInput) {
+  mutation ($id: ID!, $data: PostUpdateInput) {
     updatePost(id: $id, data: $data) {
       id
       content
@@ -12,27 +12,28 @@ export const POST_UPDATE = gql`
       }
     }
   }
-`;
+`
 
 export default function PostUpdate({ UI, children, id }) {
   // QUERY
-  const { loading, error, data = {}, refetch } = useQuery(POST_ITEM, {
+  const {
+    loading,
+    error,
+    data = {},
+  } = useQuery(POST_ITEM, {
     variables: { id },
-  });
+  })
   // MUTATION
-  const [
-    onUpdate,
-    { loadingUpdate, errorUpdate, dataUpdate = {} },
-  ] = useMutation(POST_UPDATE);
-  console.log(dataUpdate);
-  const { Post = {} } = data;
+  const [onUpdate, updateResult] = useMutation(POST_UPDATE)
+  const { Post = {} } = data
+  const { data: updatePost = {} } = updateResult
   return (
     <UI
       loading={loading}
       error={error}
       post={Post}
-      dataUpdate={dataUpdate}
+      updatePost={updatePost}
       onUpdate={onUpdate}
     />
-  );
+  )
 }
