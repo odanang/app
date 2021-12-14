@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from "react";
 import {
   Box,
   Heading,
@@ -6,28 +6,34 @@ import {
   FormControl,
   Button,
   TextArea,
-} from 'native-base'
-import Controller from './Controller'
-import { AuthContext } from '../../Provider/Native'
+} from "native-base";
+import Controller from "./Controller";
+import { AuthContext } from "../../Provider/Native";
+import { useRoute } from "@react-navigation/core";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
-function UI({ on, loading, error, post, updatePost }) {
-  const { user } = useContext(AuthContext)
-
-  const [content, setContent] = useState(post?.content || '')
-  const changeContent = (e) => {
-    setContent(e.target.value)
+function UI({ onUpdate, loading, error, post, dataUpdate }) {
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
+  const { user } = useContext(AuthContext);
+  const [content, setContent] = useState(post.content);
+  const changeContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  console.log(dataUpdate);
   const handleUpdate = () => {
     if (!loading && content.trim()) {
-      on({
+      onUpdate({
         variables: {
           id: post.id,
           data: { content: content },
         },
-      })
+      });
     }
-  }
+  };
 
   // if (user?.id !== post?.createBy?.id) {
   //   return (
@@ -41,7 +47,7 @@ function UI({ on, loading, error, post, updatePost }) {
 
   return (
     <Box maxW="560" mx="auto" w="full" p="2">
-      <Heading my="20px" textAlign="center" fontSize={['18px', '20px']}>
+      <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
         Chỉnh sửa bài viết
       </Heading>
       <Box
@@ -56,8 +62,8 @@ function UI({ on, loading, error, post, updatePost }) {
           <FormControl>
             <FormControl.Label
               _text={{
-                color: 'coolGray.800',
-                fontSize: '14',
+                color: "coolGray.800",
+                fontSize: "14",
                 fontWeight: 400,
               }}
             >
@@ -66,6 +72,7 @@ function UI({ on, loading, error, post, updatePost }) {
             <TextArea
               placeholder="Nhập nội dung ..."
               w="full"
+              value={content}
               onChange={changeContent}
               name="content"
               bgColor="white"
@@ -76,7 +83,7 @@ function UI({ on, loading, error, post, updatePost }) {
               borderColor="gray.100"
               rounded={6}
               _focus={{
-                borderColor: 'green.500',
+                borderColor: "green.500",
               }}
             />
           </FormControl>
@@ -86,7 +93,7 @@ function UI({ on, loading, error, post, updatePost }) {
               rounded={8}
               bgColor="green.500"
               p={2}
-              _text={{ color: 'white', fontWeight: '600' }}
+              _text={{ color: "white", fontWeight: "600" }}
             >
               ĐĂNG NGAY
             </Button>
@@ -96,14 +103,14 @@ function UI({ on, loading, error, post, updatePost }) {
               rounded={8}
               bgColor="green.500"
               p={2}
-              _text={{ color: 'white', fontWeight: '600' }}
+              _text={{ color: "white", fontWeight: "600" }}
             >
               ĐANG TẢI ...
             </Button>
           )}
         </VStack>
       </Box>
-      {updatePost && !error && (
+      {/* {dataUpdate && !error && (
         <Box
           mt={4}
           p={3.5}
@@ -115,7 +122,7 @@ function UI({ on, loading, error, post, updatePost }) {
             Chỉnh sửa bài viết thành công!
           </Text>
         </Box>
-      )}
+      )} */}
       {error && (
         <Box mt={4} p={3.5} rounded={10} borderWidth={1} borderColor="red.500">
           <Text textAlign="center" color="red.500">
@@ -124,9 +131,11 @@ function UI({ on, loading, error, post, updatePost }) {
         </Box>
       )}
     </Box>
-  )
+  );
 }
 
 export default function PostUpdateSimple(props) {
-  return <Controller {...props} UI={UI} />
+  const { params = {} } = useRoute();
+  const { id } = params;
+  return <Controller {...props} UI={UI} id={id} />;
 }
