@@ -6,13 +6,14 @@ import {
   FormControl,
   Button,
   TextArea,
+  Text,
 } from "native-base";
 import Controller from "./Controller";
 import { AuthContext } from "../../Provider/Native";
 import { useRoute } from "@react-navigation/core";
 import LoadingSpinner from "../../Loading/LoadingSpinner";
 
-function UI({ onUpdate, loading, error, post, dataUpdate }) {
+function UI({ onUpdate, loading, error, post, dataUpdate, loadingUpdate }) {
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -22,10 +23,9 @@ function UI({ onUpdate, loading, error, post, dataUpdate }) {
   const changeContent = (e) => {
     setContent(e.target.value);
   };
-
-  console.log(dataUpdate);
+  const { updatePost } = dataUpdate;
   const handleUpdate = () => {
-    if (!loading && content.trim()) {
+    if (!loading && !loadingUpdate && content.trim()) {
       onUpdate({
         variables: {
           id: post.id,
@@ -35,15 +35,15 @@ function UI({ onUpdate, loading, error, post, dataUpdate }) {
     }
   };
 
-  // if (user?.id !== post?.createBy?.id) {
-  //   return (
-  //     <Box maxW="560" mx="auto" w="full" p="2">
-  //       <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
-  //         Bạn không thể chỉnh sửa bài viết này
-  //       </Heading>
-  //     </Box>
-  //   );
-  // }
+  if (user?.id !== post?.createdBy?.id) {
+    return (
+      <Box maxW="560" mx="auto" w="full" p="2">
+        <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
+          Bạn không thể chỉnh sửa bài viết này
+        </Heading>
+      </Box>
+    );
+  }
 
   return (
     <Box maxW="560" mx="auto" w="full" p="2">
@@ -87,7 +87,7 @@ function UI({ onUpdate, loading, error, post, dataUpdate }) {
               }}
             />
           </FormControl>
-          {!loading && (
+          {!loadingUpdate && (
             <Button
               onPress={handleUpdate}
               rounded={8}
@@ -98,7 +98,7 @@ function UI({ onUpdate, loading, error, post, dataUpdate }) {
               ĐĂNG NGAY
             </Button>
           )}
-          {loading && (
+          {loadingUpdate && (
             <Button
               rounded={8}
               bgColor="green.500"
@@ -110,7 +110,7 @@ function UI({ onUpdate, loading, error, post, dataUpdate }) {
           )}
         </VStack>
       </Box>
-      {/* {dataUpdate && !error && (
+      {updatePost && !error && (
         <Box
           mt={4}
           p={3.5}
@@ -122,7 +122,7 @@ function UI({ onUpdate, loading, error, post, dataUpdate }) {
             Chỉnh sửa bài viết thành công!
           </Text>
         </Box>
-      )} */}
+      )}
       {error && (
         <Box mt={4} p={3.5} rounded={10} borderWidth={1} borderColor="red.500">
           <Text textAlign="center" color="red.500">

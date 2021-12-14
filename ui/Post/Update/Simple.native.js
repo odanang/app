@@ -1,38 +1,37 @@
-import React, { useState } from 'react'
-import ImageUploading from 'react-images-uploading' // upload image
-import {
-  Box,
-  Heading,
-  VStack,
-  FormControl,
-  Button,
-  TextArea,
-} from 'native-base'
+import React, { useState, useContext } from "react";
+import ImageUploading from "react-images-uploading"; // upload image
+import { Box, Text, VStack, FormControl, Button, TextArea } from "native-base";
 import {
   Keyboard,
   TouchableWithoutFeedback,
   Text as RNText,
-} from 'react-native'
-import Controller from './Controller'
-import { useNavigation } from '@react-navigation/native'
+} from "react-native";
+import Controller from "./Controller";
+import { useRoute } from "@react-navigation/core";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
-function UI({ on, loading, error, post, updatePost }) {
-  const [content, setContent] = useState(post?.content || '')
-  const changeContent = (value) => {
-    setContent(value)
+function UI({ onUpdate, loading, error, post, dataUpdate, loadingUpdate }) {
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
-  const submitHandler = () => {
-    if (!loading && content.trim()) {
-      Keyboard.dismiss()
-      on({
+  const [content, setContent] = useState(post.content);
+  const changeContent = (value) => {
+    setContent(value);
+  };
+
+  const { updatePost } = dataUpdate;
+  const handleUpdate = () => {
+    if (!loading && !loadingUpdate && content.trim()) {
+      Keyboard.dismiss();
+      onUpdate({
         variables: {
           id: post.id,
           data: { content: content },
         },
-      })
+      });
     }
-  }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,10 +39,10 @@ function UI({ on, loading, error, post, updatePost }) {
         <Box mb="20px">
           <RNText
             style={{
-              fontWeight: '500',
-              textAlign: 'center',
+              fontWeight: "500",
+              textAlign: "center",
               fontSize: 24,
-              fontFamily: 'Lexend_500Medium',
+              fontFamily: "Lexend_500Medium",
             }}
           >
             Chỉnh sửa bài viết
@@ -61,8 +60,8 @@ function UI({ on, loading, error, post, updatePost }) {
             <FormControl>
               <FormControl.Label
                 _text={{
-                  color: 'coolGray.800',
-                  fontSize: '14',
+                  color: "coolGray.800",
+                  fontSize: "14",
                   fontWeight: 400,
                 }}
               >
@@ -71,6 +70,7 @@ function UI({ on, loading, error, post, updatePost }) {
               <TextArea
                 placeholder="Nhập nội dung ..."
                 w="full"
+                value={content}
                 onChangeText={changeContent}
                 name="content"
                 bgColor="white"
@@ -80,35 +80,35 @@ function UI({ on, loading, error, post, updatePost }) {
                 borderColor="gray.100"
                 rounded={6}
                 _focus={{
-                  borderColor: 'green.500',
+                  borderColor: "green.500",
                 }}
               />
             </FormControl>
-            {!loading && (
+            {!loadingUpdate && (
               <Button
-                onPress={submitHandler}
+                onPress={handleUpdate}
                 rounded={8}
                 bgColor="green.500"
                 p={2}
               >
                 <RNText
                   style={{
-                    fontWeight: '500',
-                    color: 'white',
-                    fontFamily: 'Lexend_500Medium',
+                    fontWeight: "500",
+                    color: "white",
+                    fontFamily: "Lexend_500Medium",
                   }}
                 >
                   ĐĂNG NGAY
                 </RNText>
               </Button>
             )}
-            {loading && (
+            {loadingUpdate && (
               <Button rounded={8} bgColor="green.500" p={2}>
                 <RNText
                   style={{
-                    fontWeight: '500',
-                    color: 'white',
-                    fontFamily: 'Lexend_500Medium',
+                    fontWeight: "500",
+                    color: "white",
+                    fontFamily: "Lexend_500Medium",
                   }}
                 >
                   ĐANG TẢI ...
@@ -145,9 +145,10 @@ function UI({ on, loading, error, post, updatePost }) {
         )}
       </Box>
     </TouchableWithoutFeedback>
-  )
+  );
 }
 export default function PostCreateSimple(props) {
-  const navigation = useNavigation()
-  return <Controller {...props} UI={UI} navigation={navigation} />
+  const { params = {} } = useRoute();
+  const { id } = params;
+  return <Controller {...props} UI={UI} id={id} />;
 }
