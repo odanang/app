@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react'
 import {
   Box,
   Heading,
@@ -6,17 +6,17 @@ import {
   FormControl,
   Button,
   TextArea,
-} from "native-base";
-import Controller from "./Controller";
-import { AuthContext } from "../../Provider/Native";
+} from 'native-base'
+import Controller from './Controller'
+import { AuthContext } from '../../Provider/Native'
 
 function UI({ on, loading, error, post, updatePost }) {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext)
 
-  const [content, setContent] = useState(post?.content || "");
+  const [content, setContent] = useState(post?.content || '')
   const changeContent = (e) => {
-    setContent(e.target.value);
-  };
+    setContent(e.target.value)
+  }
 
   const handleUpdate = () => {
     if (!loading && content.trim()) {
@@ -25,9 +25,9 @@ function UI({ on, loading, error, post, updatePost }) {
           id: post.id,
           data: { content: content },
         },
-      });
+      })
     }
-  };
+  }
 
   // if (user?.id !== post?.createBy?.id) {
   //   return (
@@ -41,7 +41,7 @@ function UI({ on, loading, error, post, updatePost }) {
 
   return (
     <Box maxW="560" mx="auto" w="full" p="2">
-      <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
+      <Heading my="20px" textAlign="center" fontSize={['18px', '20px']}>
         Chỉnh sửa bài viết
       </Heading>
       <Box
@@ -56,8 +56,8 @@ function UI({ on, loading, error, post, updatePost }) {
           <FormControl>
             <FormControl.Label
               _text={{
-                color: "coolGray.800",
-                fontSize: "14",
+                color: 'coolGray.800',
+                fontSize: '14',
                 fontWeight: 400,
               }}
             >
@@ -76,7 +76,7 @@ function UI({ on, loading, error, post, updatePost }) {
               borderColor="gray.100"
               rounded={6}
               _focus={{
-                borderColor: "green.500",
+                borderColor: 'green.500',
               }}
             />
           </FormControl>
@@ -86,7 +86,7 @@ function UI({ on, loading, error, post, updatePost }) {
               rounded={8}
               bgColor="green.500"
               p={2}
-              _text={{ color: "white", fontWeight: "600" }}
+              _text={{ color: 'white', fontWeight: '600' }}
             >
               ĐĂNG NGAY
             </Button>
@@ -96,7 +96,7 @@ function UI({ on, loading, error, post, updatePost }) {
               rounded={8}
               bgColor="green.500"
               p={2}
-              _text={{ color: "white", fontWeight: "600" }}
+              _text={{ color: 'white', fontWeight: '600' }}
             >
               ĐANG TẢI ...
             </Button>
@@ -112,7 +112,7 @@ function UI({ on, loading, error, post, updatePost }) {
           borderColor="green.500"
         >
           <Text textAlign="center" color="green.500">
-            Chỉn sửa bài viết thành công!
+            Chỉnh sửa bài viết thành công!
           </Text>
         </Box>
       )}
@@ -124,9 +124,9 @@ function UI({ on, loading, error, post, updatePost }) {
         </Box>
       )}
     </Box>
-  );
+  )
 }
 
 export default function PostUpdateSimple(props) {
-  return <Controller {...props} UI={UI} />;
+  return <Controller {...props} UI={UI} />
 }
