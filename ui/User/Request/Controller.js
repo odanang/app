@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { gql, makeVar, useQuery } from "@apollo/client";
 export const FRIEND_LIST = gql`
   query($id: ID!) {
@@ -27,7 +27,7 @@ export const FRIEND_LIST = gql`
 
 export const refetchUserRequest = makeVar(() => {});
 
-export default function UserList({ UI, where, id, ...props }) {
+export default function UserList({ UI, where, id, navigation, ...props }) {
   const { loading, error, data = {}, refetch } = useQuery(FRIEND_LIST, {
     variables: { id },
   });
@@ -37,6 +37,15 @@ export default function UserList({ UI, where, id, ...props }) {
     allUsers.push(relationship?.createdBy);
   });
   if (refetch) refetchUserRequest(refetch);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     refetch();
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation]);
+
   return (
     <UI
       {...props}

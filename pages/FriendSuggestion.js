@@ -13,7 +13,7 @@ export default function NewPost({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserListSuggest id={user?.id} />
+      <UserListSuggest id={user?.id} navigation={navigation} />
     </Container>
   );
 }

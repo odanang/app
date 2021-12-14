@@ -21,7 +21,7 @@ import Controller from "./Controller";
 import DetailSkeleton from "./DetailSkeleton";
 import Field from "../../Field";
 import { AuthContext } from "../../Provider/Native";
-function UI({ loading, error, user, posts, relationship, count }) {
+function UI({ loading, error, user, posts, relationship, count, navigation }) {
   const currentUser = useContext(AuthContext).user;
   if (loading) return <DetailSkeleton />;
 
@@ -148,7 +148,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
           </Text>
           <Divider bg="gray.100" w="full" my="1" orientation="horizontal" />
         </VStack>
-        <PostListGrid />
+        <PostListGrid navigation={navigation} />
       </Box>
     </VStack>
   );

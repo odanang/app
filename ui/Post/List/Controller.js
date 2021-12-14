@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react'
-import { gql, makeVar, useQuery } from '@apollo/client'
-import { AuthContext } from '../../Provider/Native'
+import React, { useContext, useState, useEffect } from "react";
+import { gql, makeVar, useQuery } from "@apollo/client";
+import { AuthContext } from "../../Provider/Native";
 export const POST_LIST = gql`
-  query (
+  query(
     $first: Int
     $skip: Int
     $sortBy: [SortPostsBy!]
@@ -35,42 +35,51 @@ export const POST_LIST = gql`
       }
     }
   }
-`
+`;
 
 export default function PostListController({
   UI,
   first = 4,
   skip,
-  sortBy = 'createdAt_DESC',
+  sortBy = "createdAt_DESC",
   where,
+  navigation,
 }) {
-  const { user } = useContext(AuthContext)
-  const {
-    loading,
-    error,
-    data = {},
-    fetchMore,
-    refetch,
-  } = useQuery(POST_LIST, {
-    variables: { first, where, skip, sortBy, user: { id: user.id } },
-  })
-  const [loadingMore, setLoadingMore] = useState(false)
-  const { allPosts = [], _allPostsMeta = {} } = data
-  const { count = 0 } = _allPostsMeta
+  const { user } = useContext(AuthContext);
+  const { loading, error, data = {}, fetchMore, refetch } = useQuery(
+    POST_LIST,
+    {
+      variables: { first, where, skip, sortBy, user: { id: user.id } },
+    }
+  );
+  const [loadingMore, setLoadingMore] = useState(false);
+  const { allPosts = [], _allPostsMeta = {} } = data;
+  const { count = 0 } = _allPostsMeta;
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      console.log("post list home");
+      console.log(allPosts.length);
+      refetch();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   function loadMore(e) {
-    if (loading || error) return
-    setLoadingMore(true)
+    if (loading || error) return;
+    setLoadingMore(true);
     fetchMore({
       variables: { skip: allPosts.length },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         return {
           ...previousResult,
           allPosts: [...previousResult.allPosts, ...fetchMoreResult.allPosts],
-        }
+        };
       },
     }).finally(() => {
-      setLoadingMore(false)
-    })
+      setLoadingMore(false);
+    });
   }
 
   return (
@@ -83,5 +92,5 @@ export default function PostListController({
       loadingMore={loadingMore}
       refetch={refetch}
     />
-  )
+  );
 }

@@ -6,7 +6,7 @@ import { RelationshipDeleteActive } from "../../Relationship";
 import Controller from "../Friends/Controller";
 import LoadingSpinner from "../../Loading/LoadingSpinner";
 
-function UI({ loading, error, allUsers }) {
+function UI({ loading, error, allUsers, refetch }) {
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -94,7 +94,11 @@ function UI({ loading, error, allUsers }) {
                   </RNText>
                 </Box>
               </Link>
-              <RelationshipDeleteActive toId={user.id} page={"SF"} />
+              <RelationshipDeleteActive
+                id={user.idRelationship}
+                page={"FP"}
+                refetchFriends={refetch}
+              />
             </VStack>
           ))}
         </HStack>
