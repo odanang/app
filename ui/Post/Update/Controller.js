@@ -27,8 +27,8 @@ export default function PostUpdate({ UI, children, id }) {
   const { updatePost } = dataUpdate
   return (
     <UI
-      loading={loading}
-      error={error}
+      loading={loadingPost}
+      error={errorPost}
       post={dataPost}
       on={on}
       updatePost={updatePost}
