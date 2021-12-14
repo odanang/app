@@ -17,7 +17,7 @@ export default function User({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserItemDetail id={id} my_id={user?.id} />
+      <UserItemDetail id={id} my_id={user?.id} navigation={navigation} />
     </Container>
   );
 }

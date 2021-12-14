@@ -1,7 +1,7 @@
-import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import React, { useEffect } from "react";
+import { gql, useQuery } from "@apollo/client";
 export const FRIEND_LIST = gql`
-  query ($id: ID!) {
+  query($id: ID!) {
     allRelationships(
       where: {
         OR: [
@@ -30,27 +30,31 @@ export const FRIEND_LIST = gql`
       }
     }
   }
-`
-export default function UserList({ UI, where, id, ...props }) {
-  const {
-    loading,
-    error,
-    data = {},
-    refetch,
-  } = useQuery(FRIEND_LIST, {
+`;
+export default function UserList({ UI, where, id, navigation, ...props }) {
+  const { loading, error, data = {}, refetch } = useQuery(FRIEND_LIST, {
     variables: { id },
-  })
-  const { allRelationships = [] } = data
-  let allUsers = []
+  });
+  const { allRelationships = [] } = data;
+  let allUsers = [];
   allRelationships.map((relationship) => {
     if (relationship?.createdBy?.id === id)
-      allUsers.push({ ...relationship?.to, idRelationship: relationship?.id })
+      allUsers.push({ ...relationship?.to, idRelationship: relationship?.id });
     if (relationship?.to?.id === id)
       allUsers.push({
         ...relationship?.createdBy,
         idRelationship: relationship?.id,
-      })
-  })
+      });
+  });
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      refetch();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <UI
       {...props}
@@ -59,5 +63,5 @@ export default function UserList({ UI, where, id, ...props }) {
       allUsers={allUsers}
       refetch={refetch}
     />
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from "react";
 import {
   Box,
   Heading,
@@ -6,42 +6,48 @@ import {
   FormControl,
   Button,
   TextArea,
-} from 'native-base'
-import Controller from './Controller'
-import { AuthContext } from '../../Provider/Native'
+  Text,
+} from "native-base";
+import Controller from "./Controller";
+import { AuthContext } from "../../Provider/Native";
+import { useRoute } from "@react-navigation/core";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
-function UI({ on, loading, error, post, updatePost }) {
-  const { user } = useContext(AuthContext)
-
-  const [content, setContent] = useState(post?.content || '')
-  const changeContent = (e) => {
-    setContent(e.target.value)
+function UI({ onUpdate, loading, error, post, dataUpdate, loadingUpdate }) {
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
+  const { user } = useContext(AuthContext);
+  const [content, setContent] = useState(post.content);
+  const changeContent = (e) => {
+    setContent(e.target.value);
+  };
+  const { updatePost } = dataUpdate;
   const handleUpdate = () => {
-    if (!loading && content.trim()) {
-      on({
+    if (!loading && !loadingUpdate && content.trim()) {
+      onUpdate({
         variables: {
           id: post.id,
           data: { content: content },
         },
-      })
+      });
     }
-  }
+  };
 
-  // if (user?.id !== post?.createBy?.id) {
-  //   return (
-  //     <Box maxW="560" mx="auto" w="full" p="2">
-  //       <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
-  //         Bạn không thể chỉnh sửa bài viết này
-  //       </Heading>
-  //     </Box>
-  //   );
-  // }
+  if (user?.id !== post?.createdBy?.id) {
+    return (
+      <Box maxW="560" mx="auto" w="full" p="2">
+        <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
+          Bạn không thể chỉnh sửa bài viết này
+        </Heading>
+      </Box>
+    );
+  }
 
   return (
     <Box maxW="560" mx="auto" w="full" p="2">
-      <Heading my="20px" textAlign="center" fontSize={['18px', '20px']}>
+      <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
         Chỉnh sửa bài viết
       </Heading>
       <Box
@@ -56,8 +62,8 @@ function UI({ on, loading, error, post, updatePost }) {
           <FormControl>
             <FormControl.Label
               _text={{
-                color: 'coolGray.800',
-                fontSize: '14',
+                color: "coolGray.800",
+                fontSize: "14",
                 fontWeight: 400,
               }}
             >
@@ -66,6 +72,7 @@ function UI({ on, loading, error, post, updatePost }) {
             <TextArea
               placeholder="Nhập nội dung ..."
               w="full"
+              value={content}
               onChange={changeContent}
               name="content"
               bgColor="white"
@@ -76,27 +83,27 @@ function UI({ on, loading, error, post, updatePost }) {
               borderColor="gray.100"
               rounded={6}
               _focus={{
-                borderColor: 'green.500',
+                borderColor: "green.500",
               }}
             />
           </FormControl>
-          {!loading && (
+          {!loadingUpdate && (
             <Button
               onPress={handleUpdate}
               rounded={8}
               bgColor="green.500"
               p={2}
-              _text={{ color: 'white', fontWeight: '600' }}
+              _text={{ color: "white", fontWeight: "600" }}
             >
               ĐĂNG NGAY
             </Button>
           )}
-          {loading && (
+          {loadingUpdate && (
             <Button
               rounded={8}
               bgColor="green.500"
               p={2}
-              _text={{ color: 'white', fontWeight: '600' }}
+              _text={{ color: "white", fontWeight: "600" }}
             >
               ĐANG TẢI ...
             </Button>
@@ -124,9 +131,11 @@ function UI({ on, loading, error, post, updatePost }) {
         </Box>
       )}
     </Box>
-  )
+  );
 }
 
 export default function PostUpdateSimple(props) {
-  return <Controller {...props} UI={UI} />
+  const { params = {} } = useRoute();
+  const { id } = params;
+  return <Controller {...props} UI={UI} id={id} />;
 }
