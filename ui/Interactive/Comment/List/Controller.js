@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { gql, useQuery, makeVar } from "@apollo/client";
 export const COMMENT_LIST = gql`
-  query (
+  query(
     $first: Int
     $skip: Int
     $where: InteractiveCommentWhereInput
@@ -18,7 +18,7 @@ export const COMMENT_LIST = gql`
     ) {
       id
       content
-      my_interactive{
+      my_interactive {
         id
       }
     }
@@ -33,15 +33,10 @@ export default function CommentListController({
   where,
   refetchInteractiveItem,
   existing,
+  id,
 }) {
-  if (existing)
-    return <UI {...existing} />;
-  const {
-    loading,
-    error,
-    data = {},
-    refetch,
-  } = useQuery(COMMENT_LIST, {
+  if (existing) return <UI {...existing} id={id} />;
+  const { loading, error, data = {}, refetch } = useQuery(COMMENT_LIST, {
     variables: { first, skip, where, sortBy },
   });
   const { _allInteractiveCommentsMeta = {}, allInteractiveComments } = data;
@@ -49,6 +44,7 @@ export default function CommentListController({
   return useMemo(
     () => (
       <UI
+        id={id}
         loading={loading}
         error={error}
         allInteractiveComments={allInteractiveComments}

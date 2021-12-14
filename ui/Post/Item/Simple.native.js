@@ -39,6 +39,7 @@ export function UI({
   post = {},
   refetch = () => {},
   refetchPostList,
+  isRefreshing,
 }) {
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -143,8 +144,11 @@ export function UI({
           (image) => "https://odanang.net" + image?.file?.publicUrl
         )}
       />
-
-      <InteractiveItemSimple id={post?.interactive.id} />
+      <InteractiveItemSimple
+        isRefreshing={isRefreshing}
+        id={post?.interactive.id}
+        postId={post?.id}
+      />
     </Box>
   );
 }
