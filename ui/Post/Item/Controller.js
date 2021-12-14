@@ -1,8 +1,8 @@
-import React from 'react'
-import { gql, useQuery } from '@apollo/client'
-import { POST_LIST } from '../List/Controller'
+import React from "react";
+import { gql, useQuery } from "@apollo/client";
+import { POST_LIST } from "../List/Controller";
 export const POST_ITEM = gql`
-  query ($id: ID!) {
+  query($id: ID!) {
     Post(where: { id: $id }) {
       id
       content
@@ -53,28 +53,34 @@ export const POST_ITEM = gql`
       }
     }
   }
-`
+`;
 export default function PostItem({
   UI,
   id,
   where,
   existing = {},
   refetchPostList,
+  isRefreshing,
 }) {
-  if (existing) return <UI refetchPostList={refetchPostList} {...existing} />
+  if (existing)
+    return (
+      <UI
+        refetchPostList={refetchPostList}
+        {...existing}
+        isRefreshing={isRefreshing}
+      />
+    );
 
-  if (!id) return 'invalid'
+  if (!id) return "invalid";
 
-  const {
-    loading,
-    error,
-    data = {},
-    refetch,
-  } = useQuery(id ? POST_ITEM : POST_LIST, {
-    variables: id ? { id } : { where },
-  })
-  const { allPosts, Post } = data
-  const [post] = allPosts || [Post]
+  const { loading, error, data = {}, refetch } = useQuery(
+    id ? POST_ITEM : POST_LIST,
+    {
+      variables: id ? { id } : { where },
+    }
+  );
+  const { allPosts, Post } = data;
+  const [post] = allPosts || [Post];
   return (
     <UI
       loading={loading}
@@ -82,6 +88,7 @@ export default function PostItem({
       post={post}
       refetch={refetch}
       refetchPostList={refetchPostList}
+      isRefreshing={isRefreshing}
     />
-  )
+  );
 }
