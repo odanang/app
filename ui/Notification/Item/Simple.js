@@ -2,10 +2,11 @@ import React from "react";
 import { Box, Button, Text, Image, HStack } from "native-base";
 import { Text as RNText, Platform } from "react-native";
 import { Link } from "@react-navigation/native";
-
+import { useLinkTo } from "@react-navigation/native";
 function UI(props) {
+  const linkTo = useLinkTo();
   return (
-    <Button bgColor="white" onPress={props.notificationHandler}>
+    <Button bgColor="white" onPress={props.notificationHandler} onPress={() => linkTo(props?.item?.url+``)}>
       <HStack
         space="12px"
         display="flex"

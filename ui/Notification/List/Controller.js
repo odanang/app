@@ -53,6 +53,9 @@ export const NOTIFICATION_LIST = gql`
           }
         }
       }
+      post {
+        id
+      }
     }
   }
 `;
@@ -86,10 +89,25 @@ export default function NotificationListController({ UI, first = 4, id }) {
   const reactions = [];
   if (allInteractives.length)
     allInteractives.forEach((interactive) => {
-      if (interactive.comments)
-        interactive.comments.forEach((comment) => comments.push(comment));
-      if (interactive.reactions)
-        interactive.reactions.forEach((reaction) => reactions.push(reaction));
+      if (interactive.comments) {
+        interactive.comments.forEach((comment) => {
+          const commentNotiItem = {
+            ...comment,
+            postId: interactive?.post?.id
+          }
+          comments.push(commentNotiItem)
+        }
+        );
+      }
+      if (interactive.reactions) {
+        interactive.reactions.forEach((reaction) => {
+          const reactionNotiItem = {
+            ...reaction,
+            postId: interactive?.post?.id
+          }
+          reactions.push(reactionNotiItem)
+        });
+      }
     });
   const arr = [];
   arr.push(...comments, ...reactions);
@@ -111,6 +129,7 @@ export default function NotificationListController({ UI, first = 4, id }) {
             (item?.createdBy?.avatar?.publicUrl || "/upload/img/no-image.png"),
           content: "đã bình luận về bài viết của bạn.",
           time: formatTimeCreate(item.createdAt),
+          url: `/posts/${item?.postId}`
         });
         break;
       case "InteractiveReaction":
@@ -122,10 +141,11 @@ export default function NotificationListController({ UI, first = 4, id }) {
             (item?.createdBy?.avatar?.publicUrl || "/upload/img/no-image.png"),
           content: "đã thích bài viết của bạn.",
           time: formatTimeCreate(item.createdAt),
+          url: `/posts/${item?.postId}`
         });
         break;
       case "Relationship":
-        if (!item.isAccepted)
+        if (!item.isAccepted) {
           solvedData.push({
             id: item.id,
             user: item.createdBy.name,
@@ -135,8 +155,10 @@ export default function NotificationListController({ UI, first = 4, id }) {
                 "/upload/img/no-image.png"),
             content: "đã gửi lời mời kết bạn đến bạn.",
             time: formatTimeCreate(item.createdAt),
+            url: `/friendrequest`
           });
-        else
+        }
+        else {
           solvedData.push({
             id: item.id,
             user: item.createdBy.name,
@@ -146,7 +168,9 @@ export default function NotificationListController({ UI, first = 4, id }) {
                 "/upload/img/no-image.png"),
             content: "và bạn đã trở thành bạn bè",
             time: formatTimeCreate(item.createdAt),
+            url: `/users/${item?.createdBy?.id}`
           });
+        }
         break;
       default:
         solvedData.push({});
