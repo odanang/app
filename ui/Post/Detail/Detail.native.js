@@ -128,7 +128,7 @@ function UI({ loading, error, post, refetch }) {
                     >
                       <PostUpdateText id={post?.id} />
                       <Divider w="full" bgColor="gray.100" />
-                      <PostDeleteText id={post?.id} />
+                      <PostDeleteText id={post?.id} page="detailPost" />
                     </VStack>
                   )}
                   {post?.createdBy?.id === currentUser?.id && (
