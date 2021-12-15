@@ -3,11 +3,10 @@ import { Text } from "native-base";
 import Controller from "./Controller";
 
 function UI({ loading, error, allInteractiveReactions = [], count = 0 }) {
-  return loading ? (
-    <Text>...</Text>
-  ) : (
+  if (loading) return <Text></Text>;
+  return (
     <Text color="gray.400" fontSize="12" fontWeight="600">
-      {count ? count + ' lượt thích' : ''}
+      {count ? count + " lượt thích" : ""}
     </Text>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Text as RNText, Platform } from "react-native";
 import { Box, HStack, Image, Text, Button, VStack, Divider } from "native-base";
 import PostDeleteText from "../Delete/Text";
@@ -39,26 +39,14 @@ export function UI({
   post = {},
   refetch = () => {},
   refetchPostList,
+  isRefreshing,
 }) {
-  const ref = useRef();
   const currentUser = useContext(AuthContext).user;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
   };
-
-  useEffect(() => {
-    const hideModal = (e) => {
-      if (isModalOpen && ref.current && !ref.current.contains(e.target)) {
-        setIsModalOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", hideModal);
-    return () => {
-      document.removeEventListener("mousedown", hideModal);
-    };
-  }, [isModalOpen]);
 
   if (loading) return <Text></Text>;
 
@@ -114,7 +102,6 @@ export function UI({
         </Text>
         {isModalOpen && post.createdBy.id === currentUser?.id && (
           <VStack
-            ref={ref}
             position="absolute"
             right="3"
             top="8"
@@ -157,8 +144,11 @@ export function UI({
           (image) => "https://odanang.net" + image?.file?.publicUrl
         )}
       />
-
-      <InteractiveItemSimple id={post?.interactive.id} />
+      <InteractiveItemSimple
+        isRefreshing={isRefreshing}
+        id={post?.interactive.id}
+        postId={post?.id}
+      />
     </Box>
   );
 }

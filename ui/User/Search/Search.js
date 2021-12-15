@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, VStack, Box, Image, Text } from "native-base";
+import { HStack, VStack, Box, Image, Text, Spinner } from "native-base";
 import { Link } from "@react-navigation/native";
 import {
   RelationshipCreateButton,
@@ -9,8 +9,11 @@ import {
   RelationshipDeleteCancel,
 } from "../../Relationship";
 import Controller from "./Controller";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
 function UI({ loading, error, allUsers = [] }) {
+  if (loading) return <LoadingSpinner />;
+
   const [result] = allUsers;
   if (!result) {
     return (

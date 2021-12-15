@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Platform } from "react-native";
 import { Container } from "native-base";
-import { UserListSuggest } from "../ui/User";
-import { AuthContext } from "../ui/Provider/Native";
+import { PostUpdateSimple } from "../ui/Post";
+
 export default function NewPost({ navigation }) {
-  const { user } = useContext(AuthContext);
   return (
     <Container
       w="container.lg"
@@ -13,7 +12,7 @@ export default function NewPost({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserListSuggest id={user?.id} navigation={navigation} />
+      <PostUpdateSimple />
     </Container>
   );
 }

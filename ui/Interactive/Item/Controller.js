@@ -8,7 +8,7 @@ export const INTERACTIVE_ITEM = gql`
     $first: Int
     $skip: Int
   ) {
-    Interactive(where:{id: $id}) {
+    Interactive(where: { id: $id }) {
       id
       comments(sortBy: $sortBy, first: $first, skip: $skip) {
         id
@@ -27,7 +27,7 @@ export const INTERACTIVE_ITEM = gql`
             count
           }
         }
-        my_interactive{
+        my_interactive {
           id
         }
       }
@@ -89,6 +89,8 @@ export default function InteractiveItem({
   sortBy = "createdAt_DESC",
   first = 3,
   skip,
+  postId,
+  isRefreshing,
 }) {
   const { loading, error, data = {}, fetchMore, refetch } = useQuery(
     id ? INTERACTIVE_ITEM : INTERACTIVE_LIST,
@@ -99,21 +101,27 @@ export default function InteractiveItem({
   const { Interactive: interactive = {}, user = {} } = data;
   const timeAgo = formatTimeCreate(interactive?.createdAt);
   function loadMore(e) {
-    if (loading || error) return
+    if (loading || error) return;
     fetchMore({
       variables: { skip: interactive.comments.length },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        const [{ Interactive: { comments: previousComments = [] } },
-          { Interactive: { comments: fetchMoreComments = [] } }] = [previousResult, fetchMoreResult]
+        const [
+          {
+            Interactive: { comments: previousComments = [] },
+          },
+          {
+            Interactive: { comments: fetchMoreComments = [] },
+          },
+        ] = [previousResult, fetchMoreResult];
         return {
           ...previousResult,
           Interactive: {
             ...previousResult.Interactive,
-            comments: [...previousComments, ...fetchMoreComments]
-          }
-        }
+            comments: [...previousComments, ...fetchMoreComments],
+          },
+        };
       },
-    }).finally(() => { })
+    }).finally(() => {});
   }
   return (
     <UI
@@ -124,6 +132,8 @@ export default function InteractiveItem({
       refetch={refetch}
       loadMore={loadMore}
       timeAgo={timeAgo}
+      id={postId}
+      isRefreshing={isRefreshing}
     />
   );
 }

@@ -5,7 +5,7 @@ import Controller from "./Controller";
 
 function UI({ error, loading, clickDetete, id }) {
   const clickHandler = (e) => {
-    if (confirm("Bạn có chắc chắn muốn xoá hem?") && !loading) clickDetete();
+    if (!loading) clickDetete();
   };
 
   return (
@@ -16,6 +16,7 @@ function UI({ error, loading, clickDetete, id }) {
       w="full"
       bgColor="gray.100"
       onPress={clickHandler}
+      disabled={loading}
     >
       {Platform.OS !== "web" ? (
         <RNText

@@ -1,11 +1,16 @@
 import React from "react";
 import { ScrollView, Text as RNText } from "react-native";
-import { Box, VStack } from "native-base";
+import { Box, VStack, Spinner } from "native-base";
 import NotificationItemSimple from "../Item/Simple";
 import { Link } from "@react-navigation/native";
 import Controller from "./Controller";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
 function UI({ loading, error, data = [], allRelationships }) {
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const [notification] = data;
   if (!notification) {
     return (
@@ -39,7 +44,7 @@ function UI({ loading, error, data = [], allRelationships }) {
           Thông báo
         </RNText>
       </Box>
-      <VStack w="full" py="1" bgColor="white" alignItems="flex-start">
+      <VStack w="full" py="0" bgColor="white" alignItems="flex-start">
         <ScrollView style={{ width: "100%" }}>
           {data.map((item) => (
             <Box

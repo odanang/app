@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { gql, makeVar, useQuery } from "@apollo/client";
 export const FRIEND_SUGGEST_LIST = gql`
   query($id: ID!) {
@@ -46,7 +46,7 @@ export const FRIEND_SUGGEST_LIST = gql`
 `;
 export const UserSuggestRefetch = makeVar(() => {});
 
-export default function UserSuggest({ UI, id, ...props }) {
+export default function UserSuggest({ UI, id, navigation, ...props }) {
   const { loading, error, data = {}, refetch } = useQuery(FRIEND_SUGGEST_LIST, {
     variables: { id },
   });
@@ -64,6 +64,16 @@ export default function UserSuggest({ UI, id, ...props }) {
     (ar) => !allFriends.find((rm) => rm.id === ar.id || ar.id === id)
   );
   if (refetch) UserSuggestRefetch(refetch);
+
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     console.log("sug");
+  //     refetch();
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation]);
+
   return (
     <UI
       {...props}

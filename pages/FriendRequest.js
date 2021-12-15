@@ -14,7 +14,7 @@ export default function FriendRequest({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserListRequest id={user?.id} />
+      <UserListRequest id={user?.id} navigation={navigation} />
     </Container>
   );
 }

@@ -21,7 +21,7 @@ import Controller from "./Controller";
 import DetailSkeleton from "./DetailSkeleton";
 import Field from "../../Field";
 import { AuthContext } from "../../Provider/Native";
-function UI({ loading, error, user, posts, relationship, count }) {
+function UI({ loading, error, user, posts, relationship, count, navigation }) {
   const currentUser = useContext(AuthContext).user;
   if (loading) return <DetailSkeleton />;
 
@@ -49,7 +49,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
           </HStack>
           <HStack space="4">
             <Text fontSize="14" color="gray.500">
-              <Text>{posts.length} bài đăng</Text>
+              <Text>{posts?.length} bài đăng</Text>
             </Text>
             <Text fontSize="14" color="gray.500">
               {count} bạn bè
@@ -67,7 +67,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
             {relationship === null && (
               <>
                 <Text mr="4" fontSize="15" fontWeight="600" color="gray.500">
-                  Gửi lời mời kết bạn đến {user.name}
+                  Gửi lời mời kết bạn đến {user?.name}
                 </Text>
                 <HStack space="2" w="120">
                   <RelationshipCreateButton toId={user?.id} />
@@ -77,22 +77,22 @@ function UI({ loading, error, user, posts, relationship, count }) {
             {relationship?.isAccepted === true && (
               <>
                 <Text mr="4" fontSize="15" fontWeight="600" color="gray.500">
-                  Bạn và {user.name} đã là bạn bè
+                  Bạn và {user?.name} đã là bạn bè
                 </Text>
                 <HStack space="2">
-                  <RelationshipDeleteActive id={relationship.id} />
+                  <RelationshipDeleteActive id={relationship?.id} />
                 </HStack>
               </>
             )}
             {(relationship?.isAccepted === false ||
               relationship?.isAccepted === null) &&
-              relationship?.createdBy?.id === currentUser.id && (
+              relationship?.createdBy?.id === currentUser?.id && (
                 <>
                   <Text mr="4" fontSize="15" fontWeight="600" color="gray.500">
-                    Bạn đã gửi kết bạn đến {user.name}
+                    Bạn đã gửi kết bạn đến {user?.name}
                   </Text>
                   <HStack space="2">
-                    <RelationshipDeleteDelete id={relationship.id} />
+                    <RelationshipDeleteDelete id={relationship?.id} />
                   </HStack>
                 </>
               )}
@@ -102,14 +102,14 @@ function UI({ loading, error, user, posts, relationship, count }) {
               relationship?.createdBy?.id === user?.id && (
                 <>
                   <Text mr="4" fontSize="15" fontWeight="600" color="gray.500">
-                    {user.name} đã gửi lời mời kết bạn
+                    {user?.name} đã gửi lời mời kết bạn
                   </Text>
                   <HStack space="2">
                     <Box w="130px">
-                      <RelationshipUpdateButton id={relationship.id} />
+                      <RelationshipUpdateButton id={relationship?.id} />
                     </Box>
                     <Box w="130px">
-                      <RelationshipDeleteDelete id={relationship.id} />
+                      <RelationshipDeleteDelete id={relationship?.id} />
                     </Box>
                   </HStack>
                 </>
@@ -148,12 +148,12 @@ function UI({ loading, error, user, posts, relationship, count }) {
           </Text>
           <Divider bg="gray.100" w="full" my="1" orientation="horizontal" />
         </VStack>
-        <PostListGrid />
+        <PostListGrid navigation={navigation} />
       </Box>
     </VStack>
   );
 }
-export { UI };
+//export { UI };
 export default function UserItemDetail(props) {
   return <Controller {...props} UI={UI} />;
 }

@@ -10,7 +10,7 @@ import UserListSuggestFixed from "./SuggestFixed/SuggestFixed";
 import UserListRequest from "./Request/Request";
 import UserItemDetail from "./Item/Detail";
 import UserUpdateSimple from "./Update/Simple";
-import UserUpdatePassword from "./Password/Password";
+import UserUpdatePassword from "./Password/Simple";
 export {
   UserAuthShort,
   UserSignInSimple,

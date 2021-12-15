@@ -8,7 +8,7 @@ import { Link } from "@react-navigation/native";
 
 function UI({ error, loading, posts }) {
   if (loading) return <PostItemSkeletonGrid />;
-  if (error) return <Text>Error</Text>;
+
   return (
     <HStack maxw="full" w="full" flexWrap="wrap" justifyContent="flex-start">
       {posts.map((item) => (

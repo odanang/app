@@ -1,13 +1,12 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "@react-navigation/native";
 import {
   Keyboard,
   TouchableWithoutFeedback,
   Text as RNText,
 } from "react-native";
 import { Box, Text, VStack, FormControl, Input, Button } from "native-base";
-function UI({ loading, error, user, navigation }) {
-  const [oldPassword, setOldPassword] = useState("");
+import Controller from "./Controller";
+function UI({ loading, error, user, navigation, on, updateUser }) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [inputError, setInputError] = useState(null);
@@ -17,11 +16,6 @@ function UI({ loading, error, user, navigation }) {
     setInputError(null);
 
     // Validation password
-    if (oldPassword.trim().length < 6) {
-      setInputError("Kiểm tra lại mật khẩu cũ");
-      return;
-    }
-
     if (newPassword.trim().length < 6) {
       setInputError("Độ dài mật khẩu mới ít nhất 6 kí tự");
       return;
@@ -32,17 +26,21 @@ function UI({ loading, error, user, navigation }) {
       return;
     }
 
-    console.log(oldPassword, newPassword, confirmPassword);
-
-    // Save change
-    // if (!loading);
+    on({
+      variables: {
+        id: user?.id,
+        data: {
+          password: confirmPassword,
+        },
+      },
+    });
   };
 
   return (
     <Fragment>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Box maxW="370px" w="full" mx="auto" mt="4">
-          <Box my="20px">
+          <Box mb="20px">
             <RNText
               style={{
                 fontWeight: "500",
@@ -63,24 +61,6 @@ function UI({ loading, error, user, navigation }) {
             bg="gray.50"
           >
             <VStack space={3}>
-              <FormControl>
-                <FormControl.Label>Mật khẩu cũ</FormControl.Label>
-                <Input
-                  onChangeText={(text) => setOldPassword(text)}
-                  value={oldPassword}
-                  name="oldpassword"
-                  type="password"
-                  bgColor="white"
-                  p="8px"
-                  fontSize={14}
-                  borderWidth={1}
-                  borderColor="gray.100"
-                  rounded={6}
-                  _focus={{
-                    borderColor: "green.500",
-                  }}
-                />
-              </FormControl>
               <FormControl>
                 <FormControl.Label>Mật khẩu mới</FormControl.Label>
                 <Input
@@ -150,6 +130,19 @@ function UI({ loading, error, user, navigation }) {
               )}
             </VStack>
           </Box>
+          {updateUser && !error && !inputError && (
+            <Box
+              mt={4}
+              p={3.5}
+              rounded={10}
+              borderWidth={1}
+              borderColor="green.500"
+            >
+              <Text textAlign="center" color="green.500">
+                Đổi mật khẩu thành công
+              </Text>
+            </Box>
+          )}
           {error && (
             <Box
               mt={4}
@@ -181,4 +174,6 @@ function UI({ loading, error, user, navigation }) {
     </Fragment>
   );
 }
-export default UI;
+export default function ChangePassword(props) {
+  return <Controller {...props} UI={UI} />;
+}

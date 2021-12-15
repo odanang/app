@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Box, HStack, Text, Button } from "native-base";
 import InteractionCommentCreateSimple from "../Comment/Create/Simple";
 import InteractionCommentListSimple from "../Comment/List/Simple";
@@ -18,8 +18,15 @@ export function UI({
   refetch,
   loadMore = () => {},
   count,
+  id,
+  isRefreshing,
 }) {
-  if (loading) return <Text>Đang tải</Text>;
+  if (loading) return <Text></Text>;
+
+  useEffect(() => {
+    refetch();
+  }, [isRefreshing]);
+
   return (
     <Fragment>
       <Box px="3" mt="2">
@@ -62,6 +69,7 @@ export function UI({
       </Box>
       <Box px="3">
         <InteractionCommentListSimple
+          id={id}
           existing={{
             interactive,
             allInteractiveComments: interactive?.comments,

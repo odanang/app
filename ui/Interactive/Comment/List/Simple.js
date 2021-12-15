@@ -1,8 +1,11 @@
 import React from "react";
+import { Platform } from "react-native";
 import InteractionCommentItemSimple from "../Item/Simple";
 import { Button, Text, VStack } from "native-base";
 import Controller from "./Controller";
 import InteractionCommentCreateSimple from "../Create/Simple";
+import InteractionCommentCreateButton from "../Create/Button";
+import { useRoute } from "@react-navigation/core";
 
 export function UI({
   loading,
@@ -12,17 +15,25 @@ export function UI({
   count = 0,
   refetch = () => {},
   getMore,
+  id,
 }) {
-  if (loading) return <Text>Đang tải</Text>;
+  const { params = {} } = useRoute();
+  const { id: idParams } = params;
+  if (loading) return <Text></Text>;
+
   return (
     <VStack>
-      <InteractionCommentCreateSimple
-        my="10"
-        interactive={interactive}
-        onCompleted={(data) => {
-          refetch();
-        }}
-      />
+      {Platform.OS !== "web" && !idParams ? (
+        <InteractionCommentCreateButton id={id} />
+      ) : (
+        <InteractionCommentCreateSimple
+          my="10"
+          interactive={interactive}
+          onCompleted={(data) => {
+            refetch();
+          }}
+        />
+      )}
       {allInteractiveComments.map((comment) => {
         return (
           <InteractionCommentItemSimple

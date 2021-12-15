@@ -1,13 +1,14 @@
 import React from "react";
 import { Button } from "native-base";
-import { FaRegEdit } from "react-icons/fa";
 import Feather from "react-native-vector-icons/Feather";
+import { useLinkTo } from "@react-navigation/native";
 
 Feather.loadFont();
 
-function UI() {
-  const toggleText = (e) => {
-    console.log("Post Update Text");
+function UI({ id }) {
+  const linkTo = useLinkTo();
+  const navigateHanle = (e) => {
+    linkTo(`/updatepost/${id}`);
   };
 
   return (
@@ -16,7 +17,7 @@ function UI() {
       p="3"
       py="1.5"
       bgColor="transparent"
-      onPress={toggleText}
+      onPress={navigateHanle}
       leftIcon={
         <Feather
           name="edit"

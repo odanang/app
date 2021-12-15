@@ -9,7 +9,6 @@ export function UI({
   contentChangeHandle,
   userCommentHandle,
 }) {
-  if (loading) return <Text>Đang tải</Text>;
   return (
     <Box mx="auto" w="full">
       <HStack space="2" display="flex" flexDirection="row" w="full">

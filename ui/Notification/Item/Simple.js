@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Button, Text, Image, HStack } from "native-base";
+import { Text as RNText, Platform } from "react-native";
 import { Link } from "@react-navigation/native";
 
 function UI(props) {
@@ -26,9 +27,21 @@ function UI(props) {
           mt="4px"
         />
         <Box>
-          <Text color="gray.900" fontWeight="600">
-            {props.item.user}
-          </Text>
+          {Platform.OS === "web" ? (
+            <Text color="gray.900" fontWeight="600">
+              {props.item.user}
+            </Text>
+          ) : (
+            <RNText
+              style={{
+                fontWeight: "500",
+                fontFamily: "Lexend_500Medium",
+              }}
+            >
+              {props.item.user}
+            </RNText>
+          )}
+
           <Text>{props.item.content}</Text>
           <Text color="gray.400" fontSize="12px">
             {props.item.time}

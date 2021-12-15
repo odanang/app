@@ -1,11 +1,14 @@
-import React, { Fragment, useState } from "react";
-import { HStack, VStack, Box, Image, Text } from "native-base";
-import { Link } from "@react-navigation/native";
-import { RelationshipDeleteActive } from "../../Relationship";
-import Controller from "../Friends/Controller";
+import React, { Fragment, useState } from 'react'
+import { HStack, VStack, Box, Image, Text, Spinner } from 'native-base'
+import { Link } from '@react-navigation/native'
+import { RelationshipDeleteActive } from '../../Relationship'
+import Controller from '../Friends/Controller'
+import LoadingSpinner from '../../Loading/LoadingSpinner'
 
-function UI({ loading, error, allUsers }) {
-  const [friends] = allUsers;
+function UI({ loading, error, allUsers, refetch }) {
+  if (loading) return <LoadingSpinner />
+
+  const [friends] = allUsers
   if (!friends) {
     return (
       <VStack w="100%">
@@ -19,7 +22,7 @@ function UI({ loading, error, allUsers }) {
           Bạn không có bạn bè nào
         </Text>
       </VStack>
-    );
+    )
   }
 
   return (
@@ -40,21 +43,21 @@ function UI({ loading, error, allUsers }) {
           <VStack
             key={user.id}
             p="12px"
-            minW={["49%", "32%", "24%"]}
+            minW={['49%', '32%', '24%']}
             m="0.5%"
-            space={["4px", "6px"]}
+            space={['4px', '6px']}
             alignItems="center"
             borderWidth="1px"
             borderColor="gray.100"
             rounded="8px"
           >
             <Box>
-              <Link to={{ screen: "users", params: { id: user?.id } }}>
+              <Link to={{ screen: 'users', params: { id: user?.id } }}>
                 <Image
                   source={{
                     uri:
-                      "https://odanang.net" +
-                      (user?.avatar?.publicUrl || "/upload/img/no-image.png"),
+                      'https://odanang.net' +
+                      (user?.avatar?.publicUrl || '/upload/img/no-image.png'),
                   }}
                   alt={user?.name}
                   size="80px"
@@ -64,21 +67,26 @@ function UI({ loading, error, allUsers }) {
                 />
               </Link>
             </Box>
-            <Link to={{ screen: "users", params: { id: user?.id } }}>
+            <Link to={{ screen: 'users', params: { id: user?.id } }}>
               <Box my="1">
                 <Text color="gray.700" fontWeight="600">
                   {user.name}
                 </Text>
               </Box>
             </Link>
-            <RelationshipDeleteActive toId={user.id} page={"SF"} />
+            {console.log(user)}
+            <RelationshipDeleteActive
+              id={user.idRelationship}
+              page={'FP'}
+              refetchFriends={refetch}
+            />
           </VStack>
         ))}
       </HStack>
     </VStack>
-  );
+  )
 }
-export { UI };
+export { UI }
 export default function UserListSimple(props) {
-  return <Controller {...props} UI={UI} />;
+  return <Controller {...props} UI={UI} />
 }

@@ -9,8 +9,8 @@ import {
   VStack,
   Divider,
 } from "native-base";
-import { PostDeleteText } from "../Delete/Text";
-import { PostUpdateText } from "../Update/Text";
+import PostDeleteText from "../Delete/Text";
+import PostUpdateText from "../Update/Text";
 import { UploadImageListCarousel } from "../../Upload/Image";
 import PostItemSkeletonDetail from "./SkeletonDetail";
 import InteractiveItemSimple from "../../Interactive/Item/Simple";
@@ -57,10 +57,10 @@ function UI({ loading, error, post, refetch }) {
     console.log(isModalOpen);
   };
 
-  console.log(post);
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Text></Text>;
   }
+
   return (
     <Stack direction="column" mx="auto" w="full">
       <KeyboardAwareScrollView style={{ width: "100%" }} extraHeight={100}>
@@ -109,7 +109,7 @@ function UI({ loading, error, post, refetch }) {
                   <Text color="gray.400" fontSize="12">
                     {stringCreatedAt}
                   </Text>
-                  {isModalOpen && (
+                  {isModalOpen && post?.createdBy?.id === currentUser?.id && (
                     <VStack
                       position="absolute"
                       right="3"
@@ -121,29 +121,12 @@ function UI({ loading, error, post, refetch }) {
                       space="1"
                       p="2"
                     >
-                      <PostUpdateText />
-                      <Divider w="full" bgColor="gray.100" />
-                      <PostDeleteText />
-                    </VStack>
-                  )}
-                  {isModalOpen && post?.createdBy?.id === currentUser.id && (
-                    <VStack
-                      position="absolute"
-                      right="3"
-                      top="8"
-                      borderColor="gray.100"
-                      borderWidth="1"
-                      bgColor="white"
-                      rounded="10"
-                      space="1"
-                      p="2"
-                    >
-                      <PostUpdateText />
+                      <PostUpdateText id={post?.id} />
                       <Divider w="full" bgColor="gray.100" />
                       <PostDeleteText id={post?.id} />
                     </VStack>
                   )}
-                  {post?.createdBy?.id === currentUser.id && (
+                  {post?.createdBy?.id === currentUser?.id && (
                     <Button
                       bgColor="transparent"
                       p="1"

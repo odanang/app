@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   Box,
   Stack,
@@ -9,13 +9,7 @@ import {
   VStack,
   Divider,
 } from "native-base";
-import { InteractionCommentListToggleButton } from "../../Interactive/Comment";
-import {
-  InteractionReactionCreateButton,
-  InteractionReactionListIconTextWithCount,
-} from "../../Interactive/Reaction";
 
-import { AlbumCreateButton } from "../../Album";
 import { PostDeleteText, PostUpdateText } from "../index";
 import { UploadImageListCarousel } from "../../Upload/Image";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
@@ -46,21 +40,30 @@ function formatTimeCreate(createdAt) {
 }
 
 function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
+  const ref = useRef();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openComment, setOpenComment] = useState(isOpen);
   const currentUser = useContext(AuthContext).user;
   const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
-    console.log(isModalOpen);
   };
+
+  useEffect(() => {
+    const hideModal = (e) => {
+      if (isModalOpen && ref.current && !ref.current.contains(e.target)) {
+        setIsModalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", hideModal);
+    return () => {
+      document.removeEventListener("mousedown", hideModal);
+    };
+  }, [isModalOpen]);
 
   if (loading) {
     return <PostItemSkeletonDetail />;
   }
-  function pressComment() {
-    setOpenComment((status) => !status);
-  }
+
   return (
     <Stack
       direction={["column", "column", "column", "row"]}
@@ -115,25 +118,9 @@ function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
           <Text color="gray.400" fontSize="12">
             {stringCreatedAt}
           </Text>
-          {isModalOpen && (
-            <VStack
-              position="absolute"
-              right="3"
-              top="8"
-              borderColor="gray.100"
-              borderWidth="1"
-              bgColor="white"
-              rounded="10"
-              space="1"
-              p="2"
-            >
-              <PostUpdateText />
-              <Divider w="full" bgColor="gray.100" />
-              <PostDeleteText />
-            </VStack>
-          )}
           {isModalOpen && post?.createdBy?.id === currentUser?.id && (
             <VStack
+              ref={ref}
               position="absolute"
               right="3"
               top="8"
@@ -144,7 +131,7 @@ function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
               space="1"
               p="2"
             >
-              <PostUpdateText />
+              <PostUpdateText id={post?.id} />
               <Divider w="full" bgColor="gray.100" />
               <PostDeleteText id={post?.id} />
             </VStack>

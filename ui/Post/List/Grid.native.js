@@ -7,11 +7,6 @@ import { useRoute } from "@react-navigation/core";
 import { Link, useLinkTo } from "@react-navigation/native";
 
 function UI({ error, loading, posts }) {
-  // if (loading) return <PostItemSkeletonGrid />;
-  if (loading) return <Text>Loading</Text>;
-  if (error) return <Text>Error</Text>;
-  const linkTo = useLinkTo();
-  console.log("ok");
   return (
     <HStack maxw="full" w="full" flexWrap="wrap" justifyContent="flex-start">
       {posts.map((item) => (

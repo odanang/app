@@ -13,7 +13,7 @@ export default function Friends({ navigation }) {
       maxW="full"
       px="8px"
     >
-      <UserListSimple id={user?.id} />
+      <UserListSimple id={user?.id} navigation={navigation} />
     </Container>
   );
 }

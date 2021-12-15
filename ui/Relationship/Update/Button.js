@@ -16,6 +16,7 @@ function UI({ error, loading, clickAgree }) {
       w="full"
       bgColor="green.500"
       onPress={clickHandler}
+      disabled={loading}
     >
       {Platform.OS !== "web" ? (
         <RNText

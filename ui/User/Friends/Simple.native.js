@@ -1,11 +1,16 @@
 import React from "react";
 import { Text as RNText, ScrollView } from "react-native";
-import { HStack, VStack, Box, Image, Text } from "native-base";
+import { HStack, VStack, Box, Image, Spinner } from "native-base";
 import { Link } from "@react-navigation/native";
 import { RelationshipDeleteActive } from "../../Relationship";
 import Controller from "../Friends/Controller";
+import LoadingSpinner from "../../Loading/LoadingSpinner";
 
-function UI({ loading, error, allUsers }) {
+function UI({ loading, error, allUsers, refetch }) {
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const [friends] = allUsers;
   if (!friends) {
     return (
@@ -89,7 +94,11 @@ function UI({ loading, error, allUsers }) {
                   </RNText>
                 </Box>
               </Link>
-              <RelationshipDeleteActive toId={user.id} page={"SF"} />
+              <RelationshipDeleteActive
+                id={user.idRelationship}
+                page={"FP"}
+                refetchFriends={refetch}
+              />
             </VStack>
           ))}
         </HStack>

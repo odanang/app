@@ -1,7 +1,6 @@
 import React from "react";
-import { Container, HStack, Box, Image, Stack, SearchIcon } from "native-base";
+import { Container, HStack, Box, Image, Stack, Button } from "native-base";
 import AuthController from "../User/Auth/Controller";
-import { Link } from "@react-navigation/native";
 import Options from "./Options";
 import { NotificationListToggle } from "../Notification";
 import SearchButton from "./SearchButton";
@@ -23,7 +22,11 @@ function UI({ user, navigation, route, options, back }) {
               alignItems="center"
               py="1"
             >
-              <Link to={{ screen: "home" }}>
+              <Button
+                onPress={() => navigation.navigate("home")}
+                bgColor="transparent"
+                p="0"
+              >
                 <Image
                   source={{
                     uri:
@@ -34,7 +37,7 @@ function UI({ user, navigation, route, options, back }) {
                   h="40px"
                   mt="-1"
                 />
-              </Link>
+              </Button>
 
               <HStack alignItems="center" space="10px">
                 <SearchButton navigation={navigation} />
