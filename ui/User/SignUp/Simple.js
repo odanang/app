@@ -220,7 +220,7 @@ function UI({ loading, error, user, navigation, on }) {
             </Link>
           </HStack>
         </Box>
-        {error && (
+        {error && !inputError && (
           <Box
             mt="12px"
             p="14px"

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Platform } from "react-native";
 import { gql, makeVar, useQuery } from "@apollo/client";
 import { POST_LIST } from "../List/Controller";
 export const POST_ITEM_ME = gql`
@@ -103,7 +104,10 @@ export default function UserItem({
   } else {
     relationship = allRelationships[0];
   }
-  if (refetch) refetchUserItem(refetch);
+
+  if (Platform.OS === "web") {
+    if (refetch) refetchUserItem(refetch);
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {

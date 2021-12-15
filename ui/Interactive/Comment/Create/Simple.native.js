@@ -8,13 +8,20 @@ export function UI({
   content,
   contentChangeHandle,
   userCommentHandle,
+  data,
 }) {
+  if (loading) {
+    return <Text></Text>;
+  }
+  const { createInteractiveComment } = data;
+
   return (
     <Box mx="auto" w="full">
       <HStack space="2" display="flex" flexDirection="row" w="full">
         <AuthAvatar />
         <Box flex="1">
           <Input
+            autoFocus={!createInteractiveComment}
             name="comment"
             type="text"
             bgColor="white"
@@ -29,7 +36,7 @@ export function UI({
             placeholder="Viết bình luận ..."
             value={content}
             onChangeText={contentChangeHandle}
-            onEndEditing={userCommentHandle}
+            onSubmitEditing={userCommentHandle}
           />
         </Box>
       </HStack>

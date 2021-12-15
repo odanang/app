@@ -95,12 +95,13 @@ function UI({ loading, error, allRelationships }) {
                   params: { id: relationship?.createdBy?.id },
                 }}
               >
-                <Box mb="1" pt="2">
+                <Box pb="1" pt="2">
                   <RNText
                     style={{
                       fontWeight: "500",
                       fontSize: 14,
                       fontFamily: "Lexend_500Medium",
+                      textAlign: "center",
                     }}
                   >
                     {relationship?.createdBy?.name}

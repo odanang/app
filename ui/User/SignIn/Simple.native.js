@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   Keyboard,
   TouchableWithoutFeedback,
@@ -53,6 +53,14 @@ function UI({ signIn, loading, error, user, navigation }) {
 
     if (!loading) signIn({ phone, password });
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setInputError(null);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Fragment>
@@ -171,7 +179,7 @@ function UI({ signIn, loading, error, user, navigation }) {
                 </Link>
               </HStack>
             </Box>
-            {error && (
+            {error && !inputError && (
               <Box
                 mt="12px"
                 p="14px"

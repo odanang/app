@@ -12,7 +12,6 @@ import {
 import PostDeleteText from "../Delete/Text";
 import PostUpdateText from "../Update/Text";
 import { UploadImageListCarousel } from "../../Upload/Image";
-import PostItemSkeletonDetail from "./SkeletonDetail";
 import InteractiveItemSimple from "../../Interactive/Item/Simple";
 import PostDetail from "./Controller";
 import { AuthContext } from "../../Provider/Native";
@@ -102,9 +101,15 @@ function UI({ loading, error, post, refetch }) {
                       params: { id: post?.createdBy?.id },
                     }}
                   >
-                    <Text color="gray.900" fontWeight="600" fontSize="14">
+                    <RNText
+                      style={{
+                        fontWeight: "500",
+                        color: "#18181b",
+                        fontFamily: "Lexend_500Medium",
+                      }}
+                    >
                       {post?.createdBy?.name}
-                    </Text>
+                    </RNText>
                   </Link>
                   <Text color="gray.400" fontSize="12">
                     {stringCreatedAt}
@@ -123,7 +128,7 @@ function UI({ loading, error, post, refetch }) {
                     >
                       <PostUpdateText id={post?.id} />
                       <Divider w="full" bgColor="gray.100" />
-                      <PostDeleteText id={post?.id} />
+                      <PostDeleteText id={post?.id} page="detailPost" />
                     </VStack>
                   )}
                   {post?.createdBy?.id === currentUser?.id && (
