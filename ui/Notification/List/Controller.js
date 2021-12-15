@@ -26,7 +26,7 @@ export const NOTIFICATION_LIST = gql`
 
     allInteractives(
       first: $first
-      where: { createdBy: { id: $id } }
+      where: { createdBy: { id: $id }, post_is_null: false }
       sortBy: updatedAt_DESC
     ) {
       id
@@ -79,7 +79,7 @@ function formatTimeCreate(createdAt) {
 export default function NotificationListController({ UI, first = 4, id }) {
   const { loading, error, data = {} } = useQuery(NOTIFICATION_LIST, {
     variables: { first, id },
-    pollInterval: 1000,
+    pollInterval: 500,
   });
   const { allRelationships = [], allInteractives = [] } = data;
   const comments = [];
