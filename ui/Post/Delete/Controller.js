@@ -1,6 +1,7 @@
 import React from 'react'
 import { gql, useMutation, useReactiveVar } from '@apollo/client'
 import { PostListRefetch } from '../List/Controller'
+import { useNavigation } from '@react-navigation/native'
 
 export const POST_DELETE = gql`
   mutation ($id: ID!) {
@@ -11,10 +12,12 @@ export const POST_DELETE = gql`
   }
 `
 
-export default function PostDelete({ UI, id, refetchPostList }) {
+export default function PostDelete({ UI, id, refetchPostList, page }) {
+  const navigation = useNavigation()
   const [on, { loading, error, data = {} }] = useMutation(POST_DELETE, {
     onCompleted: (data) => {
-      refetchPostList()
+      if (page === 'detailPost') navigation.navigate('home')
+      else refetchPostList()
     },
   })
   const { deletePost } = data
