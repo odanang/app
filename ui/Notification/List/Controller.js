@@ -26,7 +26,7 @@ export const NOTIFICATION_LIST = gql`
 
     allInteractives(
       first: $first
-      where: { createdBy: { id: $id } }
+      where: { createdBy: { id: $id }, post_is_null: false }
       sortBy: updatedAt_DESC
     ) {
       id
@@ -74,7 +74,7 @@ function formatTimeCreate(createdAt) {
   return stringTime
 }
 
-export default function NotificationListController({ UI, first = 3, id }) {
+export default function NotificationListController({ UI, first = 4, id }) {
   const {
     loading,
     error,
