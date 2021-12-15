@@ -73,7 +73,7 @@ function UI({ loading, error, user, navigation, on }) {
                 "https://odanang.net/upload/img/61b05922004a61dc3ce0cf18-favicon.png",
             }}
             alt="Odanang logo"
-            size="80px"
+            size="50px"
             mx="auto"
           />
           <Box my="20px">
@@ -239,7 +239,7 @@ function UI({ loading, error, user, navigation, on }) {
               </Link>
             </HStack>
           </Box>
-          {error && (
+          {error && !inputError && (
             <Box
               mt="12px"
               p="14px"

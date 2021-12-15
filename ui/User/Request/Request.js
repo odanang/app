@@ -82,7 +82,7 @@ function UI({ loading, error, allRelationships }) {
               }}
             >
               <Box my="1">
-                <Text fontWeight="600" color="gray.700">
+                <Text color="gray.700" fontWeight="600" textAlign="center">
                   {relationship?.createdBy?.name}
                 </Text>
               </Box>

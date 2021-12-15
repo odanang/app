@@ -82,12 +82,13 @@ function UI({ loading, error, allUsers, refetch }) {
                 </Link>
               </Box>
               <Link to={{ screen: "users", params: { id: user?.id } }}>
-                <Box mb="1" pt="2">
+                <Box pb="1" pt="2">
                   <RNText
                     style={{
                       fontWeight: "500",
                       fontSize: 14,
                       fontFamily: "Lexend_500Medium",
+                      textAlign: "center",
                     }}
                   >
                     {user.name}

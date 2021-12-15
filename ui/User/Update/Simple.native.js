@@ -299,7 +299,7 @@ function UI({ loading, error, user, on, data }) {
                   </Text>
                 </Box>
               )}
-              {error && (
+              {error && !inputError && (
                 <Box
                   my={4}
                   p={3.5}

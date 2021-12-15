@@ -72,7 +72,7 @@ function UI({ loading, error, friendsSuggest = [], count, refetch }) {
             </Box>
             <Link to={{ screen: "users", params: { id: user.id } }}>
               <Box my="1">
-                <Text fontWeight="600" color="gray.700">
+                <Text color="gray.700" fontWeight="600" textAlign="center">
                   {user.name}
                 </Text>
               </Box>

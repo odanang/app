@@ -20,7 +20,7 @@ export default function CommentCreate({
 }) {
   const [on, { loading, error, data = {} }] = useMutation(COMMENT_CREATE, {
     onCompleted: (data) => {
-      console.log(data);
+      console.log("data", data);
       onCompleted(data);
     },
     onError: (e) => {
@@ -68,6 +68,7 @@ export default function CommentCreate({
       userCommentHandle={userCommentHandle}
       interactive={interactive}
       id={id}
+      data={data}
     />
   );
 }

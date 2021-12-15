@@ -143,7 +143,7 @@ function UI({ loading, error, user, navigation, on, updateUser }) {
               </Text>
             </Box>
           )}
-          {error && (
+          {error && !inputError && (
             <Box
               mt={4}
               p={3.5}

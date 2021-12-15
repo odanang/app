@@ -71,7 +71,7 @@ export function UI({
             {comment?.my_interactive && (
               <InteractiveItemShort id={comment?.my_interactive.id} />
             )}
-            <Box ml="auto">
+            <Box>
               {comment?.createdBy && user?.id === comment?.createdBy.id && (
                 <DeleteText id={comment?.id} onCompleted={onDeleted} />
               )}

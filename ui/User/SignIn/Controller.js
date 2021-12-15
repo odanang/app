@@ -46,5 +46,13 @@ export default function UserSignIn({ UI, navigation }) {
   };
   const { loading, error, data = {} } = result;
   const { user } = data;
-  return <UI signIn={signIn} loading={loading} error={error} user={user} />;
+  return (
+    <UI
+      signIn={signIn}
+      loading={loading}
+      error={error}
+      user={user}
+      navigation={navigation}
+    />
+  );
 }
