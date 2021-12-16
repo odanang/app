@@ -1,6 +1,10 @@
+- [ ] Nguyên nhân, lý do
+- [ ] Điều tra
+- [ ] Hướng thay đổi 
+- [ ] Phạm vi ảnh hưởng của thay đổi
+- [ ] Kết quả
 ### Loại thay đổi
-- [ ] Sửa lỗi
-- [ ] Thêm/sửa tính năng
+Sửa lỗi hoặc thêm/sửa tính năng
 
 #### Nguyên nhân, lý do
 Nguyên nhân gây lỗi hoặc lý do thực hiện thay đổi
