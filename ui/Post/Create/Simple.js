@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import ImageUploading from "react-images-uploading"; // upload image
+import React from "react";
 import {
   Box,
   Heading,
@@ -9,26 +8,9 @@ import {
   TextArea,
 } from "native-base";
 import Controller from "./Controller";
-import { useNavigation } from "@react-navigation/native";
 
-function UI({ loading, error, on }) {
-  const [content, setContent] = useState("");
-  const changeContent = (e) => {
-    setContent(e.target.value);
-  };
-
-  const submitHandler = () => {
-    if (!loading && content.trim()) {
-      on({
-        variables: {
-          data: {
-            content: content,
-            interactive: { create: { comments: null, reactions: null } },
-          },
-        },
-      });
-    }
-  };
+function UI({ loading, error, changeImages, previews = [],
+  changeContent, submitHandler }) {
 
   return (
     <Box maxW="560" mx="auto" w="full" p="2">
@@ -71,6 +53,12 @@ function UI({ loading, error, on }) {
               }}
             />
           </FormControl>
+
+          {previews.map(preview => {
+            return <img key={preview} src={preview} />
+          })}
+          <input type="file" multiple onChange={changeImages} />
+
           {!loading && (
             <Button
               onPress={submitHandler}
@@ -105,6 +93,5 @@ function UI({ loading, error, on }) {
   );
 }
 export default function PostCreateSimple(props) {
-  const navigation = useNavigation();
-  return <Controller {...props} UI={UI} navigation={navigation} />;
+  return <Controller {...props} UI={UI} />;
 }
