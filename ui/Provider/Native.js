@@ -4,7 +4,7 @@ import { createContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // important
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { ApolloClient, useQuery, gql, ApolloLink } from "@apollo/client";
+import { ApolloClient, useQuery, gql, ApolloLink, split } from "@apollo/client";
 import { HttpLink, InMemoryCache, ApolloProvider } from "@apollo/client";
 //
 import isEqual from "lodash/isEqual";
@@ -34,11 +34,25 @@ export const VARIABLE_PROP_NAME = "__variable__";
 /**
  * @returns {ApolloClient}
  */
+const isFile = (value) =>
+  (typeof File !== "undefined" && value instanceof File) ||
+  (typeof Blob !== "undefined" && value instanceof Blob);
+
+const isUpload = ({ variables }) => Object.values(variables).some(isFile);
+
 function createApolloClient(domain = "_", locale = "_") {
   const uri = "https://odanang.net/admin/api";
   const as =
-    process.env.NODE_ENV === "production" ? domain : process.env.HOST_DEV;
-  const uploadLink = createUploadLink({ uri })
+    process.env.NODE_ENV === "production"
+      ? domain
+      : process.env.HOST_DEV || "odanang.net";
+  const uploadLink = createUploadLink({
+    uri,
+    headers: {
+      as, // HOST env for dev mode
+      locale,
+    },
+  });
   const httpLink = new HttpLink({
     uri,
     headers: {
@@ -51,15 +65,19 @@ function createApolloClient(domain = "_", locale = "_") {
     return {
       headers: {
         ...headers,
+        as, // HOST env for dev mode
+        locale,
         authorization: token ? `Bearer ${token}` : "",
       },
     };
-  })
-
+  });
 
   const cache = new InMemoryCache();
   return new ApolloClient({
     link: ApolloLink.from([contextLink, uploadLink]),
+    // link: ApolloLink.from([uploadLink, contextLink]),
+    // link: uploadLink.concat(contextLink),
+    // link: split(isUpload, uploadLink, contextLink),
     ssrMode: typeof window === "undefined",
     cache,
   });
@@ -129,7 +147,7 @@ function Native({ navigation, header }) {
       background: "rgb(255, 255, 255)",
     },
   };
-  console.log(user)
+  console.log(user);
   if (result.loading) return <LoadingSpinner />;
   return (
     <AuthContext.Provider value={result}>
