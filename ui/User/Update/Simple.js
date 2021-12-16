@@ -1,4 +1,5 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useMemo, useState } from "react";
+import { ReactNativeFile } from "apollo-upload-client";
 import { Link } from "@react-navigation/native";
 import {
   Box,
@@ -13,8 +14,8 @@ import {
   Radio,
   Input,
 } from "native-base";
-import { AuthContext } from "../../Provider/Native";
 import Controller from "./Controller";
+
 function UI({ loading, error, user, on, data }) {
   /**
    *
@@ -24,6 +25,9 @@ function UI({ loading, error, user, on, data }) {
   const [phone, setPhone] = useState(user?.phone);
   const [description, setDescription] = useState(user?.description);
   const [sex, setSex] = useState(user?.gender);
+  const [file, setFile] = useState()
+  const [preview, setPreview] = useState()
+
   const [inputError, setInputError] = useState(null);
   const { updateUser } = data;
 
@@ -45,9 +49,6 @@ function UI({ loading, error, user, on, data }) {
       setInputError("Kiểm tra lại số điện thoại");
       return;
     }
-
-    console.log(username, phone, description, sex);
-    console.log(on);
     on({
       variables: {
         id: user?.id,
@@ -56,10 +57,51 @@ function UI({ loading, error, user, on, data }) {
           phone: phone,
           description: description,
           gender: sex,
+          avatar: file
         },
       },
     });
   };
+
+  function changeAvatar({ target: { validity, files } }) {
+    if (validity.valid) {
+      const [file] = files;
+      var reader = new FileReader();
+      var url = reader.readAsDataURL(file);
+      reader.onloadend = function (e) {
+        setPreview(reader.result)
+        setFile(file)
+      }.bind(this);
+    };
+  }
+
+  function pressChangeAvatar() {
+    on({
+      variables: {
+        id: user?.id,
+        data: {
+          avatar: file
+        },
+      },
+    });
+  }
+
+  const avatar = useMemo(() => {
+    const uri = preview || ("https://odanang.net" +
+      (user?.avatar?.publicUrl || "/upload/img/no-image.png"))
+    return <Fragment>
+      <img src={uri} />
+      {/* <Image
+        source={{
+          uri
+        }}
+        alt="Alternate Text"
+        size="lg"
+        mx="auto"
+        rounded="100"
+      /> */}
+    </Fragment>
+  }, [user?.avatar?.publicUrl, preview])
 
   return (
     <Fragment>
@@ -77,18 +119,13 @@ function UI({ loading, error, user, on, data }) {
         >
           <VStack space={3}>
             <VStack space="4" mb="3">
-              <Image
-                source={{
-                  uri:
-                    "https://odanang.net" +
-                    (user?.avatar?.publicUrl || "/upload/img/no-image.png"),
-                }}
-                alt="Alternate Text"
-                size="lg"
-                mx="auto"
-                rounded="100"
-              />
+              {avatar}
+              {/* PICKER */}
+              <input type="file" onChange={changeAvatar} width={'50%'} />
+              {/*  */}
               <Button
+                as="input"
+                type="file"
                 _text={{
                   color: "gray.400",
                   fontSize: "14",
@@ -99,8 +136,9 @@ function UI({ loading, error, user, on, data }) {
                 w="50%"
                 bgColor="gray.100"
                 mx="auto"
+                onPress={pressChangeAvatar}
               >
-                Thay đổi ảnh đại diện
+                {loading ? 'Đang thay đổi' : 'Thay đổi ảnh đại diện'}
               </Button>
             </VStack>
             <FormControl>

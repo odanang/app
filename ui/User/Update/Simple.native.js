@@ -25,7 +25,6 @@ function UI({ loading, error, user, on, data }) {
    *
    * @param {Event} e
    */
-
   const [username, setUsername] = useState(user?.name);
   const [phone, setPhone] = useState(user?.phone);
   const [description, setDescription] = useState(user?.description);
