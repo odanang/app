@@ -6,12 +6,19 @@ import {
   FormControl,
   Button,
   TextArea,
+  HStack,
 } from "native-base";
+import { StyleSheet } from "react-native";
 import Controller from "./Controller";
 
-function UI({ loading, error, changeImages, previews = [],
-  changeContent, submitHandler }) {
-
+function UI({
+  loading,
+  error,
+  changeImages,
+  previews = [],
+  changeContent,
+  submitHandler,
+}) {
   return (
     <Box maxW="560" mx="auto" w="full" p="2">
       <Heading my="20px" textAlign="center" fontSize={["18px", "20px"]}>
@@ -54,10 +61,21 @@ function UI({ loading, error, changeImages, previews = [],
             />
           </FormControl>
 
-          {previews.map(preview => {
-            return <img key={preview} src={preview} />
-          })}
-          <input type="file" multiple onChange={changeImages} />
+          <VStack my={1}>
+            {previews.map((preview) => {
+              return <img key={preview} src={preview} />;
+            })}
+            <label htmlFor="file-upload" style={style.label}>
+              Thêm ảnh từ máy tính
+            </label>
+            <input
+              style={style.input}
+              id="file-upload"
+              type="file"
+              multiple
+              onChange={changeImages}
+            />
+          </VStack>
 
           {!loading && (
             <Button
@@ -92,6 +110,19 @@ function UI({ loading, error, changeImages, previews = [],
     </Box>
   );
 }
+
+const style = {
+  input: {
+    display: "none",
+  },
+  label: {
+    fontFamily: "Lexend_500Medium",
+    fontSize: "14px",
+    color: "#22c55e",
+    cursor: "pointer",
+  },
+};
+
 export default function PostCreateSimple(props) {
   return <Controller {...props} UI={UI} />;
 }
