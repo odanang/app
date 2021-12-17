@@ -11,12 +11,14 @@ export const GRID_POST = gql`
           publicUrl
         }
       }
+      content
     }
   }
 `;
 export default function UserItem({ UI, id }) {
-
-  const { loading, error, data = {} } = useQuery(GRID_POST, { variables: { id } });
+  const { loading, error, data = {} } = useQuery(GRID_POST, {
+    variables: { id },
+  });
   const { allPosts = [] } = data;
   return <UI loading={loading} error={error} posts={allPosts} />;
 }
