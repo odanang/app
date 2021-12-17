@@ -107,7 +107,6 @@ export function UI({
             top="8"
             borderColor="gray.100"
             borderWidth="1"
-            bgColor="white"
             rounded="10"
             space="1"
             p="2"

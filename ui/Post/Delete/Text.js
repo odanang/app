@@ -5,9 +5,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 FontAwesome.loadFont()
 function UI({ loading, error, clickDetete, post }) {
-  const handleSubmit = (e) => {
-    clickDetete()
-  }
 
   if (loading) {
     return <Spinner color="green.500" size="sm" />
@@ -19,7 +16,7 @@ function UI({ loading, error, clickDetete, post }) {
       p="3"
       py="1.5"
       bgColor="transparent"
-      onPress={handleSubmit}
+      onPress={clickDetete}
       disabled={loading}
       leftIcon={
         <FontAwesome

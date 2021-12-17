@@ -4,7 +4,12 @@
     "slug": "app",
     "icon": "./assets/favicon.png",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "vn.itoa.odanang"
+    }
   },
   "name": "app"
 }

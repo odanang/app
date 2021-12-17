@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { PostListRefetch } from "../List/Controller";
 import { useNavigation } from "@react-navigation/native";
+import { Platform } from "react-native";
 export const POST_CREATE = gql`
   mutation($data: PostCreateInput) {
     createPost(data: $data) {
@@ -28,14 +29,13 @@ export default function PostCreate({
   });
 
   const [content, setContent] = useState("");
-  const changeContent = ({ target: { value } }) => {
-    console.log(value)
-    setContent(value);
+  function changeContent(value) {
+    const content = Platform.OS === 'web' ? value.target.value : value
+    setContent(content);
   };
 
   const [previews, setPreviews] = useState([])
   const [files, setFiles] = useState([])
-  console.log(previews)
   function changeImages({ target: { validity, files = [] } }) {
     if (validity.valid) {
       const _this = this;
@@ -72,6 +72,7 @@ export default function PostCreate({
       loading={loading}
       error={error}
       previews={previews}
+      content={content}
       changeContent={changeContent}
       submitHandler={submitHandler}
       changeImages={changeImages}
