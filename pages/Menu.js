@@ -7,6 +7,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { useLinkTo } from "@react-navigation/native";
 
 MaterialCommunityIcons.loadFont();
 MaterialIcons.loadFont();
@@ -15,12 +16,14 @@ AntDesign.loadFont();
 
 import { AuthContext } from "../ui/Provider/Native";
 export default function Menu({ navigation }) {
+  const linkTo = useLinkTo();
   const currentUser = useContext(AuthContext).user;
   return (
     <Container w="full" mt={1} maxW="full" px="8px">
       <VStack alignItems="flex-start" w="full">
         <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
           <Button
+            onPress={() => linkTo(`/users/${currentUser?.id}`)}
             bgColor="white"
             justifyContent="flex-start"
             leftIcon={
@@ -32,13 +35,12 @@ export default function Menu({ navigation }) {
               />
             }
           >
-            <Link to={{ screen: "users", params: { id: currentUser?.id } }}>
-              <Text>Trang cá nhân</Text>
-            </Link>
+            <Text>Trang cá nhân</Text>
           </Button>
         </Box>
         <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
           <Button
+            onPress={() => linkTo("/friendsuggestion")}
             bgColor="white"
             justifyContent="flex-start"
             leftIcon={
@@ -50,13 +52,12 @@ export default function Menu({ navigation }) {
               />
             }
           >
-            <Link to={{ screen: "friendsuggestion" }}>
-              <Text>Gợi ý bạn bè</Text>
-            </Link>
+            <Text>Gợi ý bạn bè</Text>
           </Button>
         </Box>
         <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
           <Button
+            onPress={() => linkTo("/friendrequest")}
             bgColor="white"
             justifyContent="flex-start"
             leftIcon={
@@ -68,13 +69,12 @@ export default function Menu({ navigation }) {
               />
             }
           >
-            <Link to={{ screen: "friendrequest" }}>
-              <Text>Lời mời kết bạn</Text>
-            </Link>
+            <Text>Lời mời kết bạn</Text>
           </Button>
         </Box>
         <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
           <Button
+            onPress={() => linkTo("/userupdate")}
             bgColor="white"
             justifyContent="flex-start"
             leftIcon={
@@ -93,6 +93,7 @@ export default function Menu({ navigation }) {
         </Box>
         <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
           <Button
+            onPress={() => linkTo("/updatepassword")}
             w="full"
             bgColor="white"
             justifyContent="flex-start"
@@ -105,14 +106,13 @@ export default function Menu({ navigation }) {
               />
             }
           >
-            <Link to={{ screen: "updatepassword" }}>
-              <Text>Đổi mật khẩu</Text>
-            </Link>
+            <Text>Đổi mật khẩu</Text>
           </Button>
         </Box>
-        <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
+        {/* <Box borderBottomColor="gray.100" borderBottomWidth="1" w="full" py={2}>
           <Button
             w="full"
+            onPress={() => linkTo("/album")}
             bgColor="white"
             justifyContent="flex-start"
             leftIcon={
@@ -124,11 +124,9 @@ export default function Menu({ navigation }) {
               />
             }
           >
-            <Link to={{ screen: "album" }}>
-              <Text>Lưu</Text>
-            </Link>
+            <Text>Lưu</Text>
           </Button>
-        </Box>
+        </Box> */}
         <Box w="full" py={2}>
           <UserSignOutButton navigation={navigation} />
         </Box>
