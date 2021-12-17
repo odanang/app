@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from 'react'
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   Box,
   Stack,
@@ -8,84 +8,98 @@ import {
   Button,
   VStack,
   Divider,
-} from 'native-base'
+} from "native-base";
 
-import { PostDeleteText, PostUpdateText } from '../index'
-import { UploadImageListCarousel } from '../../Upload/Image'
-import { HiOutlineDotsHorizontal } from 'react-icons/hi'
-import PostItemSkeletonDetail from './SkeletonDetail'
-import InteractiveItemSimple from '../../Interactive/Item/Simple'
-import PostDetail from './Controller'
-import { AuthContext } from '../../Provider/Native'
-import { Link } from '@react-navigation/native'
+import { PostDeleteText, PostUpdateText } from "../index";
+import { UploadImageListCarousel } from "../../Upload/Image";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import PostItemSkeletonDetail from "./SkeletonDetail";
+import InteractiveItemSimple from "../../Interactive/Item/Simple";
+import PostDetail from "./Controller";
+import { AuthContext } from "../../Provider/Native";
+import { Link } from "@react-navigation/native";
 
 function formatTimeCreate(createdAt) {
-  var dayjs = require('dayjs')
-  let stringTime = ''
-  const createdTime = dayjs(createdAt)
-  const now = dayjs()
-  if (now.format('DD-MM-YYYY') === createdTime.format('DD-MM-YYYY')) {
-    if (Number(now.get('hour')) - Number(createdTime.get('hour')) === 0)
+  var dayjs = require("dayjs");
+  let stringTime = "";
+  const createdTime = dayjs(createdAt);
+  const now = dayjs();
+  if (now.format("DD-MM-YYYY") === createdTime.format("DD-MM-YYYY")) {
+    if (Number(now.get("hour")) - Number(createdTime.get("hour")) === 0)
       stringTime =
-        Number(now.get('minute')) -
-        Number(createdTime.get('minute')) +
-        ' phút trước'
+        Number(now.get("minute")) -
+        Number(createdTime.get("minute")) +
+        " phút trước";
     else
       stringTime =
-        Number(now.get('hour')) - Number(createdTime.get('hour')) + ' giờ trước'
-  } else stringTime = createdTime.format('DD-MM-YYYY')
-  return stringTime
+        Number(now.get("hour")) -
+        Number(createdTime.get("hour")) +
+        " giờ trước";
+  } else stringTime = createdTime.format("DD-MM-YYYY");
+  return stringTime;
 }
 
 function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
-  const ref = useRef()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const currentUser = useContext(AuthContext).user
-  const stringCreatedAt = formatTimeCreate(post?.createdAt)
+  const ref = useRef();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const currentUser = useContext(AuthContext).user;
+  const stringCreatedAt = formatTimeCreate(post?.createdAt);
   const toggleModal = () => {
-    setIsModalOpen((prev) => !prev)
-  }
+    setIsModalOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const hideModal = (e) => {
       if (isModalOpen && ref.current && !ref.current.contains(e.target)) {
-        setIsModalOpen(false)
+        setIsModalOpen(false);
       }
-    }
-    document.addEventListener('mousedown', hideModal)
+    };
+    document.addEventListener("mousedown", hideModal);
     return () => {
-      document.removeEventListener('mousedown', hideModal)
-    }
-  }, [isModalOpen])
+      document.removeEventListener("mousedown", hideModal);
+    };
+  }, [isModalOpen]);
 
   if (loading) {
-    return <PostItemSkeletonDetail />
+    return <PostItemSkeletonDetail />;
   }
 
   return (
     <Stack
-      direction={['column', 'column', 'column', 'row']}
+      direction={[
+        "column",
+        "column",
+        "column",
+        `${!post?.images?.length ? "column" : "row"}`,
+      ]}
       mx="auto"
       my="3"
-      w={['100%', '90%', '80%', '100%']}
-      rounded={['0', 'xl']}
+      w={["100%", "90%", "80%", `${post?.images?.length ? "100%" : "75%"}`]}
+      rounded={["0", "xl"]}
       borderWidth="1"
       borderColor="gray.100"
     >
-      <Box w={['100%', '100%', '100%', '60%']}>
-        <UploadImageListCarousel
-          urls={post?.images?.map(
-            (image) => 'https://odanang.net' + image?.file?.publicUrl
-          )}
-        />
-      </Box>
+      {post?.images?.length ? (
+        <Box w={["100%", "100%", "100%", "60%"]}>
+          <UploadImageListCarousel
+            urls={post?.images?.map(
+              (image) => "https://odanang.net" + image?.file?.publicUrl
+            )}
+          />
+        </Box>
+      ) : null}
       <VStack
         h="580px"
         overflow="auto"
         flex={1}
-        maxW={['100%', '100%', '100%', '40%']}
+        maxW={[
+          "100%",
+          "100%",
+          "100%",
+          `${!post?.images?.length ? "100%" : "40%"}`,
+        ]}
         py="3"
-        px={['0', '0', '1']}
+        px={["0", "0", "1"]}
       >
         <HStack
           space="3"
@@ -100,15 +114,15 @@ function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
           <Image
             source={{
               uri:
-                'https://odanang.net' +
+                "https://odanang.net" +
                 (post?.createdBy?.avatar?.publicUrl ||
-                  '/upload/img/no-image.png'),
+                  "/upload/img/no-image.png"),
             }}
             alt="Profile image"
             size="8"
             rounded="100"
           />
-          <Link to={{ screen: 'users', params: { id: post?.createdBy?.id } }}>
+          <Link to={{ screen: "users", params: { id: post?.createdBy?.id } }}>
             <Text color="gray.900" fontWeight="600" fontSize="14">
               {post?.createdBy?.name}
             </Text>
@@ -160,8 +174,8 @@ function UI({ loading, error, post, refetch = () => {}, isOpen = true }) {
         </Box>
       </VStack>
     </Stack>
-  )
+  );
 }
 export default function PostDetailSimple(props) {
-  return <PostDetail {...props} UI={UI} />
+  return <PostDetail {...props} UI={UI} />;
 }
