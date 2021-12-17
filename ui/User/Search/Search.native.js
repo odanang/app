@@ -77,7 +77,7 @@ function UI({ loading, error, allUsers = [] }) {
               </Link>
             </Box>
             <Link to={{ screen: "users", params: { id: user?.id } }}>
-              <Box mb="1" pt="2">
+              <Box pb="1" pt="2">
                 <RNText
                   style={{
                     fontWeight: "500",
@@ -89,8 +89,6 @@ function UI({ loading, error, allUsers = [] }) {
                 </RNText>
               </Box>
             </Link>
-            <RelationshipDeleteActive toId={user.id} page={"SF"} />
-            {/* Add more relation ship button */}
           </VStack>
         ))}
       </HStack>

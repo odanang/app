@@ -78,7 +78,7 @@ function UI({ loading, error, allUsers = [] }) {
                 </Text>
               </Link>
             </HStack>
-            {
+            {/* {
               <VStack space="1.5">
                 <Box w="120px">
                   <RelationshipUpdateButton />
@@ -87,7 +87,7 @@ function UI({ loading, error, allUsers = [] }) {
                   <RelationshipDeleteDelete />
                 </Box>
               </VStack>
-            }
+            } */}
             {/* {
               <Box w="120px">
                 <RelationshipCreateButton />

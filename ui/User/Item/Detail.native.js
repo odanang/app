@@ -16,6 +16,7 @@ import { AuthContext } from "../../Provider/Native";
 function UI({ loading, error, user, posts, relationship, count }) {
   const currentUser = useContext(AuthContext).user;
   if (loading) return <DetailSkeleton />;
+  console.log("user");
 
   return (
     <VStack maxw="full" w="full" h="full" mb="-20px">
@@ -91,7 +92,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
                       Bạn và {user.name} đã là bạn bè
                     </Text>
                     <HStack space="2" w="120">
-                      <RelationshipDeleteActive id={relationship.id} />
+                      <RelationshipDeleteActive id={relationship?.id} />
                     </HStack>
                   </>
                 )}
@@ -108,7 +109,7 @@ function UI({ loading, error, user, posts, relationship, count }) {
                         Bạn đã gửi kết bạn đến {user.name}
                       </Text>
                       <HStack space="2" w="120">
-                        <RelationshipDeleteDelete id={relationship.id} />
+                        <RelationshipDeleteDelete id={relationship?.id} />
                       </HStack>
                     </>
                   )}
@@ -127,10 +128,10 @@ function UI({ loading, error, user, posts, relationship, count }) {
                       </Text>
                       <HStack space="2">
                         <Box w="130px">
-                          <RelationshipUpdateButton id={relationship.id} />
+                          <RelationshipUpdateButton id={relationship?.id} />
                         </Box>
                         <Box w="130px">
-                          <RelationshipDeleteDelete id={relationship.id} />
+                          <RelationshipDeleteDelete id={relationship?.id} />
                         </Box>
                       </HStack>
                     </>
