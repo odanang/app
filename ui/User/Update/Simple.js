@@ -25,8 +25,8 @@ function UI({ loading, error, user, on, data }) {
   const [phone, setPhone] = useState(user?.phone);
   const [description, setDescription] = useState(user?.description);
   const [sex, setSex] = useState(user?.gender);
-  const [file, setFile] = useState()
-  const [preview, setPreview] = useState()
+  const [file, setFile] = useState();
+  const [preview, setPreview] = useState();
 
   const [inputError, setInputError] = useState(null);
   const { updateUser } = data;
@@ -57,7 +57,7 @@ function UI({ loading, error, user, on, data }) {
           phone: phone,
           description: description,
           gender: sex,
-          avatar: file
+          avatar: file,
         },
       },
     });
@@ -69,10 +69,10 @@ function UI({ loading, error, user, on, data }) {
       var reader = new FileReader();
       var url = reader.readAsDataURL(file);
       reader.onloadend = function (e) {
-        setPreview(reader.result)
-        setFile(file)
+        setPreview(reader.result);
+        setFile(file);
       }.bind(this);
-    };
+    }
   }
 
   function pressChangeAvatar() {
@@ -80,18 +80,30 @@ function UI({ loading, error, user, on, data }) {
       variables: {
         id: user?.id,
         data: {
-          avatar: file
+          avatar: file,
         },
       },
     });
   }
 
   const avatar = useMemo(() => {
-    const uri = preview || ("https://odanang.net" +
-      (user?.avatar?.publicUrl || "/upload/img/no-image.png"))
-    return <Fragment>
-      <img src={uri} />
-      {/* <Image
+    const uri =
+      preview ||
+      "https://odanang.net" +
+        (user?.avatar?.publicUrl || "/upload/img/no-image.png");
+    return (
+      <Fragment>
+        <Box
+          rounded="120px"
+          overflow="hidden"
+          alignSelf="center"
+          position="relative"
+          w="fit-content"
+          mx="auto"
+        >
+          <img src={uri} style={style.img} />
+        </Box>
+        {/* <Image
         source={{
           uri
         }}
@@ -100,8 +112,9 @@ function UI({ loading, error, user, on, data }) {
         mx="auto"
         rounded="100"
       /> */}
-    </Fragment>
-  }, [user?.avatar?.publicUrl, preview])
+      </Fragment>
+    );
+  }, [user?.avatar?.publicUrl, preview]);
 
   return (
     <Fragment>
@@ -121,7 +134,17 @@ function UI({ loading, error, user, on, data }) {
             <VStack space="4" mb="3">
               {avatar}
               {/* PICKER */}
-              <input type="file" onChange={changeAvatar} width={'50%'} />
+              <Box>
+                <label htmlFor="file-upload" style={style.label}>
+                  Chọn ảnh từ máy tính
+                </label>
+                <input
+                  style={style.input}
+                  id="file-upload"
+                  type="file"
+                  onChange={changeAvatar}
+                />
+              </Box>
               {/*  */}
               <Button
                 as="input"
@@ -138,7 +161,7 @@ function UI({ loading, error, user, on, data }) {
                 mx="auto"
                 onPress={pressChangeAvatar}
               >
-                {loading ? 'Đang thay đổi' : 'Thay đổi ảnh đại diện'}
+                {loading ? "Đang lưu" : "Lưu ảnh đại diện"}
               </Button>
             </VStack>
             <FormControl>
@@ -340,6 +363,25 @@ function UI({ loading, error, user, on, data }) {
     </Fragment>
   );
 }
+
+const style = {
+  img: {
+    width: "120px",
+    height: "120px",
+    objectFit: "cover",
+    display: "block",
+  },
+  input: {
+    display: "none",
+  },
+  label: {
+    fontFamily: "Lexend_500Medium",
+    fontSize: "14px",
+    color: "#22c55e",
+    cursor: "pointer",
+    textAlign: "center",
+  },
+};
 //export default UI;
 export default function PostCreateSimple(props) {
   return <Controller {...props} UI={UI} />;
