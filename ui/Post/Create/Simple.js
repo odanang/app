@@ -62,19 +62,41 @@ function UI({
           </FormControl>
 
           <VStack my={1}>
-            {previews.map((preview) => {
-              return <img key={preview} src={preview} />;
-            })}
-            <label htmlFor="file-upload" style={style.label}>
-              Thêm ảnh từ máy tính
-            </label>
-            <input
-              style={style.input}
-              id="file-upload"
-              type="file"
-              multiple
-              onChange={changeImages}
-            />
+            <HStack
+              maxw="full"
+              w="full"
+              flexWrap="wrap"
+              justifyContent="flex-start"
+            >
+              {previews.map((preview) => {
+                return (
+                  <Box
+                    overflow="hidden"
+                    minWidth="33.33%"
+                    maxWidth="33.33%"
+                    alignSelf="center"
+                    position="relative"
+                    w="fit-content"
+                    rounded="10"
+                    key={preview}
+                  >
+                    <img src={preview} style={style.img} />
+                  </Box>
+                );
+              })}
+            </HStack>
+            <VStack alignItems="center" mt="2">
+              <label htmlFor="file-upload" style={style.label}>
+                Thêm ảnh từ máy tính
+              </label>
+              <input
+                style={style.input}
+                id="file-upload"
+                type="file"
+                multiple
+                onChange={changeImages}
+              />
+            </VStack>
           </VStack>
 
           {!loading && (
@@ -112,6 +134,13 @@ function UI({
 }
 
 const style = {
+  img: {
+    height: "120px",
+    objectFit: "cover",
+    display: "block",
+    padding: "2%",
+    // rounded: "10px",
+  },
   input: {
     display: "none",
   },
