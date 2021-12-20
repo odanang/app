@@ -6,6 +6,7 @@ import Controller from "./Controller";
 function UI({ error, loading, clickAddFriend }) {
   const clickHandler = (e) => {
     if (!loading) clickAddFriend();
+    console.log("add friend");
   };
 
   return (

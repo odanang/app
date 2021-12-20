@@ -1,21 +1,20 @@
-import React from 'react'
-import { Button, Spinner } from 'native-base'
-import PostDelete from './Controller'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import React from "react";
+import { Button, Spinner } from "native-base";
+import PostDelete from "./Controller";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-FontAwesome.loadFont()
+FontAwesome.loadFont();
 function UI({ loading, error, clickDetete, post }) {
-
   if (loading) {
-    return <Spinner color="green.500" size="sm" />
+    return <Spinner color="green.500" size="sm" />;
   }
 
   return (
     <Button
-      _text={{ color: 'gray.400', fontSize: '12', fontWeight: '600' }}
+      _text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
       p="3"
       py="1.5"
-      bgColor="transparent"
+      bgColor="white"
       onPress={clickDetete}
       disabled={loading}
       leftIcon={
@@ -29,8 +28,8 @@ function UI({ loading, error, clickDetete, post }) {
     >
       Xoá bài viết
     </Button>
-  )
+  );
 }
 export default function PostDeleteText(props) {
-  return <PostDelete {...props} UI={UI} />
+  return <PostDelete {...props} UI={UI} />;
 }
