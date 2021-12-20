@@ -16,7 +16,7 @@ function UI({ id }) {
       _text={{ color: "gray.400", fontSize: "12", fontWeight: "600" }}
       p="3"
       py="1.5"
-      bgColor="transparent"
+      bgColor="white"
       onPress={navigateHanle}
       leftIcon={
         <Feather

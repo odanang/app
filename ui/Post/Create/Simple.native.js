@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import ImageUploading from "react-images-uploading"; // upload image
-import {
-  Box,
-  Heading,
-  VStack,
-  FormControl,
-  Button,
-  TextArea,
-} from "native-base";
+import { Box, VStack, FormControl, Button, TextArea } from "native-base";
 import {
   Keyboard,
   TouchableWithoutFeedback,
@@ -16,26 +9,7 @@ import {
 import Controller from "./Controller";
 import { useNavigation } from "@react-navigation/native";
 
-function UI({ loading, error, on }) {
-  const [content, setContent] = useState("");
-  const changeContent = (value) => {
-    setContent(value);
-  };
-
-  const submitHandler = () => {
-    if (!loading && content.trim()) {
-      Keyboard.dismiss();
-      on({
-        variables: {
-          data: {
-            content: content,
-            interactive: { create: { comments: null, reactions: null } },
-          },
-        },
-      });
-    }
-  };
-
+function UI({ loading, error, submitHandler, changeContent }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Box maxW="380px" w="full" mx="auto" mt="4">

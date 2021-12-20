@@ -106,6 +106,7 @@ export function UI({
             right="3"
             top="8"
             borderColor="gray.100"
+            bgColor="white"
             borderWidth="1"
             rounded="10"
             space="1"

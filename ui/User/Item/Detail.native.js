@@ -16,7 +16,6 @@ import { AuthContext } from "../../Provider/Native";
 function UI({ loading, error, user, posts, relationship, count }) {
   const currentUser = useContext(AuthContext).user;
   if (loading) return <DetailSkeleton />;
-  console.log("user");
 
   return (
     <VStack maxw="full" w="full" h="full" mb="-20px">
